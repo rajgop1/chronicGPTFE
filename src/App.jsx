@@ -14,6 +14,7 @@ import { useGSAP } from '@gsap/react'
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FadeInText from './components/common/FadeInText'
+import Footer from './components/common/Footer/footer'
 
 gsap.registerPlugin(useGSAP)
 
@@ -21,19 +22,22 @@ function App() {
   useLenis();
 
   const container = useRef();
+  const carouselContainerRef = useRef();
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
+
     const t1 = gsap.timeline({
       scrollTrigger: {
         trigger: container.current,
         start: "top top",
-        end: "+=200%",
+        end: "+=500%",
         pin: true,
         scrub: true,
-        markers: true,
+        // markers: true,
       }
     })
+
     t1.add("firstAnim")
 
 
@@ -44,9 +48,12 @@ function App() {
       paddingBottom: 0,
     }, "firstAnim")
 
-    t1.to(".second-section hero-img", {
-      scale: 1,
-    }, "firstAnim")
+    t1.fromTo(".second-section .hero-img", {
+      autoAlpha: 0.85,
+    },
+      {
+        autoAlpha: 1,
+      }, "firstAnim")
 
     t1.fromTo(".second-section-content", {
       autoAlpha: 0,
@@ -55,28 +62,83 @@ function App() {
       delay: 0.25,
     }, "firstAnim")
 
+    t1.fromTo(".header", {
+      background: "#121212"
+    }, {
+      delay: 0.25,
+      background: "transparent",
+    }, "firstAnim")
+
 
     t1.add("secondAnim")
 
     t1.to(".second-section", {
-      height: 0,
+      height: 200,
       paddingTop: 0,
       paddingBottom: 0,
     }, "secondAnim")
 
     t1.to(".hero-img", {
-      autoAlpha: 0,
-      height: 0,
+      autoAlpha: 0.75,
+      height: 200,
     }, "secondAnim")
 
     t1.to(".second-section", {
+      autoAlpha: 0.25,
+    }, "secondAnim")
+
+    t1.to(".second-section-content", {
       autoAlpha: 0,
     }, "secondAnim")
 
+    t1.add("thirdAnim")
 
-    t1.to("third-section", {
 
+    t1.to(".third-section", {
+
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+      delay: -1
+    }, "thirdAnim")
+
+    t1.to(".third-section", {
+      height: 0,
+      autoAlpha: 0,
+      paddingTop: 0,
+      paddingBottom: 0,
+      delay: -0.25
+    }, "thirdAnim")
+
+    t1.to(".second-section", {
+      height: 0,
+      autoAlpha: 0,
     })
+
+    t1.add("fourthAnim")
+
+    t1.to(".section-five", {
+      height: 0,
+      autoAlpha: 0,
+      delay: -0.25
+    }, "fourthAnim")
+
+
+
+
+
+    // const cards = gsap.utils.toArray(carouselContainerRef.current.children)
+
+    // cards.forEach((card)=>{
+    //   console.log("card",card)
+    //   gsap.to(card, {
+    //     scrollTrigger: {
+    //       trigger: card,
+    //       start: 'bottom bottom',
+    //       end: 'top 20%',
+    //       scrub: true
+    //     }
+    //   })
+    // })
 
   }, { scope: container });
 
@@ -84,14 +146,14 @@ function App() {
 
     <div className='max-w-[1512px] mx-auto' ref={container}>
       {/* Nav */}
-      <header className='fixed top-0 z-50 left-0 right-0 '>
+      <header className='header fixed top-0 z-50 left-0 right-0 '>
         <div className='flex justify-between items-center px-[24px] py-[20px] lg:px-[60px] lg:py-[32px] h-[100px] '>
           <div>
             <img src={"/assets/images/logo.png"} className='w-[30px] h-[24px] lg:h-[40px] lg:w-[50px]' alt='Vite logo' />
           </div>
 
           <div className='hidden lg:flex items-center gap-[32px]'>
-            <NavLink to='/' className={({ isActive }) => isActive ? 'relative active-link font-bold' : ''}>Home</NavLink>
+            <NavLink to='/' className={({ isActive }) => isActive ? 'relative active-link font-bold ' : ''}>Home</NavLink>
             <NavLink to='/safeguards' className={({ isActive }) => isActive ? 'relative active-link font-bold' : ''}>Safeguards</NavLink>
             <NavLink to='/journey' className={({ isActive }) => isActive ? 'relative active-link font-bold' : ''}>Journey</NavLink>
             <NavLink to='/how-it-works' className={({ isActive }) => isActive ? 'relative active-link font-bold' : ''}>How it Works</NavLink>
@@ -108,7 +170,9 @@ function App() {
       {/* new section which will wrap above the home */}
       <Third />
 
+      <SectionFive />
 
+      <Footer />
 
     </div>
   )
@@ -149,16 +213,16 @@ const Home = () => {
       </div>
     </div>
     <Separator />
-    <div className='flex justify-center'>
+    <FadeInText className='flex justify-center'>
       <div className='text-center py-[32px] font-medium text-[20px] lg:text-[34px] leading-[40px] max-w-[1012px]'>
         Now you can have your own AI Doctor that is always on, always yours, and outcome focused
       </div>
-    </div>
+    </FadeInText>
   </div>
 }
 
 const Second = () => {
-  return <div className='second-section relative h-screen'>
+  return <div className='z-[2] second-section relative h-screen'>
     <div className='flex flex-col justify-end '>
       <img src="/assets/images/doctors-desktop-bg.png" alt="" className='hidden lg:block hero-img w-full h-full object-cover' />
       <img src="/assets/images/doctors-mobile-bg.png" alt="" className='block lg:hidden hero-img w-full h-full object-cover' />
@@ -175,18 +239,83 @@ const Second = () => {
   </div>
 }
 
-const Third = () => {
-  return <div className='h-screen third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF5E5]'>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro omnis expedita dolorem tenetur assumenda minus autem saepe sapiente exercitationem temporibus officiis, beatae eaque tempore? Magnam laudantium sint corporis ad autem?
-    Sint magnam alias voluptatum quaerat doloremque, dolore sunt ea corporis consequuntur delectus libero reprehenderit quasi. Sit temporibus optio est at voluptatibus blanditiis, accusamus illo et laudantium dolorum expedita nihil corporis.
-    Ipsam rerum tempore doloremque amet molestiae accusamus reprehenderit temporibus, neque consequatur quaerat ad mollitia, harum, magnam itaque praesentium eveniet veritatis unde quidem quos ea aut illo eum accusantium cupiditate? Inventore.
-    Nemo, consequatur ut eaque dolorem quidem eius tempora accusamus totam ea temporibus laboriosam sequi hic soluta labore rem quibusdam sed cupiditate magni laborum necessitatibus et excepturi adipisci? Hic, aspernatur placeat.
-    Nostrum repellat porro possimus minima quisquam modi accusamus repudiandae dicta quia exercitationem velit, cupiditate at? Asperiores aspernatur dignissimos nihil, libero earum labore ipsam accusantium vel aliquid consectetur dolores nostrum ex?
-    Iure, sit veniam. Nemo, laudantium facere illo nostrum sit nihil aliquid ullam dolorem vero neque delectus molestias voluptate eveniet voluptatum. Aspernatur saepe officia enim sed, mollitia ipsa quia doloremque veniam.
-    Nobis qui commodi excepturi soluta quibusdam aliquam sequi deserunt, alias laborum tenetur, quo doloremque quos non! Molestias quibusdam laboriosam, at iste, quis voluptate eligendi qui in illum, culpa voluptatibus dolores!
-    Dolore corrupti tenetur laudantium quis nihil molestiae aliquam odio est, perferendis id laborum obcaecati maiores, alias recusandae hic dolores itaque. Id officiis quas eos cupiditate quos voluptatum animi cum odit?
-    Quod magnam dolore, asperiores odio est rerum nemo, soluta iure aut aliquid delectus, totam perspiciatis mollitia beatae adipisci laborum repudiandae neque. Porro quibusdam ratione enim eos qui ipsum, molestiae quos!
-    Optio eius perferendis et, facilis, accusantium hic eveniet, architecto sit nihil enim placeat. In hic quas repellendus iusto totam debitis. Suscipit reprehenderit sint magni voluptas odio eveniet molestias at? Molestiae.
+const Third = ({ carouselContainerRef }) => {
+  return <div className='z-[3] relative h-screen third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
+    <div className='flex gap-2'>
+      <div className='flex-1 flex flex-col gap-2'>
+        <div className='text-[40px] font-semibold '>
+          How it works
+        </div>
+        <div className='font-semibold'>
+          Your AI Doctor combines three layers of intelligence  <br /> to give you continuous, clinician-guided care.
+        </div>
+      </div>
+      <div ref={carouselContainerRef} className='flex-1 cards-carousel-container flex flex-col gap-[32px] overflow-auto'>
+        <div className='bg-[#F1F1F1] card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+          <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
+            <img src="/assets/images/card-1.jpg" alt="" className=' w-full h-full object-cover' />
+          </div>
+          <div className='flex flex-col gap-[20px]'>
+            <div className='font-light text-[32px] text-[#121212]'>01</div>
+
+            <div className='flex flex-col'>
+              <div className='font-bold text-[20px]'>
+                Your AI Doctor studies the way your body behaves
+              </div>
+              <div className='text-[16px]'>It watches your sleep quality, meals, glucose swings, hydration, medication timing, activity, and stress patterns. Over time, it builds a living model of your physiology, spotting subtle patterns that even good doctors can’t see between visits. This is how it understands why your numbers move the way they do, and what will help you stabilize them.</div>
+
+            </div>
+
+          </div>
+
+        </div>
+        <div className='bg-[#F1F1F1] card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+          <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
+            <img src="/assets/images/card-2.png" alt="" className=' w-full h-full object-cover' />
+          </div>
+          <div className='flex flex-col gap-[20px]'>
+            <div className='font-light text-[32px] text-[#121212]'>02</div>
+
+            <div className='flex flex-col'>
+              <div className='font-bold text-[20px]'>
+                Behind every insight is real clinical reasoning.
+              </div>
+              <div className='text-[16px]'>Your AI Doctor evaluates risk the way a careful physician would: rising morning glucose, changing blood pressure trends, sleep debt, medication conflicts, missed doses, unusual heart-rate shifts, and more. When something looks concerning, it flags it early — and your human doctor reviews your clinical trace to confirm the right next step. You get the vigilance of a medical team that never goes off duty.</div>
+
+            </div>
+
+          </div>
+
+        </div>
+        <div className='bg-[#F1F1F1] card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+          <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
+            <img src="/assets/images/card-3.png" alt="" className=' w-full h-full object-cover' />
+          </div>
+          <div className='flex flex-col gap-[20px]'>
+            <div className='font-light text-[32px] text-[#121212]'>03</div>
+
+            <div className='flex flex-col'>
+              <div className='font-bold text-[20px]'>
+                Clear explanations. Simple actions. No jargon.              </div>
+              <div className='text-[16px]'>Your AI Doctor turns complex data into practical daily guidance:
+                “Your numbers look stable — keep the same routine today.”
+                “Take a lighter dinner tonight; your glucose stayed elevated longer than usual.”
+                “Focus on hydration for the next 24 hours — it will help bring your pressure down.”
+                Every message is personalized, medically grounded, and aimed at keeping you steady, confident, and in control.</div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+const SectionFive = () => {
+  return <div className='rounded-t-[54px] overflow-hidden relative z-[5] section-five h-screen'>
+    <img src="/assets/images/section-five.png" className=' w-full h-full object-contain' />
   </div>
 }
 

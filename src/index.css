@@ -30,3 +30,18 @@ body {
   border-bottom: 1px solid;
   border-image-source: linear-gradient(90deg, rgba(227, 227, 227, 0.2) 0%, #E3E3E3 50%, rgba(227, 227, 227, 0.2) 100%);
 }
+
+.gradient-text {
+    -webkit-text-fill-color: #0000;
+    animation: flow 4s linear infinite;
+    background: linear-gradient(90deg, #a1ffce, #7e4493, #89f7fe, #66a6ff);
+    -webkit-background-clip: text;
+    background-size: 300%;
+}
+.nav-icon {
+    align-items: center;
+    display: inline-flex;
+    font-size: 14px;
+    justify-content: center;
+    transform: translateY(-1px);
+}
