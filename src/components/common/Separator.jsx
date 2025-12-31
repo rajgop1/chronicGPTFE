@@ -2,7 +2,7 @@ import React from 'react'
 
 function Separator() {
   return (
-    <div className='separator-line'></div>
+    <div className='!h-[1px] separator-line'></div>
   )
 }
 
