@@ -98,7 +98,7 @@ function App() {
 
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
-      delay: -1
+      
     }, "thirdAnim")
 
     t1.to(".third-section", {
@@ -106,20 +106,21 @@ function App() {
       autoAlpha: 0,
       paddingTop: 0,
       paddingBottom: 0,
-      delay: -0.25
     }, "thirdAnim")
+
+    
+    t1.add("fourthAnim")
 
     t1.to(".second-section", {
       height: 0,
       autoAlpha: 0,
-    })
-
-    t1.add("fourthAnim")
+      delay: 0.25
+    }, "thirdAnim")
 
     t1.to(".section-five", {
       height: 0,
       autoAlpha: 0,
-      delay: -0.25
+      delay: 0.25
     }, "fourthAnim")
 
 
