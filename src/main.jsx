@@ -18,7 +18,7 @@ createRoot(document.getElementById('root')).render(
         wheelMultiplier: 1,
         touchMultiplier: 2,
       }}>
-      <BrowserRouter>
+      <BrowserRouter basename="/chronicGPTFE">
         <Routes>
           <Route index path="/" element={<App />} />
           <Route index path="/safeguards" element={<App />} />
