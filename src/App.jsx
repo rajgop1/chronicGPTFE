@@ -107,19 +107,15 @@ function App() {
       autoAlpha: 0,
       paddingTop: 0,
       paddingBottom: 0,
-    }, "thirdAnim")
-
-    t1.to(".second-section", {
+    }, "thirdAnim").to(".second-section", {
       height: 0,
       autoAlpha: 0,
       delay: -0.25
-    }, "thirdAnim")
-
-    t1.to(".hero-img", {
+    }, ).to(".hero-img", {
       height: 0,
       autoAlpha: 0,
       delay: -0.25
-    }, "thirdAnim")
+    }, )
 
     t1.add("fourthAnim")
 
