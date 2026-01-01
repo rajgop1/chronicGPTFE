@@ -38,7 +38,7 @@ function App() {
       }
     })
 
- 
+
     t1.add("firstAnim")
 
 
@@ -64,7 +64,7 @@ function App() {
     }, "firstAnim")
 
     t1.fromTo(".header", {
-      background: "#121212"
+      background: "#12121200"
     }, {
       delay: 0.25,
       background: "transparent",
@@ -73,7 +73,7 @@ function App() {
 
     t1.add("secondAnim")
 
-    t1.to(".second-section",{
+    t1.to(".second-section", {
       height: 200,
       paddingTop: 0,
       paddingBottom: 0,
@@ -91,6 +91,34 @@ function App() {
     t1.to(".second-section-content", {
       autoAlpha: 0,
     }, "secondAnim")
+
+    t1.add("cards-anim")
+
+    t1.to(".first-card", {
+      translateY: "-100%"
+    }, "cards-anim")
+
+    t1.to(".second-card", {
+      translateY: "-100%"
+    }, "cards-anim")
+
+    t1.to(".third-card", {
+      translateY: "-100%"
+    }, "cards-anim")
+
+    t1.add("cards-anim-2")
+
+    t1.to(".first-card", {
+      translateY: "-200%"
+    }, "cards-anim-2")
+
+    t1.to(".second-card", {
+      translateY: "-200%"
+    }, "cards-anim-2")
+
+    t1.to(".third-card", {
+      translateY: "-200%"
+    }, "cards-anim-2")
 
     t1.add("thirdAnim")
 
@@ -111,11 +139,11 @@ function App() {
       height: 0,
       autoAlpha: 0,
       delay: -0.25
-    }, ).to(".hero-img", {
+    },).to(".hero-img", {
       height: 0,
       autoAlpha: 0,
       delay: -0.25
-    }, )
+    },)
 
     t1.add("fourthAnim")
 
@@ -126,11 +154,20 @@ function App() {
       delay: 0.25
     }, "fourthAnim")
 
+    const t2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: carouselContainerRef.current,
+        start: "top top",
+        end: "+=300%",
+        pin: true,
+        scrub: true,
+        // markers: true,
+      }
+    })
+
+    t2.add("firstAnim")
 
 
-
-
-    // const cards = gsap.utils.toArray(carouselContainerRef.current.children)
 
     // cards.forEach((card)=>{
     //   console.log("card",card)
@@ -256,8 +293,8 @@ const Third = ({ carouselContainerRef }) => {
           Your AI Doctor combines three layers of intelligence  <br /> to give you continuous, clinician-guided care.
         </div>
       </div>
-      <div ref={carouselContainerRef} className='flex-1 cards-carousel-container flex flex-col gap-[32px] overflow-auto'>
-        <div className='bg-[#F1F1F1] card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+      <div ref={carouselContainerRef} className='flex-1 cards-carousel-container flex flex-col gap-[32px]'>
+        <div className='bg-[#F1F1F1] first-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
           <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
             <img src="/assets/images/card-1.jpg" alt="" className=' w-full h-full object-cover' />
           </div>
@@ -275,7 +312,7 @@ const Third = ({ carouselContainerRef }) => {
           </div>
 
         </div>
-        <div className='bg-[#F1F1F1] card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+        <div className='bg-[#F1F1F1] second-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
           <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
             <img src="/assets/images/card-2.png" alt="" className=' w-full h-full object-cover' />
           </div>
@@ -293,7 +330,7 @@ const Third = ({ carouselContainerRef }) => {
           </div>
 
         </div>
-        <div className='bg-[#F1F1F1] card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+        <div className='bg-[#F1F1F1] third-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
           <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
             <img src="/assets/images/card-3.png" alt="" className=' w-full h-full object-cover' />
           </div>
