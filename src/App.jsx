@@ -38,6 +38,7 @@ function App() {
       }
     })
 
+ 
     t1.add("firstAnim")
 
 
@@ -72,7 +73,7 @@ function App() {
 
     t1.add("secondAnim")
 
-    t1.to(".second-section", {
+    t1.to(".second-section",{
       height: 200,
       paddingTop: 0,
       paddingBottom: 0,
@@ -98,7 +99,7 @@ function App() {
 
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
-      
+
     }, "thirdAnim")
 
     t1.to(".third-section", {
@@ -108,14 +109,20 @@ function App() {
       paddingBottom: 0,
     }, "thirdAnim")
 
-    
-    t1.add("fourthAnim")
-
     t1.to(".second-section", {
       height: 0,
       autoAlpha: 0,
-      delay: 0.25
+      delay: -0.25
     }, "thirdAnim")
+
+    t1.to(".hero-img", {
+      height: 0,
+      autoAlpha: 0,
+      delay: -0.25
+    }, "thirdAnim")
+
+    t1.add("fourthAnim")
+
 
     t1.to(".section-five", {
       height: 0,
@@ -225,8 +232,10 @@ const Home = () => {
 const Second = () => {
   return <div className='z-[2] second-section relative h-screen'>
     <div className='flex flex-col justify-end '>
-      <img src="/assets/images/doctors-desktop-bg.png" alt="" className='hidden lg:block hero-img w-full h-full object-cover' />
-      <img src="/assets/images/doctors-mobile-bg.png" alt="" className='block lg:hidden hero-img w-full h-full object-cover' />
+      <div className='w-full flex-1 hero-img'>
+        <img src="/assets/images/doctors-desktop-bg.png" alt="" className='w-full h-full object-cover' />
+      </div>
+      {/* <img src="/assets/images/doctors-mobile-bg.png" alt="" className='block lg:hidden hero-img w-full h-full object-cover' /> */}
 
       <div className='relative z-1 second-section-content text-center py-[28px] px-[42px] lg:px-[100px]'>
         <h2 className='text-[24px] lg:text-[36px] font-extrabold mb-[24px]'>
