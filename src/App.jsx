@@ -15,6 +15,7 @@ import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FadeInText from './components/common/FadeInText'
 import Footer from './components/common/Footer/footer'
+import { cn } from './helpers/utils'
 
 gsap.registerPlugin(useGSAP)
 
@@ -92,33 +93,15 @@ function App() {
       autoAlpha: 0,
     }, "secondAnim")
 
-    t1.add("cards-anim")
+    const cards = ".card"
 
-    t1.to(".first-card", {
-      translateY: "-100%"
-    }, "cards-anim")
+    t1.to(cards, {
+      y: "-=100%"
+    })
 
-    t1.to(".second-card", {
-      translateY: "-100%"
-    }, "cards-anim")
-
-    t1.to(".third-card", {
-      translateY: "-100%"
-    }, "cards-anim")
-
-    t1.add("cards-anim-2")
-
-    t1.to(".first-card", {
-      translateY: "-200%"
-    }, "cards-anim-2")
-
-    t1.to(".second-card", {
-      translateY: "-200%"
-    }, "cards-anim-2")
-
-    t1.to(".third-card", {
-      translateY: "-200%"
-    }, "cards-anim-2")
+    t1.to(cards, {
+      y: "-=100%"
+    })
 
     t1.add("thirdAnim")
 
@@ -135,7 +118,38 @@ function App() {
       autoAlpha: 0,
       paddingTop: 0,
       paddingBottom: 0,
-    }, "thirdAnim").to(".second-section", {
+    }, "thirdAnim")
+
+    t1.fromTo(".section-four", {
+      y: "-=80",
+    }, {
+      y: "0",
+    }, "thirdAnim")
+
+    const wrapper = ".hr-card"
+    const steps = 6
+
+    for (let i = 0; i < steps - 1; i++) {
+      t1.to(wrapper, {
+        x: "-=100%",
+        ease: "none"
+      })
+    }
+
+    t1.add("fourthAnim")
+
+    t1.to(".section-four", {
+      height: 0,
+      autoAlpha: 0,
+
+    }, "fourthAnim")
+
+
+    t1.fromTo(".section-five", {
+      y: "-=80",
+    }, {
+      y: "0",
+    }, "fourthAnim").to(".second-section", {
       height: 0,
       autoAlpha: 0,
       delay: -0.25
@@ -145,41 +159,13 @@ function App() {
       delay: -0.25
     },)
 
-    t1.add("fourthAnim")
-
+    t1.add("fifthAnim")
 
     t1.to(".section-five", {
       height: 0,
       autoAlpha: 0,
       delay: 0.25
-    }, "fourthAnim")
-
-    const t2 = gsap.timeline({
-      scrollTrigger: {
-        trigger: carouselContainerRef.current,
-        start: "top top",
-        end: "+=300%",
-        pin: true,
-        scrub: true,
-        // markers: true,
-      }
-    })
-
-    t2.add("firstAnim")
-
-
-
-    // cards.forEach((card)=>{
-    //   console.log("card",card)
-    //   gsap.to(card, {
-    //     scrollTrigger: {
-    //       trigger: card,
-    //       start: 'bottom bottom',
-    //       end: 'top 20%',
-    //       scrub: true
-    //     }
-    //   })
-    // })
+    }, "fifthAnim")
 
   }, { scope: container });
 
@@ -210,6 +196,7 @@ function App() {
       <Second />
       {/* new section which will wrap above the home */}
       <Third />
+      <Fourth />
 
       <SectionFive />
 
@@ -284,7 +271,7 @@ const Second = () => {
 
 const Third = ({ carouselContainerRef }) => {
   return <div className='z-[3] relative h-screen third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
-    <div className='flex gap-2'>
+    <div className='flex flex-col lg:flex-row gap-8 lg:gap-2'>
       <div className='flex-1 flex flex-col gap-2'>
         <div className='text-[40px] font-semibold '>
           How it works
@@ -294,7 +281,7 @@ const Third = ({ carouselContainerRef }) => {
         </div>
       </div>
       <div ref={carouselContainerRef} className='flex-1 cards-carousel-container flex flex-col gap-[32px]'>
-        <div className='bg-[#F1F1F1] first-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+        <div className='card bg-[#F1F1F1] first-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
           <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
             <img src="/assets/images/card-1.jpg" alt="" className=' w-full h-full object-cover' />
           </div>
@@ -312,7 +299,7 @@ const Third = ({ carouselContainerRef }) => {
           </div>
 
         </div>
-        <div className='bg-[#F1F1F1] second-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+        <div className='card bg-[#F1F1F1] second-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
           <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
             <img src="/assets/images/card-2.png" alt="" className=' w-full h-full object-cover' />
           </div>
@@ -330,7 +317,7 @@ const Third = ({ carouselContainerRef }) => {
           </div>
 
         </div>
-        <div className='bg-[#F1F1F1] third-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+        <div className='card bg-[#F1F1F1] third-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
           <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
             <img src="/assets/images/card-3.png" alt="" className=' w-full h-full object-cover' />
           </div>
@@ -356,10 +343,105 @@ const Third = ({ carouselContainerRef }) => {
   </div>
 }
 
+const Fourth = () => {
+  return <div className='h-screen relative z-[4] text-[#121212] section-four flex flex-col gap-[60px] bg-[#F1F1F1] p-[60px] rounded-[60px] overflow-hidden'>
+    <div className='flex gap-2'>
+      <h2 className='flex-1 text-[40px] leading-[52px] font-semibold'>
+        Real clinical outcomes, <br /> felt in your everyday life
+      </h2>
+      <p className='flex-1 text-[16px] leading-[24px] font-medium'>
+        You choose one or more improvement programs. Your AI Doctor works in the background every day — helping you feel the changes in ways that matter: steadier energy, calmer mornings, smoother rhythms, and more restorative nights.
+      </p>
+    </div>
+    <div className='flex gap-[24px]'>
+      <HorizontalCard
+        title="Mornings stop feeling unpredictable"
+        img={"/assets/images/hr-card-1.jpg"}
+        className="hr-card-1"
+      >
+        Instead of waking up already behind, you start the day more steady — clear-headed, less groggy, and without the crashes that used to set the tone.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Sleep becomes restorative"
+        img={"/assets/images/hr-card-2.jpg"}
+        className="hr-card-2"
+      >
+        Your AI Doctor helps you adjust your evenings, nutrition, timing, and recovery.
+        You fall asleep easier, wake up less, and start feeling rested in a way you haven’t in years.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Meals stop derailing your day"
+        img={"/assets/images/hr-card-3.jpg"}
+        className="hr-card-3"
+      >
+        You quickly learn which foods and timings work for your physiology.
+        Post-meal crashes shrink, late-evening glucose stays quieter, and eating stops feeling like guesswork.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Energy feels smoother, not spiky"
+        img={"/assets/images/hr-card-4.jpg"}
+        className="hr-card-4"
+      >
+        Instead of sharp highs and lows, your days develop a smoother rhythm.
+        Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Mornings stop feeling unpredictable"
+        img={"/assets/images/hr-card-1.jpg"}
+        className="hr-card-5"
+      >
+        Instead of waking up already behind, you start the day more steady — clear-headed, less groggy, and without the crashes that used to set the tone.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Sleep becomes restorative"
+        img={"/assets/images/hr-card-2.jpg"}
+        className="hr-card-6"
+      >
+        Your AI Doctor helps you adjust your evenings, nutrition, timing, and recovery.
+        You fall asleep easier, wake up less, and start feeling rested in a way you haven’t in years.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Meals stop derailing your day"
+        img={"/assets/images/hr-card-3.jpg"}
+        className="hr-card-7"
+      >
+        You quickly learn which foods and timings work for your physiology.
+        Post-meal crashes shrink, late-evening glucose stays quieter, and eating stops feeling like guesswork.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Energy feels smoother, not spiky"
+        img={"/assets/images/hr-card-4.jpg"}
+        className="hr-card-8"
+      >
+        Instead of sharp highs and lows, your days develop a smoother rhythm.
+        Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
+      </HorizontalCard>
+    </div>
+  </div>
+}
+
+const HorizontalCard = ({ img, title, className, children }) => (
+  <div className={cn('hr-card min-w-[320px] max-w-[320px] bg-white flex flex-col gap-[20px] p-[20px] pb-[77px] rounded-[40px]', className)}>
+    <div className='img-container w-[280px] h-[152px] rounded-[20px] overflow-hidden'>
+      <img src={img} alt="" className='w-full h-full object-cover' />
+    </div>
+    <div className='flex flex-col gap-[4px]'>
+      <h3 className='font-bold text-[20px]'>
+        {title}
+      </h3>
+      <p className='text-[16px]'>
+        {children}
+      </p>
+    </div>
+  </div>
+)
+
 const SectionFive = () => {
-  return <div className='rounded-t-[54px] overflow-hidden relative z-[5] section-five h-screen'>
+  return <div className='bg-[#121212] rounded-t-[54px] overflow-hidden relative z-[5] section-five h-screen'>
     <img src="/assets/images/section-five.png" className=' w-full h-full object-contain' />
   </div>
 }
+
+
 
 export default App
