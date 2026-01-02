@@ -48,27 +48,34 @@ function App() {
       autoAlpha: 0,
       paddingTop: 0,
       paddingBottom: 0,
+      ease: "none"
     }, "firstAnim")
 
     t1.fromTo(".second-section .hero-img", {
       autoAlpha: 0.85,
+      ease: "none"
     },
       {
         autoAlpha: 1,
+        ease: "none"
       }, "firstAnim")
 
     t1.fromTo(".second-section-content", {
       autoAlpha: 0,
+      ease: "none"
     }, {
       autoAlpha: 1,
       delay: 0.25,
+      ease: "none"
     }, "firstAnim")
 
     t1.fromTo(".header", {
-      background: "#12121200"
+      background: "#12121200",
+      ease: "none"
     }, {
       delay: 0.25,
       background: "transparent",
+      ease: "none"
     }, "firstAnim")
 
 
@@ -78,53 +85,65 @@ function App() {
       height: 200,
       paddingTop: 0,
       paddingBottom: 0,
+      ease: "none"
     }, "secondAnim")
 
     t1.to(".hero-img", {
       autoAlpha: 0.75,
       height: 200,
+      ease: "none"
     }, "secondAnim")
 
     t1.to(".second-section", {
-      autoAlpha: 0.25,
+      autoAlpha: 0.5,
+      ease: "none"
     }, "secondAnim")
 
     t1.to(".second-section-content", {
       autoAlpha: 0,
     }, "secondAnim")
 
-    const cards = ".card"
+    t1.to(".second-card", { y: "-95%", ease: "none", boxShadow: "0px -5px 40px rgba(0,0,0,0.2)" }, "cardsAnim1")
+    t1.to(".third-card", { y: "-95%", ease: "none", boxShadow: "0px -5px 40px rgba(0,0,0,0.2)" }, "cardsAnim1")
+    t1.add("cardsAnim2")
+    t1.to(".third-card", { y: "-=100%", ease: "none", boxShadow: "0px -5px 40px rgba(0,0,0,0.2)" }, "cardsAnim2")
+    t1.to("third-card", { y: "-=80", ease: "none", boxShadow: "0px -5px 40px rgba(0,0,0,0.2)" })
+    // const cards = ".card"
 
-    t1.to(cards, {
-      y: "-=100%"
-    })
 
-    t1.to(cards, {
-      y: "-=100%"
-    })
 
-    t1.add("thirdAnim")
+
+    // t1.add("cardsAnim1")
+
+    // t1.to(cards, {
+    //   y: "-=100%",
+    //   ease: "none"
+    // })
+
+    // t1.to(cards, {
+    //   y: "-=100%",
+    //   ease: "none"
+    // })
+
+    // t1.add("thirdAnim")
 
 
     t1.to(".third-section", {
-
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-
+      autoAlpha: 0.8,
+      delay: 0.25
     }, "thirdAnim")
 
-    t1.to(".third-section", {
-      height: 0,
-      autoAlpha: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-    }, "thirdAnim")
 
-    t1.fromTo(".section-four", {
-      y: "-=80",
-    }, {
-      y: "0",
-    }, "thirdAnim")
+    t1.to(
+      ".section-four",
+      {
+        y: "-99%",
+        boxShadow: "0px -20px 40px rgba(0,0,0,0.3)", // final shadow
+        ease: "none"
+      },
+      "thirdAnim"
+    )
+
 
     const wrapper = ".hr-card"
     const steps = 6
@@ -136,36 +155,98 @@ function App() {
       })
     }
 
+
     t1.add("fourthAnim")
 
-    t1.to(".section-four", {
+    t1.to(
+      ".section-four",
+      {
+        y: "0%",
+        boxShadow: "none"
+      },
+      "fourthAnim"
+    )
+
+
+    t1.to(".third-section", {
       height: 0,
       autoAlpha: 0,
-
+      padding: 0,
+      ease: "none",
     }, "fourthAnim")
 
 
-    t1.fromTo(".section-five", {
-      y: "-=80",
+
+    t1.to(".section-four", {
+      height: 0,
+      padding: 0,
+      delay: 0.5,
+      autoAlpha: 0,
+      ease: "none"
+    }, "fourthAnim")
+
+    t1.to(".second-section", {
+      height: 0,
+      autoAlpha: 0,
+      ease: "none",
+      delay: -0.25
+    }, "fourthAnim")
+
+    t1.to(".second-section-content", {
+      height: 0,
+      autoAlpha: 0,
+      padding: 0,
+      ease: "none",
+      delay: -0.25
+    }, "fourthAnim")
+
+    t1.to(".hero-img", {
+      height: 0,
+      autoAlpha: 0,
+      delay: -0.25,
+      ease: "none"
+    }, "fourthAnim")
+
+    t1.fromTo(".header", {
+      background: "transparent",
+      ease: "none"
     }, {
-      y: "0",
-    }, "fourthAnim").to(".second-section", {
-      height: 0,
-      autoAlpha: 0,
-      delay: -0.25
-    },).to(".hero-img", {
-      height: 0,
-      autoAlpha: 0,
-      delay: -0.25
-    },)
+      delay: -0.25,
+      background: "#121212ef",
+      ease: "none"
+    }, "fourthAnim")
+
+    // t1.to(".header", {
+    //   background: "transparent",
+    //   ease: "none",
+    // },"fourthAnim")
+
+    // t1.to(".footer", {
+    //   height: 0,
+    //   y: "-=100%",
+    //   autoAlpha: 0,
+    //   ease: "none"
+    // }, "fifthAnim")
+
+    // come back to 0 (second half of fourthAnim)
+    // t1.to(
+    //   ".section-five",
+    //   { y: "0%", ease: "none" },
+    //   // "fourthAnim"
+    // )
+
 
     t1.add("fifthAnim")
+
+
 
     t1.to(".section-five", {
       height: 0,
       autoAlpha: 0,
-      delay: 0.25
+      ease: "none"
     }, "fifthAnim")
+
+
 
   }, { scope: container });
 
@@ -200,7 +281,10 @@ function App() {
 
       <SectionFive />
 
-      <Footer />
+      <div className='footer'>
+
+        <Footer />
+      </div>
 
     </div>
   )
@@ -344,7 +428,7 @@ const Third = ({ carouselContainerRef }) => {
 }
 
 const Fourth = () => {
-  return <div className='h-screen relative z-[4] text-[#121212] section-four flex flex-col gap-[60px] bg-[#F1F1F1] p-[60px] rounded-[60px] overflow-hidden'>
+  return <div className='h-screen relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[60px] bg-[#F1F1F1] p-[60px] mx-[10px] rounded-[60px] overflow-hidden'>
     <div className='flex gap-2'>
       <h2 className='flex-1 text-[40px] leading-[52px] font-semibold'>
         Real clinical outcomes, <br /> felt in your everyday life
@@ -437,7 +521,7 @@ const HorizontalCard = ({ img, title, className, children }) => (
 )
 
 const SectionFive = () => {
-  return <div className='bg-[#121212] rounded-t-[54px] overflow-hidden relative z-[5] section-five h-screen'>
+  return <div className='bg-[#121212] w-full h-full rounded-t-[54px] overflow-hidden relative z-[5] section-five h-screen'>
     <img src="/assets/images/section-five.png" className=' w-full h-full object-contain' />
   </div>
 }
