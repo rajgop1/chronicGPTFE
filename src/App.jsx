@@ -14,7 +14,6 @@ import { useGSAP } from '@gsap/react'
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FadeInText from './components/common/FadeInText'
-import Footer from './components/common/Footer/footer'
 import { cn } from './helpers/utils'
 
 gsap.registerPlugin(useGSAP)
@@ -23,7 +22,8 @@ function App() {
   useLenis();
 
   const container = useRef();
-  const carouselContainerRef = useRef();
+  const [currentCard, setCurrentCard] = useState(1)
+
 
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
@@ -32,10 +32,9 @@ function App() {
       scrollTrigger: {
         trigger: container.current,
         start: "top top",
-        end: "+=500%",
+        end: () => "+=600%",
         pin: true,
         scrub: true,
-        // markers: true,
       }
     })
 
@@ -48,7 +47,7 @@ function App() {
       autoAlpha: 0,
       paddingTop: 0,
       paddingBottom: 0,
-      ease: "none"
+      ease: "none",
     }, "firstAnim")
 
     t1.fromTo(".second-section .hero-img", {
@@ -103,11 +102,38 @@ function App() {
       autoAlpha: 0,
     }, "secondAnim")
 
-    t1.to(".second-card", { y: "-95%", ease: "none", boxShadow: "0px -5px 40px rgba(0,0,0,0.2)" }, "cardsAnim1")
-    t1.to(".third-card", { y: "-95%", ease: "none", boxShadow: "0px -5px 40px rgba(0,0,0,0.2)" }, "cardsAnim1")
-    t1.add("cardsAnim2")
-    t1.to(".third-card", { y: "-=100%", ease: "none", boxShadow: "0px -5px 40px rgba(0,0,0,0.2)" }, "cardsAnim2")
-    t1.to("third-card", { y: "-=80", ease: "none", boxShadow: "0px -5px 40px rgba(0,0,0,0.2)" })
+    /* ---------- CARD 1 ---------- */
+    t1.add("card1")
+    t1.call(() => setCurrentCard(1), null, "card1")
+
+    t1.to(".second-card", {
+      y: "-=95%",
+      ease: "none",
+      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)"
+    }, "card1")
+
+    /* ---------- CARD 2 ---------- */
+    t1.add("card2")
+
+    t1.to(".third-card", {
+      y: "-=95%",
+      ease: "none",
+      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)"
+    }, "card1")
+
+    t1.call(() => setCurrentCard(2), null, "card2")
+
+    /* ---------- CARD 3 ---------- */
+    t1.add("card3")
+
+    t1.to(".third-card", {
+      y: "-=100%",
+      ease: "none",
+      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)"
+    }, "card3")
+
+    t1.call(() => setCurrentCard(3), null, "card3+0.1")
+
     // const cards = ".card"
 
 
@@ -144,6 +170,7 @@ function App() {
       "thirdAnim"
     )
 
+    t1.addLabel("cardsStart")
 
     const wrapper = ".hr-card"
     const steps = 6
@@ -151,9 +178,29 @@ function App() {
     for (let i = 0; i < steps - 1; i++) {
       t1.to(wrapper, {
         x: "-=100%",
-        ease: "none"
+        ease: "none",
+
+        onUpdate: () => {
+          const start = t1.labels.cardsStart
+          const end = t1.labels.cardsEnd
+          const duration = end - start
+
+          const current = gsap.utils.clamp(
+            0,
+            duration,
+            t1.time() - start
+          )
+
+          const progress = current / duration
+
+          gsap.set(".progress-bar", {
+            width: `${progress * 100}%`,
+          })
+        },
       })
     }
+
+    t1.addLabel("cardsEnd")
 
 
     t1.add("fourthAnim")
@@ -216,29 +263,7 @@ function App() {
       ease: "none"
     }, "fourthAnim")
 
-    // t1.to(".header", {
-    //   background: "transparent",
-    //   ease: "none",
-    // },"fourthAnim")
-
-    // t1.to(".footer", {
-    //   height: 0,
-    //   y: "-=100%",
-    //   autoAlpha: 0,
-    //   ease: "none"
-    // }, "fifthAnim")
-
-    // come back to 0 (second half of fourthAnim)
-    // t1.to(
-    //   ".section-five",
-    //   { y: "0%", ease: "none" },
-    //   // "fourthAnim"
-    // )
-
-
     t1.add("fifthAnim")
-
-
 
     t1.to(".section-five", {
       height: 0,
@@ -276,7 +301,7 @@ function App() {
       <Home />
       <Second />
       {/* new section which will wrap above the home */}
-      <Third />
+      <Third currentCard={currentCard} />
       <Fourth />
 
       <SectionFive />
@@ -353,18 +378,40 @@ const Second = () => {
   </div>
 }
 
-const Third = ({ carouselContainerRef }) => {
+const Third = ({ currentCard }) => {
   return <div className='z-[3] relative h-screen third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
     <div className='flex flex-col lg:flex-row gap-8 lg:gap-2'>
-      <div className='flex-1 flex flex-col gap-2'>
-        <div className='text-[40px] font-semibold '>
-          How it works
+      <div className='flex-1 flex flex-col gap-[20px]'>
+        <div className='flex flex-col gap-2'>
+          <div className='text-[40px] font-semibold '>
+            How it works
+          </div>
+          <div className='font-semibold'>
+            Your AI Doctor combines three layers of intelligence  <br /> to give you continuous, clinician-guided care.
+          </div>
         </div>
-        <div className='font-semibold'>
-          Your AI Doctor combines three layers of intelligence  <br /> to give you continuous, clinician-guided care.
+        <div className='flex flex-col gap-[16px]'>
+          <div className='flex items-center font-roboto font-medium text-[#121212] text-[32px] gap-[4px] leading-[32px]'>
+            <div>{String(currentCard).padStart(2, "0")}</div> <div className='text-[22px] text-[#121212]/60'>/ 03</div>
+          </div>
+          <div className="flex gap-2">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "h-[4px] transition-all duration-300 ease-out",
+                  currentCard === index + 1
+                    ? "w-[88px] bg-[#06040A]"
+                    : "w-[12px] bg-[#06040A]/50"
+                )}
+              />
+            ))}
+          </div>
+
         </div>
+
       </div>
-      <div ref={carouselContainerRef} className='flex-1 cards-carousel-container flex flex-col gap-[32px]'>
+      <div className='flex-1 cards-carousel-container flex flex-col gap-[32px]'>
         <div className='card bg-[#F1F1F1] first-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
           <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
             <img src="/assets/images/card-1.jpg" alt="" className=' w-full h-full object-cover' />
@@ -437,69 +484,74 @@ const Fourth = () => {
         You choose one or more improvement programs. Your AI Doctor works in the background every day — helping you feel the changes in ways that matter: steadier energy, calmer mornings, smoother rhythms, and more restorative nights.
       </p>
     </div>
-    <div className='flex gap-[24px]'>
-      <HorizontalCard
-        title="Mornings stop feeling unpredictable"
-        img={"/assets/images/hr-card-1.jpg"}
-        className="hr-card-1"
-      >
-        Instead of waking up already behind, you start the day more steady — clear-headed, less groggy, and without the crashes that used to set the tone.
-      </HorizontalCard>
-      <HorizontalCard
-        title="Sleep becomes restorative"
-        img={"/assets/images/hr-card-2.jpg"}
-        className="hr-card-2"
-      >
-        Your AI Doctor helps you adjust your evenings, nutrition, timing, and recovery.
-        You fall asleep easier, wake up less, and start feeling rested in a way you haven’t in years.
-      </HorizontalCard>
-      <HorizontalCard
-        title="Meals stop derailing your day"
-        img={"/assets/images/hr-card-3.jpg"}
-        className="hr-card-3"
-      >
-        You quickly learn which foods and timings work for your physiology.
-        Post-meal crashes shrink, late-evening glucose stays quieter, and eating stops feeling like guesswork.
-      </HorizontalCard>
-      <HorizontalCard
-        title="Energy feels smoother, not spiky"
-        img={"/assets/images/hr-card-4.jpg"}
-        className="hr-card-4"
-      >
-        Instead of sharp highs and lows, your days develop a smoother rhythm.
-        Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
-      </HorizontalCard>
-      <HorizontalCard
-        title="Mornings stop feeling unpredictable"
-        img={"/assets/images/hr-card-1.jpg"}
-        className="hr-card-5"
-      >
-        Instead of waking up already behind, you start the day more steady — clear-headed, less groggy, and without the crashes that used to set the tone.
-      </HorizontalCard>
-      <HorizontalCard
-        title="Sleep becomes restorative"
-        img={"/assets/images/hr-card-2.jpg"}
-        className="hr-card-6"
-      >
-        Your AI Doctor helps you adjust your evenings, nutrition, timing, and recovery.
-        You fall asleep easier, wake up less, and start feeling rested in a way you haven’t in years.
-      </HorizontalCard>
-      <HorizontalCard
-        title="Meals stop derailing your day"
-        img={"/assets/images/hr-card-3.jpg"}
-        className="hr-card-7"
-      >
-        You quickly learn which foods and timings work for your physiology.
-        Post-meal crashes shrink, late-evening glucose stays quieter, and eating stops feeling like guesswork.
-      </HorizontalCard>
-      <HorizontalCard
-        title="Energy feels smoother, not spiky"
-        img={"/assets/images/hr-card-4.jpg"}
-        className="hr-card-8"
-      >
-        Instead of sharp highs and lows, your days develop a smoother rhythm.
-        Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
-      </HorizontalCard>
+    <div className='flex flex-col gap-[24px]'>
+      <div className='flex gap-[24px]'>
+        <HorizontalCard
+          title="Mornings stop feeling unpredictable"
+          img={"/assets/images/hr-card-1.jpg"}
+          className="hr-card-1"
+        >
+          Instead of waking up already behind, you start the day more steady — clear-headed, less groggy, and without the crashes that used to set the tone.
+        </HorizontalCard>
+        <HorizontalCard
+          title="Sleep becomes restorative"
+          img={"/assets/images/hr-card-2.jpg"}
+          className="hr-card-2"
+        >
+          Your AI Doctor helps you adjust your evenings, nutrition, timing, and recovery.
+          You fall asleep easier, wake up less, and start feeling rested in a way you haven’t in years.
+        </HorizontalCard>
+        <HorizontalCard
+          title="Meals stop derailing your day"
+          img={"/assets/images/hr-card-3.jpg"}
+          className="hr-card-3"
+        >
+          You quickly learn which foods and timings work for your physiology.
+          Post-meal crashes shrink, late-evening glucose stays quieter, and eating stops feeling like guesswork.
+        </HorizontalCard>
+        <HorizontalCard
+          title="Energy feels smoother, not spiky"
+          img={"/assets/images/hr-card-4.jpg"}
+          className="hr-card-4"
+        >
+          Instead of sharp highs and lows, your days develop a smoother rhythm.
+          Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
+        </HorizontalCard>
+        <HorizontalCard
+          title="Mornings stop feeling unpredictable"
+          img={"/assets/images/hr-card-1.jpg"}
+          className="hr-card-5"
+        >
+          Instead of waking up already behind, you start the day more steady — clear-headed, less groggy, and without the crashes that used to set the tone.
+        </HorizontalCard>
+        <HorizontalCard
+          title="Sleep becomes restorative"
+          img={"/assets/images/hr-card-2.jpg"}
+          className="hr-card-6"
+        >
+          Your AI Doctor helps you adjust your evenings, nutrition, timing, and recovery.
+          You fall asleep easier, wake up less, and start feeling rested in a way you haven’t in years.
+        </HorizontalCard>
+        <HorizontalCard
+          title="Meals stop derailing your day"
+          img={"/assets/images/hr-card-3.jpg"}
+          className="hr-card-7"
+        >
+          You quickly learn which foods and timings work for your physiology.
+          Post-meal crashes shrink, late-evening glucose stays quieter, and eating stops feeling like guesswork.
+        </HorizontalCard>
+        <HorizontalCard
+          title="Energy feels smoother, not spiky"
+          img={"/assets/images/hr-card-4.jpg"}
+          className="hr-card-8"
+        >
+          Instead of sharp highs and lows, your days develop a smoother rhythm.
+          Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
+        </HorizontalCard>
+      </div>
+      <div class="bg-[#06040A]/20 w-[200px] h-[4px]">
+        <div class="progress-bar bg-[#06040A] h-full w-fit"></div>
+      </div>
     </div>
   </div>
 }
@@ -521,11 +573,90 @@ const HorizontalCard = ({ img, title, className, children }) => (
 )
 
 const SectionFive = () => {
-  return <div className='bg-[#121212] w-full h-full rounded-t-[54px] overflow-hidden relative z-[5] section-five h-screen'>
-    <img src="/assets/images/section-five.png" className=' w-full h-full object-contain' />
+  return <div className='bg-[#121212] w-full h-screen rounded-t-[54px] overflow-hidden relative z-[5] section-five'>
+    <div className='flex flex-col lg:flex-row items-center h-full'>
+      <div className='flex-1 img-container self-stretch'>
+        <img src="/assets/images/bottom-banner.png" alt="" className='w-full h-full object-cover' />
+      </div>
+      <div className='flex-1 p-[40px] flex flex-col justify-center items-center'>
+        <div className='flex flex-col items-center text-center text-white'>
+          <div className='flex flex-col items-center gap-[6px]'>
+            <p className='flex justify-center items-center w-fit px-[14px] py-[6px] pb-[4px] rounded-[30px] text-white font-bold bg-[#CBCBCB33]'>Limited Spots Available</p>
+            <h2 className='text-[40px] leading-[52px] font-semibold'>Be part of the first cohort.</h2>
+            <p className='text-[20px] font-medium leading-[100%]'>
+              Get full access, all setup support, and early-user advantages.
+            </p>
+          </div>
+
+          <div className='py-[40px] w-full'>
+            <Separator variant='v2' />
+          </div>
+
+          <div className='flex flex-col gap-[16px] items-center'>
+            <button className='bg-white rounded-[12px] px-[16px] py-[10px] text-[18px] text-[#121212] min-w-[320px] font-semibold '>Join first cohort</button>
+            <p className='text-[16px] font-normal'>Takes less than 30 seconds. No commitment required.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {/* <img src="/assets/images/section-five.png" className=' w-full h-full object-contain' /> */}
   </div>
 }
 
+const Footer = () => (
+  <div className='px-[60px]'>
+    <Separator variant='v2' />
+    <footer className='py-[40px] flex flex-col gap-[50px] bg-[#121212]'>
+      <div className='px-[20px] grid grid-auto md:grid-cols-2 lg:grid-cols-3 gap-[40px]'>
+        <div className='flex flex-col gap-[24px]'>
+          <div className='flex gap-[10px] w-[220px]'>
+            <img src={"/assets/images/logo-footer.png"} className='w-full h-full object-cover' alt='Vite logo' />
+          </div>
+          <div className='text-[16px] font-normal tracking-tight'>
+            We offer reliable healthcare insights, expert advice, and digital tools to support your journey towards a healthier lifestyle.
+          </div>
+        </div>
+        <div className='flex flex-col lg:items-center gap-[16px]'>
+          <NavLink to="" className={"font-medium"}>Quick Links</NavLink>
+          <div className='flex flex-col gap-[10px]'>
+            <NavLink to="" className={"text-[14px]"}>Home</NavLink>
+            <NavLink to="" className={"text-[14px]"}>How it WOrks</NavLink>
+            <NavLink to="" className={"text-[14px]"}>Journey</NavLink>
+          </div>
+        </div>
+        <div className='md:col-span-2 lg:col-span-1 flex flex-col gap-[20px] md:text-center md:items-center'>
+          <div className='font-medium tracking-tight'>Trusted by healthcare professionals & patients alike</div>
+          <div className='flex gap-[32px]'>
+            <div className='w-[108px]'>
+              <img src="/assets/images/hippa-compliant.png" alt="" className='w-full h-full object-cover' />
+            </div>
+            <div className='w-[64px]'>
+              <img src="/assets/images/clinically-tested.png" alt="" className='w-full h-full object-cover' />
+            </div>
+            <div className='w-[56px]'>
+              <img src="/assets/images/private-security.png" alt="" className='w-full h-full object-cover' />
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <Separator variant='v2' />
+      <div className='flex flex-col gap-[40px] lg:flex-row w-full justify-between text-[14px]'>
+        <div className='flex flex-wrap flex-col md:flex-row flex-1 gap-[32px]'>
+          <div>Copyright © ChronicGPT 2026</div>
+          <div>Privacy Policy</div>
+          <div>Terms & Conditions</div>
+        </div>
+        <div className='flex '>
+          Designed & Developed by Etherealdesign.io
+        </div>
+      </div>
+    </footer>
+
+  </div>
+)
 
 
 export default App
