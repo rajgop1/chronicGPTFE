@@ -22,7 +22,7 @@ function Header() {
                     <img src="/assets/images/svg/hamburger.svg" alt="menu" className='w-[24px] h-[24px]' />
                 </div>
             </div>
-            <Separator />
+            {/* <Separator /> */}
         </header>
     )
 }
