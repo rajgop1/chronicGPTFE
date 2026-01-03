@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import App from './App.jsx'
 import ReactLenis from 'lenis/react';
 import Safeguards from './components/safeguards/Safeguards.jsx';
-import Journey from './components/Journey/Journey.jsx';
+import Journey from './components/journey/Journey.jsx';
 // import ScrollToTop from "./hooks/ScrollToTop.js"
 
 createRoot(document.getElementById('root')).render(
