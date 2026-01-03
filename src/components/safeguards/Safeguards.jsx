@@ -26,11 +26,16 @@ function Safeguards() {
 
     const cards = gsap.utils.toArray(".card");
 
+    cards.slice(1).forEach((card, index) => {
+      gsap.set(card, {
+        scale:  0.95 - index / 10
+      })
+    })
 
     cards.slice(1).forEach((card, index) => {
       t1.to(card, {
         yPercent: -(index + 1) * 100,
-        scale: 1 - (index + 1) * 0.04,
+        scale: 1 + (index + 1) * 0.02,
         ease: "none",
         boxShadow: "0px -5px 40px rgba(0,0,0,0.2)"
       });
@@ -38,17 +43,18 @@ function Safeguards() {
 
     t1.to(".section-two", {
       height: 0,
-      autoAlpha: 0
+      autoAlpha: 0,
+      delay: 0.25
     })
 
-    
+
     t1.add("fourthAnim")
-    
+
     t1.to(".build-for-trust", {
       height: 0,
-      autoAlpha: 0
+      autoAlpha: 0,
     }, "fourthAnim")
-    
+
 
     t1.add("fifthAnim")
 
