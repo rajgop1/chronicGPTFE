@@ -15,6 +15,9 @@ import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FadeInText from './components/common/FadeInText'
 import { cn } from './helpers/utils'
+import Footer from './components/common/Footer/footer'
+import Header from './components/common/Header/header'
+import JoinCohort from './components/common/JoinCohort/JoinCohort'
 
 gsap.registerPlugin(useGSAP)
 
@@ -275,36 +278,19 @@ function App() {
 
   }, { scope: container });
 
+
   return (
 
     <div className='max-w-[1512px] mx-auto' ref={container}>
       {/* Nav */}
-      <header className='header fixed top-0 z-50 left-0 right-0 '>
-        <div className='flex justify-between items-center px-[24px] py-[20px] lg:px-[60px] lg:py-[32px] h-[100px] '>
-          <div>
-            <img src={"/assets/images/logo.png"} className='w-[30px] h-[24px] lg:h-[40px] lg:w-[50px]' alt='Vite logo' />
-          </div>
-
-          <div className='hidden lg:flex items-center gap-[32px]'>
-            <NavLink to='/' className={({ isActive }) => isActive ? 'relative active-link font-bold ' : ''}>Home</NavLink>
-            <NavLink to='/safeguards' className={({ isActive }) => isActive ? 'relative active-link font-bold' : ''}>Safeguards</NavLink>
-            <NavLink to='/journey' className={({ isActive }) => isActive ? 'relative active-link font-bold' : ''}>Journey</NavLink>
-            <NavLink to='/how-it-works' className={({ isActive }) => isActive ? 'relative active-link font-bold' : ''}>How it Works</NavLink>
-          </div>
-
-          <div className='lg:hidden'>
-            <img src="/assets/images/svg/hamburger.svg" alt="menu" className='w-[24px] h-[24px]' />
-          </div>
-        </div>
-        {/* <Separator /> */}
-      </header>
+      <Header/>
       <Home />
       <Second />
       {/* new section which will wrap above the home */}
       <Third currentCard={currentCard} />
       <Fourth />
 
-      <SectionFive />
+      <JoinCohort />
 
       <div className='footer'>
 
@@ -571,92 +557,5 @@ const HorizontalCard = ({ img, title, className, children }) => (
     </div>
   </div>
 )
-
-const SectionFive = () => {
-  return <div className='bg-[#121212] w-full h-screen rounded-t-[54px] overflow-hidden relative z-[5] section-five'>
-    <div className='flex flex-col lg:flex-row items-center h-full'>
-      <div className='flex-1 img-container self-stretch'>
-        <img src="/assets/images/bottom-banner.png" alt="" className='w-full h-full object-cover' />
-      </div>
-      <div className='flex-1 p-[40px] flex flex-col justify-center items-center'>
-        <div className='flex flex-col items-center text-center text-white'>
-          <div className='flex flex-col items-center gap-[6px]'>
-            <p className='flex justify-center items-center w-fit px-[14px] py-[6px] pb-[4px] rounded-[30px] text-white font-bold bg-[#CBCBCB33]'>Limited Spots Available</p>
-            <h2 className='text-[40px] leading-[52px] font-semibold'>Be part of the first cohort.</h2>
-            <p className='text-[20px] font-medium leading-[100%]'>
-              Get full access, all setup support, and early-user advantages.
-            </p>
-          </div>
-
-          <div className='py-[40px] w-full'>
-            <Separator variant='v2' />
-          </div>
-
-          <div className='flex flex-col gap-[16px] items-center'>
-            <button className='bg-white rounded-[12px] px-[16px] py-[10px] text-[18px] text-[#121212] min-w-[320px] font-semibold '>Join first cohort</button>
-            <p className='text-[16px] font-normal'>Takes less than 30 seconds. No commitment required.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    {/* <img src="/assets/images/section-five.png" className=' w-full h-full object-contain' /> */}
-  </div>
-}
-
-const Footer = () => (
-  <div className='px-[60px]'>
-    <Separator variant='v2' />
-    <footer className='py-[40px] flex flex-col gap-[50px] bg-[#121212]'>
-      <div className='px-[20px] grid grid-auto md:grid-cols-2 lg:grid-cols-3 gap-[40px]'>
-        <div className='flex flex-col gap-[24px]'>
-          <div className='flex gap-[10px] w-[220px]'>
-            <img src={"/assets/images/logo-footer.png"} className='w-full h-full object-cover' alt='Vite logo' />
-          </div>
-          <div className='text-[16px] font-normal tracking-tight'>
-            We offer reliable healthcare insights, expert advice, and digital tools to support your journey towards a healthier lifestyle.
-          </div>
-        </div>
-        <div className='flex flex-col lg:items-center gap-[16px]'>
-          <NavLink to="" className={"font-medium"}>Quick Links</NavLink>
-          <div className='flex flex-col gap-[10px]'>
-            <NavLink to="" className={"text-[14px]"}>Home</NavLink>
-            <NavLink to="" className={"text-[14px]"}>How it WOrks</NavLink>
-            <NavLink to="" className={"text-[14px]"}>Journey</NavLink>
-          </div>
-        </div>
-        <div className='md:col-span-2 lg:col-span-1 flex flex-col gap-[20px] md:text-center md:items-center'>
-          <div className='font-medium tracking-tight'>Trusted by healthcare professionals & patients alike</div>
-          <div className='flex gap-[32px]'>
-            <div className='w-[108px]'>
-              <img src="/assets/images/hippa-compliant.png" alt="" className='w-full h-full object-cover' />
-            </div>
-            <div className='w-[64px]'>
-              <img src="/assets/images/clinically-tested.png" alt="" className='w-full h-full object-cover' />
-            </div>
-            <div className='w-[56px]'>
-              <img src="/assets/images/private-security.png" alt="" className='w-full h-full object-cover' />
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-      <Separator variant='v2' />
-      <div className='flex flex-col gap-[40px] lg:flex-row w-full justify-between text-[14px]'>
-        <div className='flex flex-wrap flex-col md:flex-row flex-1 gap-[32px]'>
-          <div>Copyright © ChronicGPT 2026</div>
-          <div>Privacy Policy</div>
-          <div>Terms & Conditions</div>
-        </div>
-        <div className='flex '>
-          Designed & Developed by Etherealdesign.io
-        </div>
-      </div>
-    </footer>
-
-  </div>
-)
-
 
 export default App

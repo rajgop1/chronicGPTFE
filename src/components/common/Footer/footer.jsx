@@ -1,96 +1,58 @@
-import "./footer.css";
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaPaperPlane } from "react-icons/fa";
+import { NavLink } from "react-router";
+import Separator from "../Separator";
 
-function Footer() {
-    return (
-        <footer className="footer h-screen">
-            {/* TOP */}
-            <div className="footer-top">
-                {/* LEFT */}
-                <div className="footer-brand">
-                    <div className="footer-logo">
-                        <img src={"/assets/images/logo.png"} alt="ChronicGPT" />
-                        <div>
-                            <h3>ChronicGPT Inc <small><br />AI Doctors for Chronic Care</small></h3>
-                        </div>
-                    </div>
-
-                    <p>
-                        We offer reliable healthcare insights, expert advice, and digital
-                        tools to support your journey towards a healthier lifestyle.
-                    </p>
-
-                    <div className="footer-talk">
-                        <h4>Talk to me!</h4>
-                        <div className="footer-input">
-                            <input type="email" placeholder="Enter E-mail ID" />
-                            <span className="send-icon"><FaPaperPlane /></span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* CENTER */}
-                <div className="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/trust">How it Works</a></li>
-                        <li><a href="/journey">Journey</a></li>
-                    </ul>
-
-                </div>
-
-                {/* RIGHT */}
-                <div className="footer-trust">
-                    <h4>Trusted by healthcare professionals & patients alike</h4>
-
-                    <div className="trust-badge">
-                        <img src={"/assets/images/h1.png"} className="img100 img10" />
-                        <img src={"/assets/images/h2.png"} className="img100 img20" />
-                        <img src={"/assets/images/h3.png"} className="img100 img30" />
-                    </div>
-
-                    <div className="footer-social">
-                        <h4>Connect with us</h4>
-
-                        <div className="social-icons">
-                            <a href="https://facebook.com" aria-label="Facebook">
-                                <FaFacebookF />
-                            </a>
-                            <a href="https://twitter.com" aria-label="Twitter">
-                                <FaTwitter />
-                            </a>
-                            <a href="https://linkedin.com" aria-label="LinkedIn">
-                                <FaLinkedinIn />
-                            </a>
-                            <a href="https://instagram.com" aria-label="Instagram">
-                                <FaInstagram />
-                            </a>
-                        </div>
-                    </div>
-                </div>
+const Footer = () => (
+  <div className='px-[60px]'>
+    <Separator variant='v2' />
+    <footer className='py-[40px] flex flex-col gap-[50px] bg-[#121212]'>
+      <div className='px-[20px] grid grid-auto md:grid-cols-2 lg:grid-cols-3 gap-[40px]'>
+        <div className='flex flex-col gap-[24px]'>
+          <div className='flex gap-[10px] w-[220px]'>
+            <img src={"/assets/images/logo-footer.png"} className='w-full h-full object-cover' alt='Vite logo' />
+          </div>
+          <div className='text-[16px] font-normal tracking-tight'>
+            We offer reliable healthcare insights, expert advice, and digital tools to support your journey towards a healthier lifestyle.
+          </div>
+        </div>
+        <div className='flex flex-col lg:items-center gap-[16px]'>
+          <NavLink to="" className={"font-medium"}>Quick Links</NavLink>
+          <div className='flex flex-col gap-[10px]'>
+            <NavLink to="" className={"text-[14px]"}>Home</NavLink>
+            <NavLink to="" className={"text-[14px]"}>How it WOrks</NavLink>
+            <NavLink to="" className={"text-[14px]"}>Journey</NavLink>
+          </div>
+        </div>
+        <div className='md:col-span-2 lg:col-span-1 flex flex-col gap-[20px] md:text-center md:items-center'>
+          <div className='font-medium tracking-tight'>Trusted by healthcare professionals & patients alike</div>
+          <div className='flex gap-[32px]'>
+            <div className='w-[108px]'>
+              <img src="/assets/images/hippa-compliant.png" alt="" className='w-full h-full object-cover' />
             </div>
-
-            {/* DIVIDER */}
-            <div className="footer-divider" />
-
-            {/* BOTTOM */}
-            <div className="footer-bottom">
-
-                <p >Copyright © ChronicGPT 2025</p>
-                <p >Privacy Policy</p>
-                <p >Terms & Conditions</p>
-                {/* <div className="footer-bottom-links">
-          <span>Privacy Policy</span>
-          <span>Terms & Conditions</span>
-        </div> */}
-
-                <p className="footer-credit">
-                    Designed & Developed by Etheraldesign.io
-                </p>
+            <div className='w-[64px]'>
+              <img src="/assets/images/clinically-tested.png" alt="" className='w-full h-full object-cover' />
             </div>
-        </footer>
-    );
-}
+            <div className='w-[56px]'>
+              <img src="/assets/images/private-security.png" alt="" className='w-full h-full object-cover' />
+            </div>
+          </div>
 
-export default Footer;
+        </div>
+
+      </div>
+      <Separator variant='v2' />
+      <div className='flex flex-col gap-[40px] lg:flex-row w-full justify-between text-[14px]'>
+        <div className='flex flex-wrap flex-col md:flex-row flex-1 gap-[32px]'>
+          <div>Copyright © ChronicGPT 2026</div>
+          <div>Privacy Policy</div>
+          <div>Terms & Conditions</div>
+        </div>
+        <div className='flex '>
+          Designed & Developed by Etherealdesign.io
+        </div>
+      </div>
+    </footer>
+
+  </div>
+)
+
+export default Footer
