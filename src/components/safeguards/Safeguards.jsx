@@ -17,7 +17,7 @@ function Safeguards() {
       scrollTrigger: {
         trigger: container.current,
         start: "top top",
-        end: () => "+=400%",
+        end: "max",
         pin: true,
         scrub: true,
       }
@@ -41,18 +41,18 @@ function Safeguards() {
       autoAlpha: 0
     })
 
-    
+
     t1.add("fourthAnim")
-    
+
     t1.to(".build-for-trust", {
       height: 0,
       autoAlpha: 0
     }, "fourthAnim")
-    
+
 
     t1.add("fifthAnim")
 
-    t1.to(".section-five", {
+    t1.to(".join-cohort", {
       height: 0,
       autoAlpha: 0,
       ease: "none"
@@ -66,7 +66,9 @@ function Safeguards() {
   return (
     <div className='max-w-[1512px] mx-auto' ref={container}>
       <Header />
-      <Second />
+      <HeaderBackground>
+        <Third/>
+      </HeaderBackground>
       <BuildForTrust />
       <JoinCohort />
       <Footer />
@@ -74,20 +76,19 @@ function Safeguards() {
   )
 }
 
-const Second = () => {
+export const HeaderBackground = ({children}) => {
   return <div className='z-[2] section-two relative h-screen overflow-hidden'>
     <div className='flex flex-col justify-end '>
       <div className="relative h-[240px] overflow-hidden">
         <img
           src="/assets/images/safeguards/safeguard-bg.jpg"
           alt=""
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-[0%_25%]"
         />
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent" />
       </div>
       <div>
-        <Third />
+        {children}
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router';
 import { cn } from '../../../helpers/utils';
+import Separator from '../Separator';
 
 function Header() {
     return (
@@ -21,7 +22,7 @@ function Header() {
                     <img src="/assets/images/svg/hamburger.svg" alt="menu" className='w-[24px] h-[24px]' />
                 </div>
             </div>
-            {/* <Separator /> */}
+            <Separator />
         </header>
     )
 }

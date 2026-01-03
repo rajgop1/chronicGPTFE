@@ -27,263 +27,289 @@ function App() {
   const container = useRef();
   const [currentCard, setCurrentCard] = useState(1)
 
-
+  
+  
   useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger)
 
-    const t1 = gsap.timeline({
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top top",
-        end: () => "+=600%",
-        pin: true,
-        scrub: true,
-      }
-    })
+    gsap.registerPlugin(ScrollTrigger);
+    
+    const t1 = gsap.timeline();
+    // /* ================== TIMELINE ================== */
+    // const t1 = gsap.timeline({
+    //   scrollTrigger: {
+    //     trigger: container.current,
+    //     start: "top top",
+    //     end: () => "+=700%",
+    //     pin: true,
+    //     scrub: true,
+    //     invalidateOnRefresh: true,
+    //   },
+    // });
 
+    /* ================== DURATIONS ================== */
+    // First / Second section
+    const FIRST_ANIM_DURATION = 0.25;
+    const SECOND_ANIM_DURATION = 0.4;
+    const FADE_DELAY = 0.05;
 
-    t1.add("firstAnim")
+    // Cards
+    const CARD_MOVE_DURATION = 0.25;
+    const CARD_SLIDE_STEP_DURATION = 0.25;
 
+    // Sections
+    const THIRD_SECTION_FADE_DURATION = 0.3;
+    const SECTION_FOUR_SLIDE_DURATION = 0.3;
+    const SECTION_FIVE_DURATION = 0.3;
+    const SECTION_SIX_DURATION = 0.6;
+
+    /* ================== FIRST ANIM ================== */
+    t1.addLabel("firstAnim");
 
     t1.to(".home-section", {
       height: 0,
       autoAlpha: 0,
       paddingTop: 0,
       paddingBottom: 0,
+      duration: FIRST_ANIM_DURATION,
       ease: "none",
-    }, "firstAnim")
+    }, "firstAnim");
 
-    t1.fromTo(".second-section .hero-img", {
-      autoAlpha: 0.85,
-      ease: "none"
-    },
+    t1.fromTo(
+      ".second-section .hero-img",
+      { autoAlpha: 0.85 },
+      { autoAlpha: 1, duration: FIRST_ANIM_DURATION, ease: "none" },
+      "firstAnim"
+    );
+
+    t1.fromTo(
+      ".second-section-content",
+      { autoAlpha: 0 },
       {
         autoAlpha: 1,
-        ease: "none"
-      }, "firstAnim")
+        duration: FIRST_ANIM_DURATION - FADE_DELAY,
+        delay: FADE_DELAY,
+        ease: "none",
+      },
+      "firstAnim"
+    );
 
-    t1.fromTo(".second-section-content", {
-      autoAlpha: 0,
-      ease: "none"
-    }, {
-      autoAlpha: 1,
-      delay: 0.25,
-      ease: "none"
-    }, "firstAnim")
+    t1.fromTo(
+      ".header",
+      { background: "#12121200" },
+      {
+        background: "transparent",
+        duration: FIRST_ANIM_DURATION - FADE_DELAY,
+        delay: FADE_DELAY,
+        ease: "none",
+      },
+      "firstAnim"
+    );
 
-    t1.fromTo(".header", {
-      background: "#12121200",
-      ease: "none"
-    }, {
-      delay: 0.25,
-      background: "transparent",
-      ease: "none"
-    }, "firstAnim")
-
-
-    t1.add("secondAnim")
-
-    t1.to(".second-section", {
-      height: 200,
-      paddingTop: 0,
-      paddingBottom: 0,
-      ease: "none"
-    }, "secondAnim")
-
-    t1.to(".hero-img", {
-      autoAlpha: 0.75,
-      height: 200,
-      ease: "none"
-    }, "secondAnim")
-
-    t1.to(".second-section", {
-      autoAlpha: 0.5,
-      ease: "none"
-    }, "secondAnim")
+    /* ================== SECOND ANIM ================== */
+    t1.addLabel("secondAnim", ">+=0.15");
 
     t1.to(".second-section-content", {
+      height: "0",
       autoAlpha: 0,
-    }, "secondAnim")
+      duration: SECOND_ANIM_DURATION / 2,
+      ease: "none",
+      padding: 0,
+    }, "secondAnim");
 
-    /* ---------- CARD 1 ---------- */
-    t1.add("card1")
-    t1.call(() => setCurrentCard(1), null, "card1")
+    t1.to(".second-section", {
+      height: "20vh",
+      duration: SECOND_ANIM_DURATION,
+      ease: "none",
+      padding: 0
+    }, "secondAnim");
+
+
+    /* ================== CARD 1 ================== */
+    t1.addLabel("card1", ">+=0.25");
+
+    t1.call(() => setCurrentCard(1), null, "card1");
 
     t1.to(".second-card", {
       y: "-=95%",
+      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+      duration: CARD_MOVE_DURATION,
       ease: "none",
-      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)"
-    }, "card1")
+    }, "card1");
 
-    /* ---------- CARD 2 ---------- */
-    t1.add("card2")
+    /* ================== CARD 2 ================== */
+    t1.addLabel("card2", ">");
+
+    t1.call(() => setCurrentCard(2), null, "card2");
 
     t1.to(".third-card", {
       y: "-=95%",
+      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+      duration: CARD_MOVE_DURATION,
       ease: "none",
-      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)"
-    }, "card1")
+    }, "card2");
 
-    t1.call(() => setCurrentCard(2), null, "card2")
+    /* ================== CARD 3 ================== */
+    t1.addLabel("card3", ">");
 
-    /* ---------- CARD 3 ---------- */
-    t1.add("card3")
 
     t1.to(".third-card", {
       y: "-=100%",
+      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+      duration: CARD_MOVE_DURATION,
       ease: "none",
-      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)"
-    }, "card3")
+    }, "card3");
 
-    t1.call(() => setCurrentCard(3), null, "card3+0.1")
+    t1.call(() => setCurrentCard(3), null, "card3+0.01");
 
-    // const cards = ".card"
-
-
-
-
-    // t1.add("cardsAnim1")
-
-    // t1.to(cards, {
-    //   y: "-=100%",
-    //   ease: "none"
-    // })
-
-    // t1.to(cards, {
-    //   y: "-=100%",
-    //   ease: "none"
-    // })
-
-    // t1.add("thirdAnim")
-
+    /* ================== THIRD → FOURTH ================== */
+    t1.addLabel("thirdAnim", ">+=0.25");
 
     t1.to(".third-section", {
       autoAlpha: 0.8,
-      delay: 0.25
-    }, "thirdAnim")
+      duration: THIRD_SECTION_FADE_DURATION,
+      ease: "none",
+    }, "thirdAnim");
 
+    t1.to(".section-four", {
+      y: "-99%",
+      boxShadow: "0px -20px 40px rgba(0,0,0,0.3)",
+      duration: SECTION_FOUR_SLIDE_DURATION,
+      ease: "none",
+    }, "thirdAnim");
 
-    t1.to(
-      ".section-four",
-      {
-        y: "-99%",
-        boxShadow: "0px -20px 40px rgba(0,0,0,0.3)", // final shadow
-        ease: "none"
-      },
-      "thirdAnim"
-    )
+    /* ================== CARD SLIDER ================== */
+    const wrapper = ".hr-card";
+    const steps = 6;
 
-    t1.addLabel("cardsStart")
-
-    const wrapper = ".hr-card"
-    const steps = 6
+    t1.addLabel("cardsStart", ">+=0.25");
 
     for (let i = 0; i < steps - 1; i++) {
       t1.to(wrapper, {
         x: "-=100%",
+        duration: CARD_SLIDE_STEP_DURATION,
         ease: "none",
-
+        delay: 0.1,
         onUpdate: () => {
-          const start = t1.labels.cardsStart
-          const end = t1.labels.cardsEnd
-          const duration = end - start
+          const start = t1.labels.cardsStart;
+          const end = t1.labels.cardsEnd;
 
-          const current = gsap.utils.clamp(
+          const progress = gsap.utils.clamp(
             0,
-            duration,
-            t1.time() - start
-          )
-
-          const progress = current / duration
+            1,
+            (t1.time() - start) / (end - start)
+          );
 
           gsap.set(".progress-bar", {
             width: `${progress * 100}%`,
-          })
+          });
         },
-      })
+      });
     }
 
-    t1.addLabel("cardsEnd")
+    t1.addLabel("cardsEnd", ">");
 
-
-    t1.add("fourthAnim")
+    t1.addLabel("inBetweenAnim", ">")
 
     t1.to(
-      ".section-four",
+      ".second-section, .second-section-content, .hero-img",
       {
-        y: "0%",
-        boxShadow: "none"
+        height: 0,
+        autoAlpha: 0,
+        padding: 0,
+        duration: SECTION_FIVE_DURATION,
+        ease: "none",
       },
-      "fourthAnim"
-    )
+      "inBetweenAnim"
+    );
 
+    // t1.fromTo(".section-four", {
+    //   y: "-99%"
+    // }, {
+    //   y: "-80%",
+    //   boxShadow: "none",
+    //   duration: SECTION_FIVE_DURATION,
+    //   ease: "none",
+    // }, "inBetweenAnim");
+
+    t1.fromTo(".join-cohort", {
+      y: "-100%"
+    }, {
+      y: "0%",
+      duration: SECTION_FIVE_DURATION + 0.1,
+      ease: "none",
+    }, "inBetweenAnim");
+
+
+    /* ================== FOURTH EXIT ================== */
+    t1.addLabel("fourthAnim", ">");
+
+    t1.to(".section-four", {
+      y: "0%",
+      boxShadow: "none",
+      duration: SECTION_FIVE_DURATION,
+      ease: "none",
+    }, "fourthAnim");
 
     t1.to(".third-section", {
       height: 0,
       autoAlpha: 0,
       padding: 0,
+      duration: SECTION_FIVE_DURATION,
       ease: "none",
     }, "fourthAnim")
-
-
 
     t1.to(".section-four", {
       height: 0,
-      padding: 0,
-      delay: 0.5,
-      autoAlpha: 0,
-      ease: "none"
-    }, "fourthAnim")
-
-    t1.to(".second-section", {
-      height: 0,
-      autoAlpha: 0,
+      boxShadow: "none",
+      duration: SECTION_FIVE_DURATION,
       ease: "none",
-      delay: -0.25
-    }, "fourthAnim")
-
-    t1.to(".second-section-content", {
-      height: 0,
-      autoAlpha: 0,
       padding: 0,
+    }, "fourthAnim")
+
+    t1.fromTo(
+      ".header",
+      { background: "transparent" },
+      {
+        background: "#121212ef",
+        duration: SECTION_FIVE_DURATION,
+        ease: "none",
+      },
+      "fourthAnim"
+    );
+
+    /* ================== FIFTH ANIM ================== */
+    t1.addLabel("fifthAnim", ">+=0.1");
+
+    t1.to(".join-cohort", {
+      height: 0,
+      autoAlpha: 0,
+      duration: SECTION_SIX_DURATION,
       ease: "none",
-      delay: -0.25
-    }, "fourthAnim")
+    }, "fifthAnim");
 
-    t1.to(".hero-img", {
-      height: 0,
-      autoAlpha: 0,
-      delay: -0.25,
-      ease: "none"
-    }, "fourthAnim")
+    console.log("t1", t1)
 
-    t1.fromTo(".header", {
-      background: "transparent",
-      ease: "none"
-    }, {
-      delay: -0.25,
-      background: "#121212ef",
-      ease: "none"
-    }, "fourthAnim")
+    const duration = Object.values(t1.labels).reduce((acc,num)=>acc+num)
 
-    t1.add("fifthAnim")
-
-    t1.to(".section-five", {
-      height: 0,
-      autoAlpha: 0,
-      ease: "none"
-    }, "fifthAnim")
-
-
+    ScrollTrigger.create({
+      animation: t1,
+      trigger: container.current,
+      start: "top top",
+      end: "max" ,
+      pin: true,
+      scrub: true,
+      invalidateOnRefresh: true,
+    });
 
   }, { scope: container });
+
 
 
   return (
 
     <div className='max-w-[1512px] mx-auto' ref={container}>
       {/* Nav */}
-      <Header/>
+      <Header />
       <Home />
       <Second />
       {/* new section which will wrap above the home */}
@@ -302,7 +328,7 @@ function App() {
 }
 
 const Home = () => {
-  return <div className='home-section h-screen py-[68px] px-[42px] flex flex-col justify-center'  >
+  return <div className='home-section h-screen py-[40px] xl:py-[68px] px-[42px] flex flex-col justify-center'  >
     {/* Home */}
     <div className='home flex flex-col lg:flex-row items-center lg:px-[40px] gap-[100px] lg:gap-[0px]'>
       <div className='flex-1'>
@@ -320,7 +346,7 @@ const Home = () => {
         </div>
       </div>
       <div className='flex-1'>
-        <div className='relative dr-img-container max-w-[304px] lg:max-w-[100%]'>
+        <div className='relative dr-img-container max-w-[304px] lg:max-w-[594px]'>
           <img src="/assets/images/dr-sara-mohan.png" alt="" className='w-full h-full object-cover' />
           <div className='absolute top-[50%] -translate-y-[200%] lg:right-0 -right-[24px]'>
             <div>
@@ -345,21 +371,32 @@ const Home = () => {
 }
 
 const Second = () => {
-  return <div className='z-[2] second-section relative h-screen'>
-    <div className='flex flex-col justify-end '>
-      <div className='w-full flex-1 hero-img'>
-        <img src="/assets/images/doctors-desktop-bg.png" alt="" className='w-full h-full object-cover' />
-      </div>
-      {/* <img src="/assets/images/doctors-mobile-bg.png" alt="" className='block lg:hidden hero-img w-full h-full object-cover' /> */}
+  return <div className='z-[2] second-section relative h-screen flex flex-col flex flex-col'>
+    <div
+      className="
 
-      <div className='relative z-1 second-section-content text-center py-[28px] px-[42px] lg:px-[100px]'>
-        <h2 className='text-[24px] lg:text-[36px] font-extrabold mb-[24px]'>
-          Your care with human MD and AI Doctor
-        </h2>
-        <p className='text-[16px] lg:text-[20px] max-w-[800px] lg:max-w-[1360px] mx-auto'>
-          If you are living with diabetes, hypertension, or weight struggles, you know how unpredictable the numbers can feel — progress one week, setbacks the next, and no clear sense of what actually helps. ChronicGPT changes that. Your human doctor sets your goals, and your personal AI Doctor learns your body in real time — watching your sleep, meals, glucose, activity, and medications to guide you with simple, clinical-grade decisions every day. It turns confusion into clarity, patterns into progress, and setbacks into signals you can finally understand.
-        </p>
-      </div>
+        relative
+        flex-1
+        w-full
+        hero-img
+        shadow-[0_0_60px_20px_rgba(18,18,18,0.6)_inset]
+        bg-[url('/assets/images/doctors-desktop-bg.png')]
+        bg-cover
+        bg-center
+        bg-no-repeat
+      "
+    >
+      {/* Optional gradient overlay */}
+      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" /> */}
+    </div>
+
+    <div className='bg-[#121212] flex flex-col justify-center relative z-1 second-section-content text-center py-[28px] px-[42px] lg:px-[100px]'>
+      <h2 className='text-[24px] lg:text-[36px] font-extrabold mb-[24px]'>
+        Your care with human MD and AI Doctor
+      </h2>
+      <p className='text-[16px] lg:text-[20px] max-w-[800px] lg:max-w-[1360px] mx-auto'>
+        If you are living with diabetes, hypertension, or weight struggles, you know how unpredictable the numbers can feel — progress one week, setbacks the next, and no clear sense of what actually helps. ChronicGPT changes that. Your human doctor sets your goals, and your personal AI Doctor learns your body in real time — watching your sleep, meals, glucose, activity, and medications to guide you with simple, clinical-grade decisions every day. It turns confusion into clarity, patterns into progress, and setbacks into signals you can finally understand.
+      </p>
     </div>
   </div>
 }
@@ -398,7 +435,7 @@ const Third = ({ currentCard }) => {
 
       </div>
       <div className='flex-1 cards-carousel-container flex flex-col gap-[32px]'>
-        <div className='card bg-[#F1F1F1] first-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
+        <div className='card bg-[#F1F1F1] first-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[20px] xl:gap-[32px]'>
           <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
             <img src="/assets/images/card-1.jpg" alt="" className=' w-full h-full object-cover' />
           </div>
