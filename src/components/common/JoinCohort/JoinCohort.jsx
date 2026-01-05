@@ -5,7 +5,7 @@ function JoinCohort() {
     return (
         <div className='bg-[#121212] w-full h-screen rounded-t-[54px] overflow-hidden relative z-[5] join-cohort'>
             <div className='flex flex-col lg:flex-row items-center h-full'>
-                <div className='flex-1 img-container self-stretch'>
+                <div className='pt-[100px] flex-1 img-container self-stretch'>
                     <img src="/assets/images/bottom-banner.png" alt="" className='w-full h-full object-cover' />
                 </div>
                 <div className='flex-1 p-[40px] flex flex-col justify-center items-center'>
@@ -14,7 +14,7 @@ function JoinCohort() {
                             <p className='flex justify-center items-center w-fit px-[14px] py-[6px] pb-[4px] rounded-[30px] text-white font-bold bg-[#CBCBCB33]'>Limited Spots Available</p>
                             <h2 className='text-[40px] leading-[52px] font-semibold'>Be part of the first cohort.</h2>
                             <p className='text-[20px] font-medium leading-[100%]'>
-                                Get full access, all setup support, and early-user advantages.
+                                Get full access, all setup support, and early-user <br/> advantages.
                             </p>
                         </div>
 

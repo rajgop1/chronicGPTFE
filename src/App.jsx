@@ -18,6 +18,7 @@ import { cn } from './helpers/utils'
 import Footer from './components/common/Footer/footer'
 import Header from './components/common/Header/header'
 import JoinCohort from './components/common/JoinCohort/JoinCohort'
+import ResponsiveSection from './components/common/ResponsiveSection'
 
 gsap.registerPlugin(useGSAP)
 
@@ -27,12 +28,12 @@ function App() {
   const container = useRef();
   const [currentCard, setCurrentCard] = useState(1)
 
-  
-  
+
+
   useGSAP(() => {
 
     gsap.registerPlugin(ScrollTrigger);
-    
+
     const t1 = gsap.timeline();
     // /* ================== TIMELINE ================== */
     // const t1 = gsap.timeline({
@@ -76,7 +77,7 @@ function App() {
 
     t1.fromTo(
       ".second-section .hero-img",
-      { autoAlpha: 0.85 },
+      { autoAlpha: 0.85, },
       { autoAlpha: 1, duration: FIRST_ANIM_DURATION, ease: "none" },
       "firstAnim"
     );
@@ -123,55 +124,99 @@ function App() {
       padding: 0
     }, "secondAnim");
 
+    t1.fromTo(
+      ".second-section .hero-img",
+      { backgroundPosition: "50% 100%", },
+      { backgroundPosition: "50% 50%", duration: FIRST_ANIM_DURATION, ease: "none" },
+      "secondAnim"
+    );
 
-    /* ================== CARD 1 ================== */
-    t1.addLabel("card1", ">+=0.25");
 
-    t1.call(() => setCurrentCard(1), null, "card1");
+    // Set initial box shadow
+    t1.set(".card", {
+      boxShadow: "0px -5px 40px #12121233",
+    });
 
-    t1.to(".second-card", {
-      y: "-=95%",
-      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+    // First animation label
+    t1.addLabel("cardAnim1", ">+=0.2");
+
+    // Update current card
+    t1.call(() => setCurrentCard(1), null);
+
+    // Move cards: full height + 32px gap
+    t1.to(".card", {
+      yPercent: -100, // move by full card height
+      y: -32,         // add the 32px gap
       duration: CARD_MOVE_DURATION,
       ease: "none",
-    }, "card1");
+    }, "cardAnim1");
 
-    /* ================== CARD 2 ================== */
-    t1.addLabel("card2", ">");
+    // Second animation label
+    t1.addLabel("cardAnim2", ">+=0.2");
 
-    t1.call(() => setCurrentCard(2), null, "card2");
+    // Update current card again
+    t1.call(() => setCurrentCard(2), null, "cardAnim2");
 
-    t1.to(".third-card", {
-      y: "-=95%",
-      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+    // Move cards again: next card height + gap
+    t1.to(".card", {
+      yPercent: -200, // moved 2 card heights total
+      y: -64,         // 32px per card gap × 2
       duration: CARD_MOVE_DURATION,
       ease: "none",
-    }, "card2");
+    }, "cardAnim2");
 
-    /* ================== CARD 3 ================== */
-    t1.addLabel("card3", ">");
+    // Update current card
+    t1.call(() => setCurrentCard(3), null, "cardAnim2");
 
 
-    t1.to(".third-card", {
-      y: "-=100%",
-      boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
-      duration: CARD_MOVE_DURATION,
-      ease: "none",
-    }, "card3");
+    // /* ================== CARD 1 ================== */
+    // t1.addLabel("card1", ">+=0.25");
 
-    t1.call(() => setCurrentCard(3), null, "card3+0.01");
+    // t1.call(() => setCurrentCard(1), null, "card1");
+
+    // t1.to(".second-card", {
+    //   y: "-=95%",
+    //   boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+    //   duration: CARD_MOVE_DURATION,
+    //   ease: "none",
+    // }, "card1");
+
+    // /* ================== CARD 2 ================== */
+    // t1.addLabel("card2", ">");
+
+    // t1.call(() => setCurrentCard(2), null, "card2");
+
+    // t1.to(".third-card", {
+    //   y: "-=95%",
+    //   boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+    //   duration: CARD_MOVE_DURATION,
+    //   ease: "none",
+    // }, "card2");
+
+    // /* ================== CARD 3 ================== */
+    // t1.addLabel("card3", ">");
+
+
+    // t1.to(".third-card", {
+    //   y: "-=100%",
+    //   boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+    //   duration: CARD_MOVE_DURATION,
+    //   ease: "none",
+    // }, "card3");
+
+    // t1.call(() => setCurrentCard(3), null, "card3+0.01");
 
     /* ================== THIRD → FOURTH ================== */
-    t1.addLabel("thirdAnim", ">+=0.25");
+    t1.addLabel("thirdAnim", ">+=0.35");
 
-    t1.to(".third-section", {
-      autoAlpha: 0.8,
-      duration: THIRD_SECTION_FADE_DURATION,
-      ease: "none",
-    }, "thirdAnim");
+    // t1.to(".third-section", {
+    //   autoAlpha: 0.8,
+    //   duration: THIRD_SECTION_FADE_DURATION,
+    //   ease: "none",
+    // }, "thirdAnim");
 
     t1.to(".section-four", {
-      y: "-99%",
+      y: "-=100%",
       boxShadow: "0px -20px 40px rgba(0,0,0,0.3)",
       duration: SECTION_FOUR_SLIDE_DURATION,
       ease: "none",
@@ -185,7 +230,8 @@ function App() {
 
     for (let i = 0; i < steps - 1; i++) {
       t1.to(wrapper, {
-        x: "-=100%",
+        xPercent: (i + 1) * -100,
+        x: -24 * (i + 1),
         duration: CARD_SLIDE_STEP_DURATION,
         ease: "none",
         delay: 0.1,
@@ -289,13 +335,13 @@ function App() {
 
     console.log("t1", t1)
 
-    const duration = Object.values(t1.labels).reduce((acc,num)=>acc+num)
+    const duration = Object.values(t1.labels).reduce((acc, num) => acc + num)
 
     ScrollTrigger.create({
       animation: t1,
       trigger: container.current,
       start: "top top",
-      end: "max" ,
+      end: "max",
       pin: true,
       scrub: true,
       invalidateOnRefresh: true,
@@ -315,98 +361,136 @@ function App() {
       {/* new section which will wrap above the home */}
       <Third currentCard={currentCard} />
       <Fourth />
-
+      
       <JoinCohort />
-
-      <div className='footer'>
-
-        <Footer />
-      </div>
-
+      <Footer />
     </div>
   )
 }
 
 const Home = () => {
-  return <div className='home-section h-screen py-[40px] xl:py-[68px] px-[42px] flex flex-col justify-center'  >
+  return <div className='home-section h-screen pb-[40px] xl:pb-[68px] px-[42px] flex flex-col'  >
     {/* Home */}
-    <div className='home flex flex-col lg:flex-row items-center lg:px-[40px] gap-[100px] lg:gap-[0px]'>
-      <div className='flex-1'>
-        <div className="flex-1">
-          <SlideUpText
-            items={[
-              "Glucose spike between MD visits?",
-              "Regaining weight after a brief loss?",
-              "Not meeting your metabolic goals?",
-              "Wish you had a doctor always on?",
-            ]}
-            interval={3000}
-            className='text-[22px] lg:text-[32px] text-center lg:text-left'
-          />
+    <div className='shrink-0 h-[99px] w-full'>
+    </div>
+    <Separator className={"shrink-0"} />
+    <div className='flex-1 flex flex-col justify-center'>
+      <div className='flex flex-col lg:flex-row items-center lg:px-[40px] gap-[100px] lg:gap-[0px]'>
+        <div className='flex-1'>
+          <div className="flex-1">
+            <SlideUpText
+              items={[
+                "Glucose spike between MD visits?",
+                "Regaining weight after a brief loss?",
+                "Not meeting your metabolic goals?",
+                "Wish you had a doctor always on?",
+              ]}
+              interval={3000}
+              className='text-[22px] lg:text-[32px] text-center lg:text-left'
+            />
+          </div>
         </div>
-      </div>
-      <div className='flex-1'>
-        <div className='relative dr-img-container max-w-[304px] lg:max-w-[594px]'>
-          <img src="/assets/images/dr-sara-mohan.png" alt="" className='w-full h-full object-cover' />
-          <div className='absolute top-[50%] -translate-y-[200%] lg:right-0 -right-[24px]'>
-            <div>
-              <FadeInText>
-                <FloatText amplitude={6} duration={2} className="text-[14px] lg:text-[22px] font-medium text-white leading-[16px] lg:leading-[21px]">
-                  Dr. Sara Mohan <br />
-                  <span className='text-[11px] lg:text-[16px] font-light'>Your AI Doctor</span>
-                </FloatText>
-              </FadeInText>
+        <div className='flex-1 flex justify-center'>
+          <div className='relative dr-img-container max-w-[464px]'>
+            <img src="/assets/images/dr-sara-mohan.png" alt="" className='w-full h-full object-cover' />
+            <div className='absolute top-[50%] -translate-y-[200%] -right-[34px]'>
+              <div>
+                <FadeInText>
+                  <FloatText amplitude={6} duration={2} className="text-[14px] lg:text-[22px] font-medium text-white leading-[16px] lg:leading-[21px]">
+                    Dr. Sara Mohan <br />
+                    <span className='text-[11px] lg:text-[16px] font-light'>Your AI Doctor</span>
+                  </FloatText>
+                </FadeInText>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <Separator className={"shrink-0"} />
+      <FadeInText className='flex justify-center'>
+        <div className='text-center py-[32px] font-medium text-[20px] lg:text-[34px] leading-[40px] max-w-[1012px]'>
+          Now you can have your own AI Doctor that is always on, always yours, and outcome focused
+        </div>
+      </FadeInText>
     </div>
-    <Separator />
-    <FadeInText className='flex justify-center'>
-      <div className='text-center py-[32px] font-medium text-[20px] lg:text-[34px] leading-[40px] max-w-[1012px]'>
-        Now you can have your own AI Doctor that is always on, always yours, and outcome focused
-      </div>
-    </FadeInText>
   </div>
 }
 
 const Second = () => {
-  return <div className='z-[2] second-section relative h-screen flex flex-col flex flex-col'>
+  return <div className="z-[2] second-section relative h-screen flex flex-col gap-[25px] bg-[#121212]">
+    {/* IMAGE SECTION */}
     <div
       className="
-
-        relative
-        flex-1
-        w-full
-        hero-img
-        shadow-[0_0_60px_20px_rgba(18,18,18,0.6)_inset]
-        bg-[url('/assets/images/doctors-desktop-bg.png')]
-        bg-cover
-        bg-center
-        bg-no-repeat
-      "
+      relative
+      flex-1
+      w-full
+      hero-img
+      bg-[url('/assets/images/doctors-desktop-bg.png')]
+      bg-cover
+      bg-no-repeat
+      bg-[50%_100%]
+      shadow-[0_0_60px_20px_rgba(18,18,18,0.6)_inset]
+    "
     >
-      {/* Optional gradient overlay */}
-      {/* <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent" /> */}
+      {/* Bottom fade: image → content */}
+      <div
+        className="
+        pointer-events-none
+        absolute inset-0
+        bg-[linear-gradient(to_bottom,_transparent_75%,_#121212_100%)]
+      "
+      />
     </div>
 
-    <div className='bg-[#121212] flex flex-col justify-center relative z-1 second-section-content text-center py-[28px] px-[42px] lg:px-[100px]'>
-      <h2 className='text-[24px] lg:text-[36px] font-extrabold mb-[24px]'>
+    {/* CONTENT SECTION */}
+    <div
+      className="
+      relative
+      z-[1]
+      -mt-[80px]
+      bg-[linear-gradient(to_bottom,_transparent_0%,_#121212_45%)]
+      flex flex-col justify-center
+      text-center
+      py-[28px]
+      px-[42px]
+      lg:px-[100px]
+      second-section-content
+    "
+    >
+      <h2 className="
+      text-[24px]
+      lg:text-[36px]
+      xl:text-[50px]
+      font-extrabold
+      mb-[24px]
+    ">
         Your care with human MD and AI Doctor
       </h2>
-      <p className='text-[16px] lg:text-[20px] max-w-[800px] lg:max-w-[1360px] mx-auto'>
+
+      <p className="
+      text-[16px]
+      lg:text-[20px]
+      max-w-[800px]
+      lg:max-w-[1360px]
+      mx-auto
+    ">
         If you are living with diabetes, hypertension, or weight struggles, you know how unpredictable the numbers can feel — progress one week, setbacks the next, and no clear sense of what actually helps. ChronicGPT changes that. Your human doctor sets your goals, and your personal AI Doctor learns your body in real time — watching your sleep, meals, glucose, activity, and medications to guide you with simple, clinical-grade decisions every day. It turns confusion into clarity, patterns into progress, and setbacks into signals you can finally understand.
       </p>
     </div>
   </div>
+
 }
 
 const Third = ({ currentCard }) => {
-  return <div className='z-[3] relative h-screen third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
-    <div className='flex flex-col lg:flex-row gap-8 lg:gap-2'>
-      <div className='flex-1 flex flex-col gap-[20px]'>
-        <div className='flex flex-col gap-2'>
-          <div className='text-[40px] font-semibold '>
+  return <ResponsiveSection className='z-[3] relative h-screen third-section rounded-[54px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
+    <div className='flex flex-col lg:flex-row gap-2 md:gap-4 lg:gap-6 3xl:gap-8'>
+      <div className='max-h-[calc(80vh-20px)]
+        md:max-h-[calc(80vh-40px)]
+        lg:max-h-[calc(80vh-80px)]
+        3xl:max-h-[calc(80vh-120px)]
+        flex-1 flex flex-col justify-between gap-[20px]'>
+        <div className='flex flex-col gap-2 justify-between'>
+          <div className='text-[40px] font-medium '>
             How it works
           </div>
           <div className='font-semibold'>
@@ -435,80 +519,54 @@ const Third = ({ currentCard }) => {
 
       </div>
       <div className='flex-1 cards-carousel-container flex flex-col gap-[32px]'>
-        <div className='card bg-[#F1F1F1] first-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[20px] xl:gap-[32px]'>
-          <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
-            <img src="/assets/images/card-1.jpg" alt="" className=' w-full h-full object-cover' />
-          </div>
-          <div className='flex flex-col gap-[20px]'>
-            <div className='font-light text-[32px] text-[#121212]'>01</div>
+        <Card
+          index="01"
+          image="/assets/images/card-1.jpg"
+          title="Your AI Doctor studies the way your body behaves"
+          className="first-card"
+        >
+          It watches your sleep quality, meals, glucose swings, hydration, medication timing, activity, and stress patterns. Over time, it builds a living model of your physiology, spotting subtle patterns that even good doctors can’t see between visits. This is how it understands why your numbers move the way they do, and what will help you stabilize them.
+        </Card>
 
-            <div className='flex flex-col'>
-              <div className='font-bold text-[20px]'>
-                Your AI Doctor studies the way your body behaves
-              </div>
-              <div className='text-[16px]'>It watches your sleep quality, meals, glucose swings, hydration, medication timing, activity, and stress patterns. Over time, it builds a living model of your physiology, spotting subtle patterns that even good doctors can’t see between visits. This is how it understands why your numbers move the way they do, and what will help you stabilize them.</div>
+        <Card
+          index="02"
+          image="/assets/images/card-2.png"
+          title="Behind every insight is real clinical reasoning."
+          className="second-card"
+        >
+          Your AI Doctor evaluates risk the way a careful physician would: rising morning glucose, changing blood pressure trends, sleep debt, medication conflicts, missed doses, unusual heart-rate shifts, and more. When something looks concerning, it flags it early — and your human doctor reviews your clinical trace to confirm the right next step. You get the vigilance of a medical team that never goes off duty.
+        </Card>
 
-            </div>
+        <Card
+          index="03"
+          image="/assets/images/card-3.png"
+          title="Clear explanations. Simple actions. No jargon."
+          className="third-card"
+        >
+          Your AI Doctor turns complex data into practical daily guidance:
+          “Your numbers look stable — keep the same routine today.”
+          “Take a lighter dinner tonight; your glucose stayed elevated longer than usual.”
+          “Focus on hydration for the next 24 hours — it will help bring your pressure down.”
+          Every message is personalized, medically grounded, and aimed at keeping you steady, confident, and in control.
+        </Card>
 
-          </div>
-
-        </div>
-        <div className='card bg-[#F1F1F1] second-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
-          <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
-            <img src="/assets/images/card-2.png" alt="" className=' w-full h-full object-cover' />
-          </div>
-          <div className='flex flex-col gap-[20px]'>
-            <div className='font-light text-[32px] text-[#121212]'>02</div>
-
-            <div className='flex flex-col'>
-              <div className='font-bold text-[20px]'>
-                Behind every insight is real clinical reasoning.
-              </div>
-              <div className='text-[16px]'>Your AI Doctor evaluates risk the way a careful physician would: rising morning glucose, changing blood pressure trends, sleep debt, medication conflicts, missed doses, unusual heart-rate shifts, and more. When something looks concerning, it flags it early — and your human doctor reviews your clinical trace to confirm the right next step. You get the vigilance of a medical team that never goes off duty.</div>
-
-            </div>
-
-          </div>
-
-        </div>
-        <div className='card bg-[#F1F1F1] third-card card-carousel rounded-[50px] p-[40px] flex flex-col gap-[32px]'>
-          <div className='img-container rounded-[20px] h-[212px] overflow-hidden'>
-            <img src="/assets/images/card-3.png" alt="" className=' w-full h-full object-cover' />
-          </div>
-          <div className='flex flex-col gap-[20px]'>
-            <div className='font-light text-[32px] text-[#121212]'>03</div>
-
-            <div className='flex flex-col'>
-              <div className='font-bold text-[20px]'>
-                Clear explanations. Simple actions. No jargon.              </div>
-              <div className='text-[16px]'>Your AI Doctor turns complex data into practical daily guidance:
-                “Your numbers look stable — keep the same routine today.”
-                “Take a lighter dinner tonight; your glucose stayed elevated longer than usual.”
-                “Focus on hydration for the next 24 hours — it will help bring your pressure down.”
-                Every message is personalized, medically grounded, and aimed at keeping you steady, confident, and in control.</div>
-
-            </div>
-
-          </div>
-
-        </div>
       </div>
     </div>
-  </div>
+  </ResponsiveSection>
 }
 
 const Fourth = () => {
-  return <div className='h-screen relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[60px] bg-[#F1F1F1] p-[60px] mx-[10px] rounded-[60px] overflow-hidden'>
+  return <ResponsiveSection className='h-screen relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] rounded-[60px] overflow-hidden'>
     <div className='flex gap-2'>
-      <h2 className='flex-1 text-[40px] leading-[52px] font-semibold'>
+      <h2 className='flex-1 text-[40px] leading-[52px] font-medium'>
         Real clinical outcomes, <br /> felt in your everyday life
       </h2>
       <p className='flex-1 text-[16px] leading-[24px] font-medium'>
         You choose one or more improvement programs. Your AI Doctor works in the background every day — helping you feel the changes in ways that matter: steadier energy, calmer mornings, smoother rhythms, and more restorative nights.
       </p>
     </div>
-    <div className='flex flex-col gap-[24px]'>
-      <div className='flex gap-[24px]'>
+    <div className='flex flex-col justify-between gap-[24px]'>
+      <div className='flex gap-[24px] hr-card-container'>
         <HorizontalCard
           title="Mornings stop feeling unpredictable"
           img={"/assets/images/hr-card-1.jpg"}
@@ -541,43 +599,100 @@ const Fourth = () => {
           Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
         </HorizontalCard>
         <HorizontalCard
-          title="Mornings stop feeling unpredictable"
-          img={"/assets/images/hr-card-1.jpg"}
-          className="hr-card-5"
-        >
-          Instead of waking up already behind, you start the day more steady — clear-headed, less groggy, and without the crashes that used to set the tone.
-        </HorizontalCard>
-        <HorizontalCard
           title="Sleep becomes restorative"
-          img={"/assets/images/hr-card-2.jpg"}
-          className="hr-card-6"
+          img={"/assets/images/hr-card-5.jpg"}
+          className="hr-card-5"
         >
           Your AI Doctor helps you adjust your evenings, nutrition, timing, and recovery.
           You fall asleep easier, wake up less, and start feeling rested in a way you haven’t in years.
         </HorizontalCard>
         <HorizontalCard
           title="Meals stop derailing your day"
-          img={"/assets/images/hr-card-3.jpg"}
-          className="hr-card-7"
+          img={"/assets/images/hr-card-6.jpg"}
+          className="hr-card-6"
         >
           You quickly learn which foods and timings work for your physiology.
           Post-meal crashes shrink, late-evening glucose stays quieter, and eating stops feeling like guesswork.
         </HorizontalCard>
         <HorizontalCard
           title="Energy feels smoother, not spiky"
-          img={"/assets/images/hr-card-4.jpg"}
-          className="hr-card-8"
+          img={"/assets/images/hr-card-7.jpg"}
+          className="hr-card-7"
         >
           Instead of sharp highs and lows, your days develop a smoother rhythm.
           Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
         </HorizontalCard>
+        <HorizontalCard
+          title="Healthy routines finally stick"
+          img={"/assets/images/hr-card-8.jpg"}
+          className="hr-card-8"
+        >
+          Because your AI Doctor guides you in real time, habits stop slipping through cracks. Hydration, movement, medication timing, sleep routines — they become easier, more automatic, and more consistent.
+        </HorizontalCard>
       </div>
-      <div class="bg-[#06040A]/20 w-[200px] h-[4px]">
-        <div class="progress-bar bg-[#06040A] h-full w-fit"></div>
+      <div className="bg-[#06040A]/20 w-[200px] h-[4px]">
+        <div className="progress-bar bg-[#06040A] h-full w-fit"></div>
       </div>
     </div>
-  </div>
+  </ResponsiveSection>
 }
+
+const Card = ({
+  index,
+  image,
+  title,
+  children,
+  className = "",
+}) => {
+  return (
+    <div
+      className={`
+        card
+        bg-[#F1F1F1]
+        card-carousel
+        rounded-[50px]
+        p-[10px]
+        md:p-[20px]
+        lg:p-[30px]
+        3xl:p-[40px]
+        flex
+        flex-col
+        gap-[8px]
+        md:gap-[10px]
+        lg:gap-[16px]
+        3xl:gap-[32px]
+        ${className}
+      `}
+    >
+      {/* Image */}
+      <div className="img-container rounded-[20px] h-[212px] overflow-hidden">
+        <img
+          src={image}
+          alt=""
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Content */}
+      <div className="flex flex-col gap-[8px] lg:gap-[16px] 3xl:gap-[20px]">
+        <div className="font-light text-[32px] text-[#121212]">
+          {index}
+        </div>
+
+        <div className="flex flex-col gap-[4px] 3xl:gap-[8px]">
+          <div className="font-bold text-[20px] text-[#121212]">
+            {title}
+          </div>
+
+          <div className="text-[16px] text-[#121212]">
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 
 const HorizontalCard = ({ img, title, className, children }) => (
   <div className={cn('hr-card min-w-[320px] max-w-[320px] bg-white flex flex-col gap-[20px] p-[20px] pb-[77px] rounded-[40px]', className)}>
@@ -585,7 +700,7 @@ const HorizontalCard = ({ img, title, className, children }) => (
       <img src={img} alt="" className='w-full h-full object-cover' />
     </div>
     <div className='flex flex-col gap-[4px]'>
-      <h3 className='font-bold text-[20px]'>
+      <h3 className='font-bold text-[20px] leading-[26px]'>
         {title}
       </h3>
       <p className='text-[16px]'>

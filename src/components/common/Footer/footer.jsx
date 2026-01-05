@@ -2,10 +2,10 @@ import { NavLink } from "react-router";
 import Separator from "../Separator";
 
 const Footer = () => (
-  <div className='px-[60px]'>
+  <div className='flex flex-col px-[60px]'>
     <Separator variant='v2' />
-    <footer className='py-[40px] flex flex-col gap-[50px] bg-[#121212]'>
-      <div className='px-[20px] grid grid-auto md:grid-cols-2 lg:grid-cols-3 gap-[40px]'>
+    <footer className='flex-1 flex flex-col justify-between py-[40px] flex flex-col gap-[50px] bg-[#121212]'>
+      <div className='flex-1 px-[20px] grid grid-auto md:grid-cols-2 lg:grid-cols-3 gap-[40px]'>
         <div className='flex flex-col gap-[24px]'>
           <div className='flex gap-[10px] w-[220px]'>
             <img src={"/assets/images/logo-footer.png"} className='w-full h-full object-cover' alt='Vite logo' />
@@ -39,15 +39,17 @@ const Footer = () => (
         </div>
 
       </div>
-      <Separator variant='v2' />
-      <div className='flex flex-col gap-[40px] lg:flex-row w-full justify-between text-[14px]'>
-        <div className='flex flex-wrap flex-col md:flex-row flex-1 gap-[32px]'>
-          <div>Copyright © ChronicGPT 2026</div>
-          <div>Privacy Policy</div>
-          <div>Terms & Conditions</div>
-        </div>
-        <div className='flex '>
-          Designed & Developed by Etherealdesign.io
+      <div className="flex flex-col gap-[50px]">
+        <Separator variant='v2' />
+        <div className='flex flex-col gap-[40px] lg:flex-row w-full justify-between text-[14px]'>
+          <div className='flex flex-wrap flex-col md:flex-row flex-1 gap-[32px]'>
+            <div>Copyright © ChronicGPT 2026</div>
+            <div>Privacy Policy</div>
+            <div>Terms & Conditions</div>
+          </div>
+          <div className='flex '>
+            Designed & Developed by Etherealdesign.io
+          </div>
         </div>
       </div>
     </footer>
