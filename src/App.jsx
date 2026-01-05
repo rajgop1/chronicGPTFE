@@ -160,7 +160,7 @@ function App() {
     // Move cards again: next card height + gap
     t1.to(".card", {
       yPercent: -200, // moved 2 card heights total
-      y: -64,         // 32px per card gap × 2
+      y: "-=32",         // 32px per card gap × 2
       duration: CARD_MOVE_DURATION,
       ease: "none",
     }, "cardAnim2");
@@ -353,17 +353,16 @@ function App() {
 
   return (
 
-    <div className='max-w-[1512px] mx-auto' ref={container}>
-      {/* Nav */}
-      <Header />
-      <Home />
-      <Second />
-      {/* new section which will wrap above the home */}
-      <Third currentCard={currentCard} />
-      <Fourth />
-      
-      <JoinCohort />
-      <Footer />
+    <div className='max-w-[1512px] mx-auto'>
+      <div ref={container}>
+        <Header />
+        <Home />
+        <Second />
+        <Third currentCard={currentCard} />
+        <Fourth />
+        <JoinCohort />
+        <Footer />
+      </div>
     </div>
   )
 }

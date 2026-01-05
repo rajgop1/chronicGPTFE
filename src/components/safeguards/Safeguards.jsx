@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import JoinCohort from '../common/JoinCohort/JoinCohort';
+import ResponsiveSection from '../common/ResponsiveSection';
 
 gsap.registerPlugin(useGSAP)
 
@@ -25,38 +26,78 @@ function Safeguards() {
     })
 
     const cards = gsap.utils.toArray(".card");
+    const STACK_OFFSET = 25;
 
-    cards.slice(1).forEach((card, index) => {
+    cards.forEach((card, index) => {
       gsap.set(card, {
-        scale:  0.95 - index / 10
-      })
-    })
-
-    cards.slice(1).forEach((card, index) => {
-      t1.to(card, {
-        yPercent: -(index + 1) * 100,
-        scale: 1 + (index + 1) * 0.02,
-        ease: "none",
-        boxShadow: "0px -5px 40px rgba(0,0,0,0.2)"
+        y: index * STACK_OFFSET, // stack DOWN
+        scale: 1 - index * 0.04,
+        zIndex: cards.length - index,
       });
     });
+
+    cards.slice(1).forEach((card, index) => {
+
+      t1
+        // bring NEXT card into active slot
+        .to(card, {
+          y: 0,
+          scale: 1,
+          zIndex: cards.length + index,  // always top
+          ease: "none",
+          boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+          duration: 0.25,
+        })
+
+        // push all previous cards DOWN
+        .to(
+          cards.slice(0, index + 1),
+          {
+            y: (i) => (i + 1) * STACK_OFFSET,
+            scale: (i) => 0.95 - i * 0.05,
+            ease: "none",
+            zIndex: (i) => {
+              const newZ = cards.length - (i + 1)
+              console.log("index", index, "card", card, "new z", newZ,)
+              return newZ
+            }, // 🔑 reset stacking
+            duration: 0.25
+          },
+          "<"
+        );
+    });
+
+
+
+    t1.addLabel("secondAnim", ">+=0.25")
+
+    t1.to(".second-inner-content", {
+      height: 0,
+      autoAlpha: 0,
+      padding: 0
+    }, "secondAnim")
+
+    t1.to(".section-two", {
+      height: "20vh",
+    }, "secondAnim")
+
+
+    t1.addLabel("thirdAnim", ">+=0.25")
 
     t1.to(".section-two", {
       height: 0,
       autoAlpha: 0,
-      delay: 0.25
-    })
-
-
-    t1.add("fourthAnim")
-
+    }, "thirdAnim").to(".build-for-trust", {
+      height: "100vh",
+      // autoAlpha: 0,
+    }, "thirdAnim")
+    
     t1.to(".build-for-trust", {
       height: 0,
-      autoAlpha: 0,
-    }, "fourthAnim")
+      autoAlpha: 0
+    },)
 
-
-    t1.add("fifthAnim")
+    t1.addLabel("fifthAnim", ">+=0.25")
 
     t1.to(".join-cohort", {
       height: 0,
@@ -73,7 +114,7 @@ function Safeguards() {
     <div className='max-w-[1512px] mx-auto' ref={container}>
       <Header />
       <HeaderBackground>
-        <Third/>
+        <Third />
       </HeaderBackground>
       <BuildForTrust />
       <JoinCohort />
@@ -82,27 +123,25 @@ function Safeguards() {
   )
 }
 
-export const HeaderBackground = ({children}) => {
-  return <div className='z-[2] section-two relative h-screen overflow-hidden'>
-    <div className='flex flex-col justify-end '>
-      <div className="relative h-[240px] overflow-hidden">
-        <img
-          src="/assets/images/safeguards/safeguard-bg.jpg"
-          alt=""
-          className="w-full h-full object-cover object-[0%_25%]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent" />
-      </div>
-      <div>
-        {children}
-      </div>
+export const HeaderBackground = ({ children }) => {
+  return <div className='z-[2] section-two relative h-screen overflow-hidden flex flex-col'>
+    <div className="hero-img h-[20vh] relative overflow-hidden">
+      <img
+        src="/assets/images/safeguards/safeguard-bg.jpg"
+        alt=""
+        className="w-full h-full object-cover object-[0%_25%]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent" />
+    </div>
+    <div className='second-inner-content flex flex-col flex-1 p-[10px]'>
+      {children}
     </div>
   </div>
 }
 
 const Third = () => {
-  return <div className='bg-[#F1F1F1] z-[1] relative h-screen third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
-    <div className='flex flex-col gap-[40px]'>
+  return <ResponsiveSection className='bg-[#F1F1F1] z-[1] flex-1 relative third-section rounded-[54px] text-[#121212] overflow-hidden' >
+    <div className='flex flex-col gap-[20px] 3xl:gap-[40px]'>
       <div className='flex-1 flex flex-col gap-[20px]'>
         <div className='flex flex-row gap-2'>
           <div className='flex-1 text-[40px] font-semibold '>
@@ -134,11 +173,11 @@ const Third = () => {
         </Card>
       </div>
     </div>
-  </div>
+  </ResponsiveSection >
 }
 
 const Card = ({ title, logo, img, children }) => (
-  <div className='card bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[40px] p-[32px] border border-[1px] border-[#B0B0B0] flex gap-[60px]'>
+  <div className='card absolute bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[40px] p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[60px]'>
     <div className='flex-1 flex flex-col justify-between'>
       <div className='flex items-center gap-[20px]'>
         <img src={logo} alt="" className='w-[80px] h-[80px]' />
@@ -151,7 +190,7 @@ const Card = ({ title, logo, img, children }) => (
       </div>
     </div>
     <div className='flex-1'>
-      <div className='lg:h-[300px] xl:h-[372px] rounded-[24px] overflow-hidden'>
+      <div className='lg:h-[300px] xl:h-[320px] rounded-[24px] overflow-hidden'>
         <img src={img} className='w-full h-full object-cover rounded-[24px]' />
       </div>
     </div>
@@ -159,15 +198,15 @@ const Card = ({ title, logo, img, children }) => (
 )
 
 const BuildForTrust = () => (
-  <div className='build-for-trust rounded-[52px] overflow-hidden flex flex-col gap-[32px] border border-[5px] border-white'>
-    <div className="relative h-[456px] rounded-[52px] overflow-hidden">
+  <div className='build-for-trust rounded-[52px] overflow-hidden flex flex-col border border-[5px] border-white'>
+    <div className="relative h-[420px] rounded-[52px] overflow-hidden">
       <img
-        src="/assets/images/safeguards/safeguard-bg.jpg"
+        src="/assets/images/safeguards/safeguards-bg-v2.png"
         alt=""
         className="w-full h-full object-cover object-center rounded-[52px]"
       />
     </div>
-    <div className='flex flex-col gap-[24px] text-center p-[24px]'>
+    <div className='flex-1 flex flex-col justify-center gap-[24px] text-center p-[24px] pb-[32px]'>
       <div className='text-[36px] font-semibold'>Built for Trust</div>
       <div className='text-[16px] flex flex-col gap-[8px]'>
         <div className='font-medium'>

@@ -179,7 +179,7 @@ function Journey() {
 
 
 const Third = () => {
-  return <div className='bg-[#F1F1F1] z-[1] relative h-screen third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
+  return <div className='bg-[#F1F1F1] z-[1] relative third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
     <div className='flex flex-col gap-[40px]'>
       <div className='flex-1 flex flex-col gap-[20px]'>
         <div className='flex flex-row gap-2'>
