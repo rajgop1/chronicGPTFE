@@ -104,16 +104,24 @@ function Safeguards() {
     //     );
     // });
 
-    const GAP = 24;
+    const MARGIN_TOP = 0;
+    const BASE_SCALES = []
+    const AUTO_ALPHAE = []
 
     cards.forEach((card, i) => {
+      const scale = 0.85 + (i / 8)
+      const autoAlpha = 1 - (i / 4)
+      BASE_SCALES[i] = scale
+      AUTO_ALPHAE[i] = autoAlpha
       gsap.set(card, {
-        scale: i === 0 ? 1 : 1.15,
-        autoAlpha: i === 0 ? 1 : 0.6,
-        marginTop: (i + 1) * GAP
+        scale: scale,
+        autoAlpha: autoAlpha,
+        marginTop: (i + 1) * MARGIN_TOP
       });
     });
 
+
+    t1.addLabel("cardsAnimation")
 
     cards.slice(1).forEach((card, i) => {
 
@@ -124,24 +132,25 @@ function Safeguards() {
         t1.to(".safeguards-header", {
           height: 0,
           autoAlpha: 0,
-          duration: 0.25,
+          duration: 0.1,
         }, labelName)
       }
 
 
-      t1.to(cards, {
-        yPercent: -100 * (i + 1),
-        y: -(GAP + 24) * (i + 1)
-      }, labelName)
-
-      t1
-        .to(card, {
-          scale: 1,
-          autoAlpha: 1,
-          duration: 1,
+      t1.to(
+        cards,
+        {
+          yPercent: -100 * (i + 1),
+          y: -(MARGIN_TOP) * (i + 1),
           ease: "none",
-          marginTop: 0
+          scale: (index, div) => {
+            if (index <= i) return 0.85
+            return BASE_SCALES[index - (i + 1)]
+          },
+          autoAlpha: 1
+
         }, labelName)
+
     });
 
 
@@ -229,7 +238,7 @@ const Third = () => {
           </div>
         </div>
       </div>
-      <div className='relative z-[1] flex flex-col gap-[24px]'>
+      <div className='relative z-[1] flex flex-col'>
         <Card title="Your data stays yours" logo="/assets/images/safeguards/card-1-icon.png" img="/assets/images/safeguards/card-1.jpg">
           Your health data is encrypted, never sold, and never shared without your permission. You decide what ChronicGPT Inc. can access and what it cannot.
         </Card>
