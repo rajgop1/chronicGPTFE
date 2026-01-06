@@ -8,6 +8,11 @@ import FormSelect from '../Form/FormSelect';
 
 function JoinCohort() {
     const [open, setOpen] = useState(false)
+
+    async function sendRequest() {
+
+    }
+
     return (
         <div className='bg-[#121212] w-full h-screen rounded-t-[54px] overflow-hidden relative z-[5] join-cohort'>
             <div className='flex flex-col lg:flex-row items-center h-full'>
@@ -35,16 +40,16 @@ function JoinCohort() {
                                     <button className='cursor-pointer bg-white rounded-[12px] px-[16px] py-[10px] text-[18px] text-[#121212] min-w-[320px] font-semibold '>Join first cohort</button>
                                 }>
                                 {/* <p>We’ll collect your details and get you onboarded.</p> */}
-                                <div className='flex text-[#121212] pr-[48px]'>
-                                    <div className='flex-1 flex flex-col'>
+                                <div className='flex items-start text-[#121212] pr-[48px]'>
+                                    <div className='flex-1 flex flex-col gap-[8px]'>
                                         <div className='flex flex-col gap-[8px]'>
-                                            <div className='text-[30px] leading-[54px] font-bold'>Join the Waitlist</div>
+                                            <div className='text-[30px] font-bold'>Join the Waitlist</div>
                                         </div>
-                                        <div className='text-[38px] leading-[42px] font-light'>
+                                        <div className='text-[38px] leading-[42px] font-thin'>
                                             Be among the first to experience personalized AI Doctor care
                                         </div>
                                     </div>
-                                    <div className='flex-1 flex flex-col '>
+                                    <div className='flex-1 flex flex-col px-[80px]'>
                                         <div className='flex flex-col gap-[32px] '>
                                             <div className='flex gap-[24px] flex-1'>
                                                 <FormInput
@@ -93,7 +98,16 @@ function JoinCohort() {
                                                 className={"w-full"}
                                                 rows={6}
                                             />
-                                            <button className='cursor-pointer bg-[#121212] text-white rounded-[12px] px-[16px] py-[10px] text-[18px] text-[#121212] min-w-[320px] font-semibold '>Request</button>
+                                            <AppDialog trigger={
+                                                <button onClick={sendRequest} className='cursor-pointer bg-[#121212] text-white rounded-[12px] px-[16px] py-[10px] text-[18px] text-[#121212] min-w-[320px] font-semibold '>Request</button>
+                                            }
+                                                className={"max-w-[480px]"}
+                                            >
+                                                <div className='text-2xl text-black'>
+                                                    Request Sent!
+                                                </div>
+
+                                            </AppDialog>
                                         </div>
 
                                     </div>
