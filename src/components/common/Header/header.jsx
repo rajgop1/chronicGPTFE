@@ -7,9 +7,9 @@ function Header() {
     return (
         <header className='header fixed top-0 z-50 left-0 right-0 '>
             <div className='flex justify-between items-center px-[24px] py-[20px] lg:px-[60px] lg:py-[32px] h-[100px] '>
-                <div>
+                <NavLink to="/">
                     <img src={"/assets/images/logo.png"} className='w-[30px] h-[24px] lg:h-[40px] lg:w-[50px]' alt='Vite logo' />
-                </div>
+                </NavLink>
 
                 <nav className="hidden lg:flex items-center gap-[32px]">
                     <NavItem to="/" label="Home" />
@@ -37,7 +37,6 @@ const NavItem = ({ to, label }) => (
             className={cn('w-[16px] h-[16 px] invisible', isActive && "visible")}
           />
         <span className={isActive ? "font-bold" : ""}>{label}</span>
-
       </div>
     )}
   </NavLink>
