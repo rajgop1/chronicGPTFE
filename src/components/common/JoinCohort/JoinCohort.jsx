@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Separator from '../Separator'
+import AppDialog from '../Dialog/AppDialog'
+import FormInput from '../Form/FormInput'
+import { HiOutlineXCircle } from "react-icons/hi2";
+import FormTextArea from '../Form/FormTextArea';
+import FormSelect from '../Form/FormSelect';
 
 function JoinCohort() {
+    const [open, setOpen] = useState(false)
     return (
         <div className='bg-[#121212] w-full h-screen rounded-t-[54px] overflow-hidden relative z-[5] join-cohort'>
             <div className='flex flex-col lg:flex-row items-center h-full'>
@@ -14,7 +20,7 @@ function JoinCohort() {
                             <p className='flex justify-center items-center w-fit px-[14px] py-[6px] pb-[4px] rounded-[30px] text-white font-bold bg-[#CBCBCB33]'>Limited Spots Available</p>
                             <h2 className='text-[40px] leading-[52px] font-semibold'>Be part of the first cohort.</h2>
                             <p className='text-[20px] font-medium leading-[100%]'>
-                                Get full access, all setup support, and early-user <br/> advantages.
+                                Get full access, all setup support, and early-user <br /> advantages.
                             </p>
                         </div>
 
@@ -23,14 +29,89 @@ function JoinCohort() {
                         </div>
 
                         <div className='flex flex-col gap-[16px] items-center'>
-                            <button className='bg-white rounded-[12px] px-[16px] py-[10px] text-[18px] text-[#121212] min-w-[320px] font-semibold '>Join first cohort</button>
+                            {/* Dialog */}
+                            <AppDialog
+                                trigger={
+                                    <button className='cursor-pointer bg-white rounded-[12px] px-[16px] py-[10px] text-[18px] text-[#121212] min-w-[320px] font-semibold '>Join first cohort</button>
+                                }>
+                                {/* <p>We’ll collect your details and get you onboarded.</p> */}
+                                <div className='flex text-[#121212] pr-[48px]'>
+                                    <div className='flex-1 flex flex-col'>
+                                        <div className='flex flex-col gap-[8px]'>
+                                            <div className='text-[30px] leading-[54px] font-bold'>Join the Waitlist</div>
+                                        </div>
+                                        <div className='text-[38px] leading-[42px] font-light'>
+                                            Be among the first to experience personalized AI Doctor care
+                                        </div>
+                                    </div>
+                                    <div className='flex-1 flex flex-col '>
+                                        <div className='flex flex-col gap-[32px] '>
+                                            <div className='flex gap-[24px] flex-1'>
+                                                <FormInput
+                                                    label="First Name"
+                                                    id="first-name"
+                                                    placeholder="Enter your First name"
+                                                    className={"w-full"}
+                                                />
+                                                <FormInput
+                                                    label="Last Name"
+                                                    id="last-name"
+                                                    placeholder="Enter your Last name"
+                                                    className={"w-full"}
+                                                />
+                                            </div>
+
+                                            <FormInput
+                                                label="Phone Number"
+                                                id="phone"
+                                                placeholder="Enter your Phone Number"
+                                                className={"w-full"}
+                                            />
+
+                                            <FormInput
+                                                label="Email"
+                                                id="email"
+                                                placeholder="Email"
+                                                className={"w-full"}
+                                            />
+
+                                            <FormSelect
+                                                label="Primary Condition (Optional)"
+                                                id="primary-condition"
+                                                placeholder="Select a program"
+                                                options={[
+                                                    { label: "Sleep Optimization", value: "sleep" },
+                                                    { label: "Energy Balance", value: "energy" },
+                                                    { label: "Metabolic Health", value: "metabolic" },
+                                                ]}
+                                            />
+
+                                            <FormTextArea
+                                                label="Additional Information (Optional)"
+                                                id="additional-information"
+                                                placeholder="Tell us about your health goal or questions..."
+                                                className={"w-full"}
+                                                rows={6}
+                                            />
+                                            <button className='cursor-pointer bg-[#121212] text-white rounded-[12px] px-[16px] py-[10px] text-[18px] text-[#121212] min-w-[320px] font-semibold '>Request</button>
+                                        </div>
+
+                                    </div>
+
+                                    {/* <div className='shrink-0'>
+                                        <img src="/assets/icons/close.svg" alt="" className='w-[48px] h-[48px]' />
+                                    </div> */}
+
+                                </div>
+                            </AppDialog>
                             <p className='text-[16px] font-normal'>Takes less than 30 seconds. No commitment required.</p>
+
                         </div>
                     </div>
 
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

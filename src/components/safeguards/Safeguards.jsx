@@ -26,45 +26,122 @@ function Safeguards() {
     })
 
     const cards = gsap.utils.toArray(".card");
-    const STACK_OFFSET = 25;
+    // const STACK_OFFSET = 25;
 
-    cards.forEach((card, index) => {
+    // cards.forEach((card, index) => {
+    //   gsap.set(card, {
+    //     y: index * STACK_OFFSET, // stack DOWN
+    //     scale: 1 - index * 0.04,
+    //     zIndex: cards.length - index,
+    //   });
+    // });
+
+    // cards.slice(1).forEach((card, index) => {
+
+    //   t1
+    //     // bring NEXT card into active slot
+    //     .to(card, {
+    //       y: 0,
+    //       scale: 1,
+    //       zIndex: cards.length + index,  // always top
+    //       ease: "none",
+    //       boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
+    //       duration: 0.25,
+    //     })
+
+    //     // push all previous cards DOWN
+    //     .to(
+    //       cards.slice(0, index + 1),
+    //       {
+    //         y: (i) => (i + 1) * STACK_OFFSET,
+    //         scale: (i) => 0.95 - i * 0.05,
+    //         ease: "none",
+    //         zIndex: (i) => {
+    //           const newZ = cards.length - (i + 1)
+    //           console.log("index", index, "card", card, "new z", newZ,)
+    //           return newZ
+    //         }, // 🔑 reset stacking
+    //         duration: 0.25
+    //       },
+    //       "<"
+    //     );
+    // });
+
+    // // Initial states
+    // cards.forEach((card, i) => {
+    //   gsap.set(card, {
+    //     yPercent: i === 0 ? 0 : 30,
+    //     scale: i === 0 ? 1 : 0.92,
+    //     autoAlpha: i === 0 ? 1 : 0,
+    //     zIndex: cards.length - i,
+    //   });
+    // });
+
+    // // Scroll takeover animation
+    // cards.slice(1).forEach((card, i) => {
+    //   const prev = cards[i];
+
+    //   t1
+    //     // Incoming card
+    //     .to(card, {
+    //       yPercent: 0,
+    //       scale: 1,
+    //       autoAlpha: 1,
+    //       duration: 1,
+    //       ease: "none",
+    //     })
+
+    //     // Previous card fades back
+    //     .to(
+    //       prev,
+    //       {
+    //         scale: 0.92,
+    //         autoAlpha: 0,
+    //         duration: 1,
+    //         ease: "none",
+    //       },
+    //       "<"
+    //     );
+    // });
+
+    const GAP = 24;
+
+    cards.forEach((card, i) => {
       gsap.set(card, {
-        y: index * STACK_OFFSET, // stack DOWN
-        scale: 1 - index * 0.04,
-        zIndex: cards.length - index,
+        scale: i === 0 ? 1 : 1.15,
+        autoAlpha: i === 0 ? 1 : 0.6,
+        marginTop: (i + 1) * GAP
       });
     });
 
-    cards.slice(1).forEach((card, index) => {
+
+    cards.slice(1).forEach((card, i) => {
+
+      const labelName = `card-anim-${i}`
+      t1.addLabel(labelName)
+
+      if (i === 0) {
+        t1.to(".safeguards-header", {
+          height: 0,
+          autoAlpha: 0,
+          duration: 0.25,
+        }, labelName)
+      }
+
+
+      t1.to(cards, {
+        yPercent: -100 * (i + 1),
+        y: -(GAP + 24) * (i + 1)
+      }, labelName)
 
       t1
-        // bring NEXT card into active slot
         .to(card, {
-          y: 0,
           scale: 1,
-          zIndex: cards.length + index,  // always top
+          autoAlpha: 1,
+          duration: 1,
           ease: "none",
-          boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
-          duration: 0.25,
-        })
-
-        // push all previous cards DOWN
-        .to(
-          cards.slice(0, index + 1),
-          {
-            y: (i) => (i + 1) * STACK_OFFSET,
-            scale: (i) => 0.95 - i * 0.05,
-            ease: "none",
-            zIndex: (i) => {
-              const newZ = cards.length - (i + 1)
-              console.log("index", index, "card", card, "new z", newZ,)
-              return newZ
-            }, // 🔑 reset stacking
-            duration: 0.25
-          },
-          "<"
-        );
+          marginTop: 0
+        }, labelName)
     });
 
 
@@ -91,7 +168,7 @@ function Safeguards() {
       height: "100vh",
       // autoAlpha: 0,
     }, "thirdAnim")
-    
+
     t1.to(".build-for-trust", {
       height: 0,
       autoAlpha: 0
@@ -125,7 +202,7 @@ function Safeguards() {
 
 export const HeaderBackground = ({ children }) => {
   return <div className='z-[2] section-two relative h-screen overflow-hidden flex flex-col'>
-    <div className="hero-img h-[20vh] relative overflow-hidden">
+    <div className="hero-img shrink-0 h-[20vh] relative overflow-hidden">
       <img
         src="/assets/images/safeguards/safeguard-bg.jpg"
         alt=""
@@ -142,7 +219,7 @@ export const HeaderBackground = ({ children }) => {
 const Third = () => {
   return <ResponsiveSection className='bg-[#F1F1F1] z-[1] flex-1 relative third-section rounded-[54px] text-[#121212] overflow-hidden' >
     <div className='flex flex-col gap-[20px] 3xl:gap-[40px]'>
-      <div className='flex-1 flex flex-col gap-[20px]'>
+      <div className='safeguards-header flex-1 flex flex-col gap-[20px]'>
         <div className='flex flex-row gap-2'>
           <div className='flex-1 text-[40px] font-semibold '>
             Safeguards you deserve
@@ -177,7 +254,7 @@ const Third = () => {
 }
 
 const Card = ({ title, logo, img, children }) => (
-  <div className='card absolute bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[40px] p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[60px]'>
+  <div className='card bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[40px] p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[60px]'>
     <div className='flex-1 flex flex-col justify-between'>
       <div className='flex items-center gap-[20px]'>
         <img src={logo} alt="" className='w-[80px] h-[80px]' />

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -19,6 +19,7 @@ import Footer from './components/common/Footer/footer'
 import Header from './components/common/Header/header'
 import JoinCohort from './components/common/JoinCohort/JoinCohort'
 import ResponsiveSection from './components/common/ResponsiveSection'
+import HorizontalScroll from './components/common/Framer/HorizontalScrollContainer'
 
 gsap.registerPlugin(useGSAP)
 
@@ -28,6 +29,21 @@ function App() {
   const container = useRef();
   const [currentCard, setCurrentCard] = useState(1)
 
+  /* ================== DURATIONS ================== */
+  // First / Second section
+  const FIRST_ANIM_DURATION = 0.25;
+  const SECOND_ANIM_DURATION = 0.4;
+  const FADE_DELAY = 0.05;
+
+  // Cards
+  const CARD_MOVE_DURATION = 0.25;
+  const CARD_SLIDE_STEP_DURATION = 0.25;
+
+  // Sections
+  const THIRD_SECTION_FADE_DURATION = 0.3;
+  const SECTION_FOUR_SLIDE_DURATION = 0.3;
+  const SECTION_FIVE_DURATION = 0.3;
+  const SECTION_SIX_DURATION = 0.6;
 
 
   useGSAP(() => {
@@ -35,33 +51,6 @@ function App() {
     gsap.registerPlugin(ScrollTrigger);
 
     const t1 = gsap.timeline();
-    // /* ================== TIMELINE ================== */
-    // const t1 = gsap.timeline({
-    //   scrollTrigger: {
-    //     trigger: container.current,
-    //     start: "top top",
-    //     end: () => "+=700%",
-    //     pin: true,
-    //     scrub: true,
-    //     invalidateOnRefresh: true,
-    //   },
-    // });
-
-    /* ================== DURATIONS ================== */
-    // First / Second section
-    const FIRST_ANIM_DURATION = 0.25;
-    const SECOND_ANIM_DURATION = 0.4;
-    const FADE_DELAY = 0.05;
-
-    // Cards
-    const CARD_MOVE_DURATION = 0.25;
-    const CARD_SLIDE_STEP_DURATION = 0.25;
-
-    // Sections
-    const THIRD_SECTION_FADE_DURATION = 0.3;
-    const SECTION_FOUR_SLIDE_DURATION = 0.3;
-    const SECTION_FIVE_DURATION = 0.3;
-    const SECTION_SIX_DURATION = 0.6;
 
     /* ================== FIRST ANIM ================== */
     t1.addLabel("firstAnim");
@@ -224,7 +213,7 @@ function App() {
 
     /* ================== CARD SLIDER ================== */
     const wrapper = ".hr-card";
-    const steps = 6;
+    const steps = 3;
 
     t1.addLabel("cardsStart", ">+=0.25");
 
@@ -289,12 +278,12 @@ function App() {
     /* ================== FOURTH EXIT ================== */
     t1.addLabel("fourthAnim", ">");
 
-    t1.to(".section-four", {
-      y: "0%",
-      boxShadow: "none",
-      duration: SECTION_FIVE_DURATION,
-      ease: "none",
-    }, "fourthAnim");
+    // t1.to(".section-four", {
+    //   y: "0%",
+    //   boxShadow: "none",
+    //   duration: SECTION_FIVE_DURATION,
+    //   ease: "none",
+    // }, "fourthAnim");
 
     t1.to(".third-section", {
       height: 0,
@@ -316,12 +305,25 @@ function App() {
       ".header",
       { background: "transparent" },
       {
-        background: "#121212ef",
+        background: "#121212",
         duration: SECTION_FIVE_DURATION,
         ease: "none",
       },
       "fourthAnim"
     );
+
+
+    t1.fromTo(".join-cohort", {
+      y: "-100%",
+      duration: SECTION_FIVE_DURATION,
+      ease: "none",
+    },
+      {
+        y: "0%",
+        duration: SECTION_FIVE_DURATION,
+        ease: "none",
+      }
+      , "fourthAnim");
 
     /* ================== FIFTH ANIM ================== */
     t1.addLabel("fifthAnim", ">+=0.1");
@@ -332,8 +334,6 @@ function App() {
       duration: SECTION_SIX_DURATION,
       ease: "none",
     }, "fifthAnim");
-
-    console.log("t1", t1)
 
     const duration = Object.values(t1.labels).reduce((acc, num) => acc + num)
 
@@ -349,6 +349,80 @@ function App() {
 
   }, { scope: container });
 
+  const hrCardContainer = useRef(null);
+  // let horizontalST;
+
+  // useGSAP(() => {
+  //   gsap.registerPlugin(ScrollTrigger);
+
+  //   const cards = gsap.utils.toArray(".hr-card");
+  //   const steps = cards.length;
+
+  //   const t2 = gsap.timeline();
+  //   t2.addLabel("cardsStart");
+
+  //   for (let i = 0; i < steps - 1; i++) {
+  //     t2.to(".hr-card-container", {
+  //       xPercent: -(i + 1) * 100,
+  //       duration: CARD_SLIDE_STEP_DURATION,
+  //       ease: "none",
+  //       onUpdate: () => {
+  //         const start = t2.labels.cardsStart;
+  //         const end = t2.labels.cardsEnd;
+
+  //         const progress = gsap.utils.clamp(
+  //           0,
+  //           1,
+  //           (t2.time() - start) / (end - start)
+  //         );
+
+  //         gsap.set(".progress-bar", {
+  //           width: `${progress * 100}%`,
+  //         });
+  //       },
+  //     });
+  //   }
+
+  //   t2.addLabel("cardsEnd");
+
+  //   horizontalST = ScrollTrigger.create({
+  //     animation: t2,
+  //     trigger: hrCardContainer.current,
+  //     start: "top top",
+  //     end: () => `+=${window.innerWidth * (steps - 1)}`,
+  //     pin: true,
+  //     scrub: true,
+  //     anticipatePin: 1,
+  //     invalidateOnRefresh: true,
+  //     enabled: false, // 🔴 important
+  //   });
+
+  // }, { scope: hrCardContainer });
+
+
+  // useEffect(() => {
+  //   const el = hrCardContainer.current;
+  //   if (!el) return;
+
+  //   const onEnter = () => {
+  //     horizontalST?.enable();
+  //     ScrollTrigger.refresh();
+  //   };
+
+  //   const onLeave = () => {
+  //     horizontalST?.disable();
+  //   };
+
+  //   el.addEventListener("mouseenter", onEnter);
+  //   el.addEventListener("mouseleave", onLeave);
+
+  //   return () => {
+  //     el.removeEventListener("mouseenter", onEnter);
+  //     el.removeEventListener("mouseleave", onLeave);
+  //   };
+  // }, []);
+
+
 
 
   return (
@@ -359,7 +433,10 @@ function App() {
         <Home />
         <Second />
         <Third currentCard={currentCard} />
-        <Fourth />
+        <Fourth hrCardContainer={hrCardContainer} />
+        {/* <div className='fourth-section h-screen'>
+          <FourthV2 hrCardContainer={hrCardContainer} />
+        </div> */}
         <JoinCohort />
         <Footer />
       </div>
@@ -554,7 +631,7 @@ const Third = ({ currentCard }) => {
   </ResponsiveSection>
 }
 
-const Fourth = () => {
+const Fourth = ({ hrCardContainer }) => {
   return <ResponsiveSection className='h-screen relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] rounded-[60px] overflow-hidden'>
     <div className='flex gap-2'>
       <h2 className='flex-1 text-[40px] leading-[52px] font-medium'>
@@ -564,7 +641,7 @@ const Fourth = () => {
         You choose one or more improvement programs. Your AI Doctor works in the background every day — helping you feel the changes in ways that matter: steadier energy, calmer mornings, smoother rhythms, and more restorative nights.
       </p>
     </div>
-    <div className='flex flex-col justify-between gap-[24px]'>
+    <div className='flex flex-col justify-between gap-[24px]' ref={hrCardContainer}>
       <div className='flex gap-[24px] hr-card-container'>
         <HorizontalCard
           title="Mornings stop feeling unpredictable"
@@ -598,30 +675,6 @@ const Fourth = () => {
           Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
         </HorizontalCard>
         <HorizontalCard
-          title="Sleep becomes restorative"
-          img={"/assets/images/hr-card-5.jpg"}
-          className="hr-card-5"
-        >
-          Your AI Doctor helps you adjust your evenings, nutrition, timing, and recovery.
-          You fall asleep easier, wake up less, and start feeling rested in a way you haven’t in years.
-        </HorizontalCard>
-        <HorizontalCard
-          title="Meals stop derailing your day"
-          img={"/assets/images/hr-card-6.jpg"}
-          className="hr-card-6"
-        >
-          You quickly learn which foods and timings work for your physiology.
-          Post-meal crashes shrink, late-evening glucose stays quieter, and eating stops feeling like guesswork.
-        </HorizontalCard>
-        <HorizontalCard
-          title="Energy feels smoother, not spiky"
-          img={"/assets/images/hr-card-7.jpg"}
-          className="hr-card-7"
-        >
-          Instead of sharp highs and lows, your days develop a smoother rhythm.
-          Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
-        </HorizontalCard>
-        <HorizontalCard
           title="Healthy routines finally stick"
           img={"/assets/images/hr-card-8.jpg"}
           className="hr-card-8"
@@ -633,6 +686,60 @@ const Fourth = () => {
         <div className="progress-bar bg-[#06040A] h-full w-fit"></div>
       </div>
     </div>
+  </ResponsiveSection>
+}
+
+const FourthV2 = ({ hrCardContainer }) => {
+  return <ResponsiveSection className='h-screen relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] rounded-[60px] overflow-hidden'>
+    <div className='flex gap-2'>
+      <h2 className='flex-1 text-[40px] leading-[52px] font-medium'>
+        Real clinical outcomes, <br /> felt in your everyday life
+      </h2>
+      <p className='flex-1 text-[16px] leading-[24px] font-medium'>
+        You choose one or more improvement programs. Your AI Doctor works in the background every day — helping you feel the changes in ways that matter: steadier energy, calmer mornings, smoother rhythms, and more restorative nights.
+      </p>
+    </div>
+
+    <HorizontalScroll>
+      <HorizontalCard
+        title="Mornings stop feeling unpredictable"
+        img={"/assets/images/hr-card-1.jpg"}
+        className="hr-card-1"
+      >
+        Instead of waking up already behind, you start the day more steady — clear-headed, less groggy, and without the crashes that used to set the tone.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Sleep becomes restorative"
+        img={"/assets/images/hr-card-2.jpg"}
+        className="hr-card-2"
+      >
+        Your AI Doctor helps you adjust your evenings, nutrition, timing, and recovery.
+        You fall asleep easier, wake up less, and start feeling rested in a way you haven’t in years.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Meals stop derailing your day"
+        img={"/assets/images/hr-card-3.jpg"}
+        className="hr-card-3"
+      >
+        You quickly learn which foods and timings work for your physiology.
+        Post-meal crashes shrink, late-evening glucose stays quieter, and eating stops feeling like guesswork.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Energy feels smoother, not spiky"
+        img={"/assets/images/hr-card-4.jpg"}
+        className="hr-card-4"
+      >
+        Instead of sharp highs and lows, your days develop a smoother rhythm.
+        Lifting groceries, climbing stairs, focusing at work — everything feels more doable.
+      </HorizontalCard>
+      <HorizontalCard
+        title="Healthy routines finally stick"
+        img={"/assets/images/hr-card-8.jpg"}
+        className="hr-card-8"
+      >
+        Because your AI Doctor guides you in real time, habits stop slipping through cracks. Hydration, movement, medication timing, sleep routines — they become easier, more automatic, and more consistent.
+      </HorizontalCard>
+    </HorizontalScroll>
   </ResponsiveSection>
 }
 
