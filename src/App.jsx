@@ -511,7 +511,7 @@ const Home = () => {
     <div className='flex-1 flex flex-col justify-center'>
       <div className='flex flex-col lg:flex-row items-center lg:px-[40px] gap-[100px] lg:gap-[0px]'>
         <div className='flex-1'>
-          <div className="flex-1">
+          <div className="flex-1 text-right">
             <SlideUpText
               items={[
                 "Glucose spike between MD visits?",
@@ -791,7 +791,7 @@ const Fourth = ({ hrCardContainer }) => {
           Because your AI Doctor guides you in real time, habits stop slipping through cracks. Hydration, movement, medication timing, sleep routines — they become easier, more automatic, and more consistent.
         </HorizontalCard>
       </div>
-      <div className='flex justify-between items-center w-full'>
+      <div className='flex justify-between flex items-center w-full'>
         <div className="bg-[#06040A]/20 w-[200px] h-[4px]">
           <div style={{ width: `${progress}%` }}
             className={cn("progress-bar bg-[#06040A] h-full w-fit")}></div>
