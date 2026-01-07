@@ -5,7 +5,7 @@ import Separator from '../Separator';
 
 function Header() {
     return (
-        <header className='mx-auto w-[1512px] header fixed top-0 z-50 left-0 right-0 '>
+        <header className='mx-auto max-w-[1512px] header fixed top-0 z-50 left-0 right-0 '>
             <div className='flex justify-between items-center px-[24px] py-[20px] lg:px-[60px] lg:py-[32px] h-[100px] '>
                 <NavLink to="/">
                     <img src={"/assets/images/logo.png"} className='w-[30px] h-[24px] lg:h-[40px] lg:w-[50px]' alt='Vite logo' />
