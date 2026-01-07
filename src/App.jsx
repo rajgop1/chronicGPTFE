@@ -126,7 +126,7 @@ function App() {
       { backgroundPosition: "50% 50%", duration: FIRST_ANIM_DURATION, ease: "none" },
       "secondAnim"
     );
-    const CARD_MOVE_DURATION = 0.5;
+    
     const GAP = 32; // px gap between cards
     const TOTAL_CARDS = 3;
     const DELAY_BETWEEN = 0.2; // seconds delay between cards
