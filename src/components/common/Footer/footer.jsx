@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 import Separator from "../Separator";
 
 const Footer = () => (
-  <div className='footer h-fit flex flex-col flex-1 px-[60px]'>
+  <div className='footer h-fit flex flex-col flex-1 px-[20px] lg:px-[60px]'>
     <Separator variant='v2' />
     <div className="flex flex-col ">
       <footer className='py-[40px] flex flex-col gap-[50px] bg-[#121212]'>
@@ -15,7 +15,7 @@ const Footer = () => (
               We offer reliable healthcare insights, expert advice, and digital tools to support your journey towards a healthier lifestyle.
             </div>
           </div>
-          <div className='flex flex-col lg:items-center gap-[16px]'>
+          <div className='flex flex-col md:items-end lg:items-center gap-[16px]'>
             <NavLink to="" className={"font-medium"}>Quick Links</NavLink>
             <div className='flex flex-col gap-[10px]'>
               <NavLink to="" className={"text-[14px]"}>Home</NavLink>
@@ -42,7 +42,7 @@ const Footer = () => (
         </div>
         <Separator variant='v2' />
         <div className='flex flex-col gap-[40px] lg:flex-row w-full justify-between text-[14px]'>
-          <div className='flex flex-wrap flex-col md:flex-row flex-1 gap-[32px]'>
+          <div className='flex flex-wrap flex-col md:flex-row md:justify-center flex-1 gap-[32px]'>
             <div>Copyright © ChronicGPT 2026</div>
             <div>Privacy Policy</div>
             <div>Terms & Conditions</div>

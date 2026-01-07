@@ -74,6 +74,7 @@ function Journey() {
   const container = useRef();
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
+    const mm = gsap.matchMedia();
 
     const t1 = gsap.timeline({
       scrollTrigger: {
@@ -185,21 +186,53 @@ function Journey() {
 
     const cards2 = gsap.utils.toArray(".card-2");
 
-    cards2.forEach((card, i) => {
-      t1.to(card, {
-        y: `-${(i) * 100}%`,  // each card moves more than the previous
-        boxShadow: "0px -5px 80px rgba(0,0,0,0.8)",
-        ease: "none",
-        duration: 0.3
+    /* ⏩ DESKTOP — keep your existing logic */
+    mm.add("(min-width: 768px)", () => {
+      cards2.forEach((card, i) => {
+        t1.to(card, {
+          y: `-${i * 100}%`,
+          boxShadow: "0px -5px 80px rgba(0,0,0,0.8)",
+          ease: "none",
+          duration: 0.3,
+        });
+      });
+    });
+
+    /* 📱 MOBILE — same animation style as earlier stack section */
+    mm.add("(max-width: 767px)", () => {
+      const GAP = 32; // change to px if you want vertical spacing
+
+      cards2.slice(1).forEach((card, i) => {
+        const label = `card2-mobile-${i}`;
+        t1.addLabel(label);
+
+
+        if (i === 0) {
+          t1.to(".section-three-header", { height: 0, autoAlpha: 0, duration: 0.1 }, label)
+        }
+
+        // Move all cards, but only reveal stack above
+
+        t1.to(
+          cards2,
+          {
+            yPercent: -100 * (i + 1),
+            y: `-=${GAP * i}`,
+            ease: "none",
+          },
+          `${label}`
+        )
       });
     });
 
     t1.addLabel("thirdAnim");
 
-    t1.to(".section-three-header", {
-      autoAlpha: 0.75,
-      duration: 0.2
-    }, "thirdAnim")
+    mm.add("(min-width: 768px)", () => {
+      t1.to(".section-three-header", {
+        autoAlpha: 0.75,
+        duration: 0.2
+      }, "thirdAnim")
+    })
 
     t1.to(".section-two", {
       height: "0",
@@ -233,7 +266,7 @@ function Journey() {
 
   return (
     <>
-      <div className='max-w-[1512px] mx-auto' ref={container}>
+      <div className='max-w-[1512px] mx-auto text-[#121212]' ref={container}>
         <Header />
         <HeaderBackground>
           <Third />
@@ -249,32 +282,37 @@ function Journey() {
 
 
 const Third = () => {
-  return <ResponsiveSection className='max-h-[76dvh] flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section rounded-[54px] p-[60px] mx-[10px] text-[#121212] overflow-hidden'>
+  return <ResponsiveSection className='max-h-[76lvh] mx-[4px] lg:mx-0 flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section mx-[10px] text-[#121212] overflow-hidden'>
     <div className='flex-1 flex flex-col gap-[10px]'>
       <div className='flex flex-col '>
-        <div className='flex flex-row gap-2'>
-          <div className='flex-1 text-[40px] font-semibold '>
+        <div className='flex flex-col lg:flex-row gap-[12px] lg:gap-2'>
+          <div className='flex-1 text-[32px] lg:text-[40px] leading-[36px] md:leading-normal font-semibold '>
             Your Journey With Qronic AI
           </div>
-          <div className='flex-1 font-medium'>
+          <div className='text-[16px] leading-[22px] text-[#4A4A4A] flex-1 font-medium'>
             Your AI Doctor combines three essential functions to provide continuous, intelligent care.
           </div>
         </div>
       </div>
       <div className="flex-1 flex flex-col justify-center relative z-[1] flex overflow-x-auto hide-scrollbar">
-        {/* {CARD_DATA.map((card) => (
-          <Card
-            key={card.position}
-            position={card.position}
-            title={card.title}
-            logo={card.logo}
-            img={card.img}
-            className="group"
-          >
-            {card.text}
-          </Card>
-        ))} */}
-        <HoverCards cards={CARD_DATA} />
+        <div className='flex flex-col lg:hidden'>
+          {CARD_DATA.map((card) => (
+            <Card
+              key={card.position}
+              position={card.position}
+              title={card.title}
+              logo={card.logo}
+              img={card.img}
+              className="group"
+            >
+              {card.text}
+            </Card>
+          ))}
+        </div>
+        <div className='hidden lg:flex'>
+          <HoverCards cards={CARD_DATA} />
+
+        </div>
       </div>
 
     </div>
@@ -282,31 +320,36 @@ const Third = () => {
 }
 
 const Card = ({ title, logo, img, children, position = "01", className }) => (
-  <div className={cn('group transition-all duration-300 ease-out hover:shrink-0 flex flex-col card w-[550px] bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[60px] p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[20px]', className)}>
-    <div className='flex-1 flex flex-col gap-[16px]'>
-      <div className='h-[204px] rounded-[40px] overflow-hidden'>
-        <img src={img} className='w-full h-full object-cover rounded-[24px]' />
+  <div className={cn('flex flex-col-reverse lg:flex-col card w-full bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[30px] lg:rounded-[60px] p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[24px] lg:gap-[20px]', className)}>
+    <div className='flex-1 flex flex-col gap-[24px] lg:gap-[16px]'>
+      <div className='h-[288px] lg:h-[204px] rounded-[30px] lg:rounded-[40px] overflow-hidden'>
+        <img src={img} className='w-full h-full object-cover rounded-[30px] lg:rounded-[24px]' />
       </div>
-      <div className='font-bold text-[20px] flex flex-col gap-[8px]'>
-        <div>{title}</div>
-      </div>
-      <div className='opacity-0 card-children'>
-        {children}
+      <div className='flex flex-col gap-[8px]'>
+        <div className='font-bold text-[24px] lg:text-[20px] flex flex-col gap-[8px]'>
+          <div>{title}</div>
+        </div>
+        <div className='card-children'>
+          {children}
+        </div>
       </div>
     </div>
-    <div className='opacity-0 font-roboto text-[32px]'>
-      {position}
+    <div className='font-roboto flex items-end lg:items-center lg:gap-[8px] text-[50px] leading-[42px] lg:text-[32px] lg:leading-normal'>
+      <div>
+        {position}
+      </div>
+      <div className="flex flex-col justify-end text-[16px] leading-[26px] font-thin text-[#121212] uppercase">//step</div>
     </div>
   </div>
 )
 
 const SectionThree = () => (
-  <ResponsiveSection className='relative z-[4] section-three h-dvh rounded-[52px] overflow-hidden mx-[10px] flex flex-col gap-[32px] border border-[5px] border-white'>
+  <ResponsiveSection className='text-white relative z-[4] section-three h-lvh overflow-hidden mx-[10px] flex flex-col gap-[32px] border border-[5px] border-white'>
 
-    <div className='flex flex-col gap-[24px] p-[24px] pt-0'>
-      <div className='relative z-[2] pt-[24px] flex items-center bg-[#121212] section-three-header'>
-        <div className='flex-1 text-[36px] font-semibold'>No Surprises. No Fine Print. <br /> Just the Truth.</div>
-        <div className='flex-1 font-medium'>We believe in complete transparency. Here's exactly what you get with Qronic AI, what your insurance already covers, and what's optional.</div>
+    <div className='flex flex-col gap-[40px] lg:gap-[24px] px-[5px] lg:p-[24px] lg:pt-0'>
+      <div className='relative lg:z-[2] pt-[24px] flex items-center bg-[#121212] section-three-header flex-col lg:flex-row gap-[4px]'>
+        <div className='flex-1 text-[32px] lg:text-[36px] leading-[36px] lg:leading-normal font-semibold'>No Surprises. No Fine Print. <br className='hidden lg:inline-block'/> Just the Truth.</div>
+        <div className='flex-1 text-[16px] leading-[22px] font-medium'>We believe in complete transparency. Here's exactly what you get with Qronic AI, what your insurance already covers, and what's optional.</div>
       </div>
       <div className='relative z-[1] flex flex-col gap-[40px]'>
         <Card2
@@ -314,12 +357,12 @@ const SectionThree = () => (
           subtitle="(Everything here is part of the subscription)"
           img="/assets/images/journey/card-1.jpg"
         >
-          <div>Your own AI Doctor</div>
-          <div>Daily guidance & weekly check-ins</div>
-          <div>24/7 messaging & support</div>
-          <div>Continuous monitoring of patterns</div>
-          <div>Integration with your existing wearables</div>
-          <div>Essential starter devices, if needed (sleep/activity tracker, condition-specific sensor)</div>
+          <li>Your own AI Doctor</li>
+          <li>Daily guidance & weekly check-ins</li>
+          <li>24/7 messaging & support</li>
+          <li>Continuous monitoring of patterns</li>
+          <li>Integration with your existing wearables</li>
+          <li>Essential starter devices, if needed (sleep/activity tracker, condition-specific sensor)</li>
         </Card2>
 
         <Card2
@@ -327,11 +370,11 @@ const SectionThree = () => (
           subtitle="(Things your existing doctor or insurance already covers)"
           img="/assets/images/journey/card-2.jpg"
         >
-          <div>Routine lab tests</div>
-          <div>Imaging and results</div>
-          <div>Prescription medications</div>
-          <div>In-person doctor visits</div>
-          <div>Many telehealth visits with clinicians</div>
+          <li>Routine lab tests</li>
+          <li>Imaging and results</li>
+          <li>Prescription medications</li>
+          <li>In-person doctor visits</li>
+          <li>Many telehealth visits with clinicians</li>
         </Card2>
 
         <Card2
@@ -339,10 +382,10 @@ const SectionThree = () => (
           subtitle="(Completely optional add-ons; not required)"
           img="/assets/images/journey/card-3.jpg"
         >
-          <div>Additional specialty sensors</div>
-          <div>Non-standard lab panels</div>
-          <div>Extra or premium services</div>
-          <div>Any advanced devices not included in starter kit</div>
+          <li>Additional specialty sensors</li>
+          <li>Non-standard lab panels</li>
+          <li>Extra or premium services</li>
+          <li>Any advanced devices not included in starter kit</li>
         </Card2>
       </div>
     </div>
@@ -350,21 +393,21 @@ const SectionThree = () => (
 )
 
 const Card2 = ({ title, subtitle, img, children }) => (
-  <div className='card-2 rounded-[40px] bg-[#2A2A2A] p-[40px] flex flex-row gap-[32px]'>
-    <div className='flex-1 flex flex-col gap-[24px]'>
+  <div className='card-2 rounded-[30px] lg:rounded-[40px] bg-[#2A2A2A] p-[20px] lg:p-[40px] flex flex-col lg:flex-row gap-[32px]'>
+    <div className='flex-1 flex flex-col gap-[20px] lg:gap-[24px]'>
       <div>
-        <div className='font-semibold text-[24px] leading-[40px]'>{title}</div>
-        <div className='text-[16px] leading-[28px]'>{subtitle}</div>
+        <div className='font-bold lg:font-semibold text-[20px] lg:text-[24px] leading-[30px] lg:leading-[40px]'>{title}</div>
+        <div className='text-[16px] leading-[22px] lg:leading-[28px]'>{subtitle}</div>
       </div>
-      <div className='flex flex-col gap-[8px] px-[20px] text-[16px] leading-[28px]'>
+      <div className='flex flex-col gap-[8px] px-[20px] text-[16px] leading-[24px] lg:leading-[28px]'>
         {children}
       </div>
     </div>
-    <div className="flex-1 relative h-[328px] rounded-[24px] overflow-hidden">
+    <div className="flex-1 relative min-h-[328px] lg:h-[328px] lg:min-h-auto rounded-[24px] overflow-hidden">
       <img
         src={img}
         alt=""
-        className="w-full h-full object-cover object-center rounded-[24px]"
+        className="w-full h-full object-cover object-center rounded-[16px] lg:rounded-[24px]"
       />
     </div>
   </div>

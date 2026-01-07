@@ -13,13 +13,13 @@ function Safeguards() {
   const container = useRef();
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
+    const mm = gsap.matchMedia()
 
     const t1 = gsap.timeline({
       scrollTrigger: {
         trigger: container.current,
         start: "top top",
-        end: "+=230%",
-        pinSpacing:false,
+        end: "max",
         pin: true,
         scrub: true,
       }
@@ -105,55 +105,69 @@ function Safeguards() {
     //     );
     // });
 
-    const MARGIN_TOP = 0;
-    const BASE_SCALES = []
-    const AUTO_ALPHAE = []
+    mm.add("(min-width: 768px)", () => {
+      // DESKTOP/TABLET — scale + move
+      const MARGIN_TOP = 0
+      const BASE_SCALES = []
+      const AUTO_ALPHAE = []
 
-    cards.forEach((card, i) => {
-      const scale = 0.85 + (i / 8)
-      const autoAlpha = 1 - (i / 4)
-      BASE_SCALES[i] = scale
-      AUTO_ALPHAE[i] = autoAlpha
-      gsap.set(card, {
-        scale: scale,
-        autoAlpha: autoAlpha,
-        marginTop: (i + 1) * MARGIN_TOP
-      });
-    });
+      cards.forEach((card, i) => {
+        const scale = 0.85 + (i / 8)
+        const autoAlpha = 1 - (i / 4)
+        BASE_SCALES[i] = scale
+        AUTO_ALPHAE[i] = autoAlpha
+        gsap.set(card, { scale, autoAlpha, marginTop: (i + 1) * MARGIN_TOP })
+      })
 
+      t1.addLabel("cardsAnimation")
 
-    t1.addLabel("cardsAnimation")
+      cards.slice(1).forEach((card, i) => {
+        const labelName = `card-anim-${i}`
+        t1.addLabel(labelName)
 
-    cards.slice(1).forEach((card, i) => {
+        if (i === 0) {
+          t1.to(".safeguards-header", { height: 0, autoAlpha: 0, duration: 0.1 }, labelName)
+        }
 
-      const labelName = `card-anim-${i}`
-      t1.addLabel(labelName)
-
-      if (i === 0) {
-        t1.to(".safeguards-header", {
-          height: 0,
-          autoAlpha: 0,
-          duration: 0.1,
-        }, labelName)
-      }
-
-
-      t1.to(
-        cards,
-        {
+        t1.to(cards, {
           yPercent: -100 * (i + 1),
-          y: -(MARGIN_TOP) * (i + 1),
           ease: "none",
-          scale: (index, div) => {
-            if (index <= i) return 0.85
-            return BASE_SCALES[index - (i + 1)]
-          },
+          scale: (index) => (index <= i ? 0.85 : BASE_SCALES[index - (i + 1)]),
           autoAlpha: 1
-
         }, labelName)
+      })
+    })
 
-    });
 
+    mm.add("(max-width: 767px)", () => {
+      const GAP = 24 // change to your card gap
+
+      t1.addLabel("cardsAnimationMobile")
+
+      cards.forEach((card) => {
+        gsap.set(card, { scale: 1, autoAlpha: 1 }) // reset desktop style
+      })
+
+      cards.slice(1).forEach((card, i) => {
+        const labelName = `card-anim-mobile-${i}`
+        t1.addLabel(labelName,)
+
+        if (i === 0) {
+          t1.to(".safeguards-header", { height: 0, autoAlpha: 0, duration: 0.1 }, labelName)
+        }
+
+        t1.to(
+          cards,
+          {
+            yPercent: -100 * (i + 1),
+            // y: `-=calc(-${GAP * (i + 1)}px`,
+            y: `-=${GAP * i}`,
+            ease: "none",
+          },
+          `${labelName}`
+        )
+      })
+    })
 
 
     t1.addLabel("secondAnim", ">+=0.25")
@@ -211,7 +225,7 @@ function Safeguards() {
 }
 
 export const HeaderBackground = ({ children }) => {
-  return <div className='z-[2] section-two relative h-dvh overflow-hidden flex flex-col'>
+  return <div className='z-[2] section-two relative h-lvh overflow-hidden flex flex-col'>
     <div className="hero-img shrink-0 absolute h-[26dvh] w-full overflow-hidden">
       <img
         src="/assets/images/sub-banner.png"
@@ -238,27 +252,27 @@ export const HeaderBackground = ({ children }) => {
       />
 
     </div>
-    <div className='second-inner-content mt-[20dvh] flex flex-col flex-1 p-[10px] pt-[0px]'>
+    <div className='second-inner-content mt-[14dvh] lg:mt-[20dvh] flex flex-col flex-1 p-[10px] pt-[0px]'>
       {children}
     </div>
   </div>
 }
 
 const Third = () => {
-  return <ResponsiveSection className='bg-[#F1F1F1] z-[1] flex-1 relative third-section rounded-[54px] text-[#121212] overflow-hidden' >
+  return <ResponsiveSection className='bg-white lg:bg-[#F1F1F1] z-[1] flex-1 relative third-section text-[#121212] overflow-hidden' >
 
     <div className='flex flex-col gap-[20px] 3xl:gap-[40px]'>
       <div className='safeguards-header flex-1 flex flex-col gap-[20px]'>
-        <div className='flex flex-row gap-2'>
-          <div className='flex-1 text-[40px] font-semibold '>
+        <div className='flex flex-col lg:flex-row gap-2'>
+          <div className='flex-1 text-[32px] lg:text-[40px] font-semibold '>
             Safeguards you deserve
           </div>
-          <div className='flex-1 font-medium'>
+          <div className='flex-1 font-medium text-[16px]'>
             Your AI Doctor is designed with multiple layers of protection to ensure your safety, privacy, and the highest standard of care.
           </div>
         </div>
       </div>
-      <div className='relative z-[1] flex flex-col'>
+      <div className='relative z-[1] flex flex-col gap-[24px] lg:gap-0'>
         <Card title="Your data stays yours" logo="/assets/images/safeguards/card-1-icon.png" img="/assets/images/safeguards/card-1.jpg">
           Your health data is encrypted, never sold, and never shared without your permission. You decide what ChronicGPT Inc. can access and what it cannot.
         </Card>
@@ -283,15 +297,15 @@ const Third = () => {
 }
 
 const Card = ({ title, logo, img, children }) => (
-  <div className='card bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[40px] p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[60px]'>
-    <div className='flex-1 flex flex-col justify-between'>
-      <div className='flex items-center gap-[20px]'>
-        <img src={logo} alt="" className='w-[80px] h-[80px]' />
-        <div className='text-[28px] font-medium'>
+  <div className='card bg-[#F1F1F1] h-[440px] md:h-auto lg:bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[28px] lg:rounded-[40px] p-[24px] border border-[1px] border-[#B0B0B0] flex flex-col-reverse lg:flex-row gap-[20px] lg:gap-[60px]'>
+    <div className='flex-1 flex flex-col justify-between gap-[6px]'>
+      <div className='flex items-center gap-[8px] lg:gap-[20px]'>
+        <img src={logo} alt="" className='w-[40px] h-[40px] lg:w-[80px] lg:h-[80px]' />
+        <div className='text-[20px] lg:text-[28px] font-bold lg:font-medium'>
           {title}
         </div>
       </div>
-      <div className='text-[20px]'>
+      <div className='text-[16px] lg:text-[20px]'>
         {children}
       </div>
     </div>
@@ -305,20 +319,20 @@ const Card = ({ title, logo, img, children }) => (
 
 const BuildForTrust = () => (
   <div className='build-for-trust bg-transparent rounded-[52px] overflow-hidden flex flex-col border border-[5px] border-white'>
-    <div className="relative h-[420px] rounded-[52px] overflow-hidden">
+    <div className="relative h-[260px] lg:h-[420px] rounded-[24px] lg:rounded-[52px] overflow-hidden">
       <img
         src="/assets/images/safeguards/safeguards-bg-v2.png"
         alt=""
-        className="w-full h-full object-cover object-center rounded-[52px]"
+        className="w-full h-full object-cover object-center rounded-[24px] lg:rounded-[52px]"
       />
     </div>
-    <div className='flex-1 flex flex-col justify-center gap-[24px] text-center p-[24px] pb-[32px]'>
-      <div className='text-[36px] font-semibold'>Built for Trust</div>
+    <div className='flex-1 flex flex-col lg:justify-center gap-[24px] text-center px-[10px] py-[24px] lg:p-[24px] pb-[32px]'>
+      <div className='text-[32px] lg:text-[36px] font-semibold'>Built for Trust</div>
       <div className='text-[16px] flex flex-col gap-[8px]'>
         <div className='font-medium'>
           We know you can only trust a system that is medically sound, transparent, and accountable. ChronicGPT is built so that your AI Doctor never acts alone. Your human doctor sets your health goals, licensed physicians oversee your progress, and every recommendation your AI Doctor makes is traceable, explainable, and grounded in real clinical reasoning. You are always informed, always in control, and never navigating your health alone.
         </div>
-        <div className='font-bold'>
+        <div className='font-bold pt-[16px] lg:pt-0'>
           How we keep you safe:
         </div>
         <div className='font-medium'>

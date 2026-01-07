@@ -53,6 +53,8 @@ function App() {
   useGSAP(() => {
 
     gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
+
 
     const t1 = gsap.timeline();
     const hrTl = gsap.timeline({
@@ -113,12 +115,25 @@ function App() {
       padding: 0,
     }, "secondAnim");
 
-    t1.to(".second-section", {
-      height: "20dvh",
-      duration: SECOND_ANIM_DURATION,
-      ease: "none",
-      padding: 0
-    }, "secondAnim");
+    mm.add("(min-width: 768px)", () => {
+      // Desktop/tablet height
+      t1.to(".second-section", {
+        height: "20dvh",
+        padding: 0,
+        ease: "none",
+        duration: SECOND_ANIM_DURATION,
+      }, "secondAnim");
+    });
+
+    mm.add("(max-width: 767px)", () => {
+      // Mobile height
+      t1.to(".second-section", {
+        height: "10dvh",
+        padding: 0,
+        ease: "none",
+        duration: SECOND_ANIM_DURATION,
+      }, "secondAnim");
+    });
 
     t1.fromTo(
       ".second-section .hero-img",
@@ -356,6 +371,13 @@ function App() {
       ease: "none",
     }, "fifthAnim");
 
+    t1.to(".header", {
+      height: 0,
+      autoAlpha: 0,
+      duration: SECTION_SIX_DURATION,
+      ease: "none",
+    }, "fifthAnim");
+
     const duration = Object.values(t1.labels).reduce((acc, num) => acc + num)
 
 
@@ -509,13 +531,13 @@ function App() {
 }
 
 const Home = () => {
-  return <div className='home-section h-dvh pb-[40px] xl:pb-[68px] px-[42px] flex flex-col'  >
+  return <div className='home-section h-lvh pb-[40px] xl:pb-[68px] px-[42px] flex flex-col'  >
     {/* Home */}
     <div className='shrink-0 h-[59px] lg:h-[99px] w-full'>
     </div>
     <Separator className={"shrink-0"} />
     <div className='flex-1 flex flex-col justify-center'>
-      <div className='flex flex-col lg:flex-row items-center lg:px-[40px] gap-[100px] lg:gap-[0px]'>
+      <div className='flex flex-col lg:flex-row items-center lg:px-[40px] gap-[80px] md:gap-[40px] lg:gap-[100px] lg:gap-[0px]'>
         <div className='flex-1'>
           <div className="flex-1 text-right">
             <SlideUpText
@@ -531,7 +553,7 @@ const Home = () => {
           </div>
         </div>
         <div className='flex-1 flex justify-center'>
-          <div className='relative dr-img-container max-w-[464px]'>
+          <div className='relative dr-img-container max-w-[304px] md:max-w-[200px] lg:max-w-[464px]'>
             <img src="/assets/images/dr-sara-mohan.png" alt="" className='w-full h-full object-cover' />
             <div className='absolute top-[50%] -translate-y-[200%] -right-[34px]'>
               <div>
@@ -548,7 +570,7 @@ const Home = () => {
       </div>
       <Separator className={"shrink-0"} />
       <FadeInText className='flex justify-center'>
-        <div className='text-center py-[32px] font-medium text-[20px] lg:text-[34px] leading-[40px] max-w-[1012px]'>
+        <div className='text-center py-[32px] font-medium text-[20px] lg:text-[34px] lg:leading-[40px] max-w-[1012px]'>
           Now you can have your own AI Doctor that is always on, always yours, and outcome focused
         </div>
       </FadeInText>
@@ -557,7 +579,7 @@ const Home = () => {
 }
 
 const Second = () => {
-  return <div className="z-[2] second-section relative h-dvh flex flex-col gap-[25px] bg-[#121212]">
+  return <div className="z-[2] second-section relative h-lvh flex flex-col gap-[25px] bg-[#121212]">
     {/* IMAGE SECTION */}
     <div
       className="
@@ -632,12 +654,14 @@ const Second = () => {
 
 const Third = ({ currentCard }) => {
   return <ResponsiveSection className='z-[3] relative h-dvh third-section mx-[10px] text-black bg-[#FFF] overflow-hidden'>
-    <div className='flex flex-col lg:flex-row gap-2 md:gap-4 lg:gap-6 3xl:gap-8'>
+    <div className='flex flex-col lg:flex-row gap-8 md:gap-4 lg:gap-6 3xl:gap-8'>
       <div className='max-h-[calc(80dvh-20px)]
         md:max-h-[calc(80dvh-40px)]
         lg:max-h-[calc(80dvh-80px)]
         3xl:max-h-[calc(80dvh-120px)]
-        flex-1 flex flex-col justify-between gap-[20px]'>
+        flex-1 flex flex-col justify-between gap-[20px]
+        relative z-[1] bg-white shadow-lg lg:shadow-none lg:bg-transparent lg:static -mx-[16px] -mt-[20px] px-[16px] py-[24px] lg:mx-0 lg:mt-0 lg:px-0 lg:py-0  
+        '>
         <div className='flex flex-col gap-2 justify-between'>
           <div className='text-[40px] font-medium '>
             How it works
@@ -646,7 +670,7 @@ const Third = ({ currentCard }) => {
             Your AI Doctor combines three layers of intelligence  <br /> to give you continuous, clinician-guided care.
           </div>
         </div>
-        <div className='flex flex-row justify-between items-center md:items-start md:flex-col gap-[16px]'>
+        <div className='flex flex-row justify-between items-center lg:items-start lg:flex-col gap-[16px]'>
           <div className='flex items-center font-roboto font-medium text-[#121212] text-[32px] gap-[4px] leading-[32px]'>
             <div>{String(currentCard).padStart(2, "0")}</div> <div className='text-[22px] text-[#121212]/60'>/ 03</div>
           </div>
@@ -757,7 +781,7 @@ const Fourth = ({ hrCardContainer }) => {
   }, []);
 
   return <ResponsiveSection className='h-dvh relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] overflow-hidden'>
-    <div className='flex flex-col md:flex-row gap-2'>
+    <div className='flex flex-col lg:flex-row gap-2'>
       <h2 className='flex-1 text-[40px] leading-[52px] font-medium'>
         Real clinical outcomes, felt in your everyday life
       </h2>
@@ -765,7 +789,7 @@ const Fourth = ({ hrCardContainer }) => {
         You choose one or more improvement programs. Your AI Doctor works in the background every day — helping you feel the changes in ways that matter: steadier energy, calmer mornings, smoother rhythms, and more restorative nights.
       </p>
     </div>
-    <div className='flex flex-col-reverse md:flex-col justify-between gap-[24px]'  >
+    <div className='flex flex-col-reverse lg:flex-col justify-between gap-[24px]'  >
       <div className={cn('flex gap-[24px] hr-card-container pb-[8px] overflow-auto hide-scrollbar', canNext && "hr-card-container-mask")} ref={hrCardContainer}>
         <HorizontalCard
           title="Mornings stop feeling unpredictable"
@@ -806,7 +830,7 @@ const Fourth = ({ hrCardContainer }) => {
           Because your AI Doctor guides you in real time, habits stop slipping through cracks. Hydration, movement, medication timing, sleep routines — they become easier, more automatic, and more consistent.
         </HorizontalCard>
       </div>
-      <div className='flex justify-between flex flex-row-reverse md:flex-row items-center w-full'>
+      <div className='flex justify-between flex flex-row-reverse lg:flex-row items-center w-full'>
         <div className="bg-[#06040A]/20 w-[200px] h-[4px]">
           <div style={{ width: `${progress}%` }}
             className={cn("progress-bar bg-[#06040A] h-full w-fit")}></div>
@@ -902,7 +926,7 @@ const Card = ({
         bg-[#F1F1F1]
         card-carousel
         rounded-[30px]
-        md:rounded-[50px]
+        lg:rounded-[50px]
         p-[10px]
         md:p-[20px]
         lg:p-[30px]

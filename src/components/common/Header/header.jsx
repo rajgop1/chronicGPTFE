@@ -22,13 +22,13 @@ function Header() {
   }, [menu, lenis])
 
   return (
-    <header className='mx-auto max-w-[1512px] header fixed top-0 z-50 left-0 right-0 '>
+    <header className='mx-auto max-w-[1512px] header fixed top-0 z-[50] left-0 right-0 text-white'>
       <div className='flex justify-between items-center px-[24px] md:py-[20px] lg:px-[60px] lg:py-[32px] h-[64px] lg:h-[100px] '>
         <NavLink to="/">
           <img src={"/assets/images/logo.png"} className='w-[30px] h-[24px] lg:h-[40px] lg:w-[50px]' alt='Vite logo' />
         </NavLink>
 
-        <nav className="hidden md:flex items-center gap-[32px]">
+        <nav className="hidden lg:flex items-center gap-[32px]">
           <NavItem to="/" label="Home" />
           <NavItem to="/safeguards" label="Safeguards" />
           <NavItem to="/journey" label="Journey" />
@@ -39,7 +39,7 @@ function Header() {
           {menu && (
             <motion.nav
               data-lenis-prevent
-              className="overflow-hidden fixed top-0 left-0 w-full h-lvh bg-[#121212] flex flex-col justify-center items-center md:hidden gap-[32px]"
+              className="overflow-hidden fixed top-0 left-0 w-full h-lvh bg-[#121212] flex flex-col justify-center items-center lg:hidden gap-[32px]"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}

@@ -75,7 +75,7 @@ export default function HoverCards({ cards }) {
 
                 >
                   <div className="flex items-center gap-[8px]">
-                    {card.position} {isActive && <div className="text-[14px] font-thin text-uppercase">//step</div>}
+                    {card.position} {isActive && <div className="text-[14px] font-thin uppercase">//step</div>}
                   </div>
                 </motion.div>
               )}
