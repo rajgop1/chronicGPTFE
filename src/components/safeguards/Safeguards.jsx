@@ -215,7 +215,7 @@ export const HeaderBackground = ({ children }) => {
       <img
         src="/assets/images/sub-banner.png"
         alt=""
-        className="w-full h-full object-cover object-[0%_25%]"
+        className="w-full h-full object-cover object-[0%_35%]"
       />
       {/* <div
         className="absolute inset-0 [background:linear-gradient(357.51deg,#121212_0.18%,rgba(18,18,18,0)_47.86%)]"
