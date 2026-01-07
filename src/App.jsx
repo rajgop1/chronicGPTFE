@@ -126,7 +126,7 @@ function App() {
       { backgroundPosition: "50% 50%", duration: FIRST_ANIM_DURATION, ease: "none" },
       "secondAnim"
     );
-    
+
     const GAP = 32; // px gap between cards
     const TOTAL_CARDS = 3;
     const DELAY_BETWEEN = 0.2; // seconds delay between cards
@@ -744,7 +744,7 @@ const Fourth = ({ hrCardContainer }) => {
       </p>
     </div>
     <div className='flex flex-col justify-between gap-[24px]'  >
-      <div className='flex gap-[24px] hr-card-container pb-[8px] overflow-auto hide-scrollbar' ref={hrCardContainer}>
+      <div className={cn('flex gap-[24px] hr-card-container pb-[8px] overflow-auto hide-scrollbar', canNext && "hr-card-container-mask")} ref={hrCardContainer}>
         <HorizontalCard
           title="Mornings stop feeling unpredictable"
           img={"/assets/images/hr-card-1.jpg"}

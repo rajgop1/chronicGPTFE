@@ -66,3 +66,17 @@ body {
     linear-gradient(0deg, #F1F1F1, #F1F1F1);
 
 }
+
+.hr-card-container{
+    transition: -webkit-mask-image 0.3s ease, mask-image 0.3s ease;
+
+}
+
+.hr-card-container-mask {
+  -webkit-mask-image: linear-gradient(to right, rgba(18, 18, 18,1) 90%, rgba(18, 18, 18,0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-image: linear-gradient(to right, rgba(18, 18, 18,1) 90%, rgba(18, 18, 18,0) 100%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
