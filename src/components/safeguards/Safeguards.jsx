@@ -18,7 +18,8 @@ function Safeguards() {
       scrollTrigger: {
         trigger: container.current,
         start: "top top",
-        end: "max",
+        end: "+=230%",
+        pinSpacing:false,
         pin: true,
         scrub: true,
       }
@@ -164,7 +165,7 @@ function Safeguards() {
     }, "secondAnim")
 
     t1.to(".section-two", {
-      height: "20vh",
+      height: "20dvh",
     }, "secondAnim")
 
 
@@ -174,7 +175,7 @@ function Safeguards() {
       height: 0,
       autoAlpha: 0,
     }, "thirdAnim").to(".build-for-trust", {
-      height: "100vh",
+      height: "100dvh",
       // autoAlpha: 0,
     }, "thirdAnim")
 
@@ -210,8 +211,8 @@ function Safeguards() {
 }
 
 export const HeaderBackground = ({ children }) => {
-  return <div className='z-[2] section-two relative h-screen overflow-hidden flex flex-col'>
-    <div className="hero-img shrink-0 absolute h-[26vh] w-full overflow-hidden">
+  return <div className='z-[2] section-two relative h-dvh overflow-hidden flex flex-col'>
+    <div className="hero-img shrink-0 absolute h-[26dvh] w-full overflow-hidden">
       <img
         src="/assets/images/sub-banner.png"
         alt=""
@@ -237,7 +238,7 @@ export const HeaderBackground = ({ children }) => {
       />
 
     </div>
-    <div className='second-inner-content mt-[20vh] flex flex-col flex-1 p-[10px] pt-[0px]'>
+    <div className='second-inner-content mt-[20dvh] flex flex-col flex-1 p-[10px] pt-[0px]'>
       {children}
     </div>
   </div>

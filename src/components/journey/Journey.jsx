@@ -175,7 +175,7 @@ function Journey() {
 
 
     t1.to(".section-two", {
-      height: "10vh",
+      height: "10dvh",
       autoAlpha: 0
     })
 
@@ -217,13 +217,14 @@ function Journey() {
     }, "fourthAnim")
 
 
-    t1.add("fifthAnim")
+    // t1.add("fifthAnim")
 
-    t1.to(".join-cohort", {
-      height: 0,
-      autoAlpha: 0,
-      ease: "none"
-    }, "fifthAnim")
+    // t1.to(".join-cohort", {
+    //   height: "60dvh",
+    //   autoAlpha: 1,
+    //   ease: "none",
+    //   y: "+=100%"
+    // }, "fifthAnim")
 
 
 
@@ -231,21 +232,24 @@ function Journey() {
   }, { scope: container.current })
 
   return (
-    <div className='max-w-[1512px] mx-auto' ref={container}>
-      <Header />
-      <HeaderBackground>
-        <Third />
-      </HeaderBackground>
-      <SectionThree />
-      <JoinCohort />
+    <>
+      <div className='max-w-[1512px] mx-auto' ref={container}>
+        <Header />
+        <HeaderBackground>
+          <Third />
+        </HeaderBackground>
+        <SectionThree />
+        <JoinCohort />
+      </div>
       <Footer />
-    </div>
+
+    </>
   )
 }
 
 
 const Third = () => {
-  return <ResponsiveSection className='max-h-[76vh] flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section rounded-[54px] p-[60px] mx-[10px] text-[#121212] overflow-hidden'>
+  return <ResponsiveSection className='max-h-[76dvh] flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section rounded-[54px] p-[60px] mx-[10px] text-[#121212] overflow-hidden'>
     <div className='flex-1 flex flex-col gap-[10px]'>
       <div className='flex flex-col '>
         <div className='flex flex-row gap-2'>
@@ -270,7 +274,7 @@ const Third = () => {
             {card.text}
           </Card>
         ))} */}
-         <HoverCards cards={CARD_DATA} />
+        <HoverCards cards={CARD_DATA} />
       </div>
 
     </div>
@@ -297,7 +301,7 @@ const Card = ({ title, logo, img, children, position = "01", className }) => (
 )
 
 const SectionThree = () => (
-  <ResponsiveSection className='relative z-[4] section-three h-screen rounded-[52px] overflow-hidden mx-[10px] flex flex-col gap-[32px] border border-[5px] border-white'>
+  <ResponsiveSection className='relative z-[4] section-three h-dvh rounded-[52px] overflow-hidden mx-[10px] flex flex-col gap-[32px] border border-[5px] border-white'>
 
     <div className='flex flex-col gap-[24px] p-[24px] pt-0'>
       <div className='relative z-[2] pt-[24px] flex items-center bg-[#121212] section-three-header'>

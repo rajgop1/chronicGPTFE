@@ -2,9 +2,9 @@ import { NavLink } from "react-router";
 import Separator from "../Separator";
 
 const Footer = () => (
-  <div className='footer h-screen flex flex-col flex-1 px-[60px]'>
+  <div className='footer h-fit flex flex-col flex-1 px-[60px]'>
     <Separator variant='v2' />
-    <div className="flex flex-col flex-1 justify-center">
+    <div className="flex flex-col ">
       <footer className='py-[40px] flex flex-col gap-[50px] bg-[#121212]'>
         <div className='px-[20px] grid grid-auto md:grid-cols-2 lg:grid-cols-3 gap-[40px]'>
           <div className='flex flex-col gap-[24px]'>

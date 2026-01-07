@@ -32,7 +32,7 @@ function AppDialog({ trigger, className, title, children }) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 10 }}
             >
-              <div className="flex items-start w-[90vw] 3xl:max-w-[1520px] max-h-[80vh] p-[32px] overflow-y-auto ">
+              <div className="flex items-start w-[90vw] 3xl:max-w-[1520px] max-h-[80dvh] p-[32px] overflow-y-auto ">
                 <div>{children}</div>
 
                 <Dialog.Close className="shrink-0 cursor-pointer sticky top-[8px]">
