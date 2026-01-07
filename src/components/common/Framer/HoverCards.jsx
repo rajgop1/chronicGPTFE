@@ -1,0 +1,86 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+export default function HoverCards({ cards }) {
+  const [active, setActive] = useState(0); // first card grown by default
+
+  const baseWidth = 200; // default width in px
+  const expandedWidth = 418; // width when hovered
+  const baseImgHeight = 140;
+  const expandedImgHeight = 204;
+  const baseTitleSize = 16;
+  const expandedTitleSize = 20;
+
+  return (
+    <div className="flex overflow-hidden h-[400px] 3xl:h-[550px] max-h-[608px] w-full gap-[16px]">
+      {cards.map((card, i) => {
+        const isActive = active === i;
+
+        return (
+          <motion.div
+            key={i}
+            className="rounded-[60px] p-[24px] flex flex-col cursor-pointer border border-[#B0B0B0] shadow-[0px_10px_20px_0px_#0000000A] overflow-hidden"
+            onMouseEnter={() => setActive(i)}
+            onMouseLeave={() => setActive(null)}
+            animate={{
+              width: isActive ? expandedWidth : baseWidth,
+            }}
+            transition={{ type: "spring", stiffness: 200, damping: 24 }}
+          >
+            {/* Image */}
+            <motion.div
+              className="overflow-hidden w-full "
+              animate={{ height: isActive ? expandedImgHeight : baseImgHeight }}
+              transition={{ type: "spring", stiffness: 200, damping: 24 }}
+            >
+              <img
+                src={card.img}
+                alt={card.title}
+                className="w-full h-full object-cover rounded-[40px]"
+              />
+            </motion.div>
+
+            {/* Title */}
+            <motion.div
+              className="font-bold py-2"
+              animate={{
+                fontSize: isActive ? expandedTitleSize : baseTitleSize,
+                opacity: isActive ? 1 : 0.6,
+              }}
+              transition={{ type: "spring", stiffness: 200, damping: 24 }}
+            >
+              {card.title}
+            </motion.div>
+
+            {/* Children text */}
+            <AnimatePresence>
+              {isActive && (
+                <motion.div
+                  className="text-[14px]"
+                  initial={{ opacity: 0, }}
+                  animate={{ opacity: 1, }}
+                  exit={{ opacity: 0,  }}
+                  transition={{ duration: 0.25 }}
+                >
+                  {card.text}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Position number */}
+            <AnimatePresence>
+              {isActive && (
+                <motion.div
+                  className="font-roboto text-[32px] mt-2 px-2 flex flex-col justify-end flex-1"
+                 
+                >
+                  {card.position}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+}

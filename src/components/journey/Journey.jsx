@@ -6,8 +6,68 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import JoinCohort from '../common/JoinCohort/JoinCohort';
 import { HeaderBackground } from '../safeguards/Safeguards';
+import { cn } from '../../helpers/utils';
+import HoverCards from '../common/Framer/HoverCards';
 
 gsap.registerPlugin(useGSAP)
+
+const CARD_DATA = [
+  {
+    position: "01",
+    title: "Your MD sets your clinical goals.",
+    logo: "/assets/images/safeguards/card-1-icon.png",
+    img: "/assets/images/safeguards/card-1.jpg",
+    text: `After sign-up, your own physician (or one you choose on the platform) reviews your labs, medications, history, and current biomarkers.
+           They set measurable 3–6 month goals — for HbA1c, weight, LDL, blood pressure, sleep, and more.
+           These goals become the medical blueprint for your AI Doctor.`
+  },
+  {
+    position: "02",
+    title: "You create your own AI Doctor.",
+    logo: "/assets/images/safeguards/card-2-icon.png",
+    img: "/assets/images/safeguards/card-2.jpg",
+    text: `You choose how you want to interact: text, voice notes, or a human-like video avatar.
+           Pick your language, tone, and frequency of check-ins.
+           Your AI Doctor learns your communication style and is available 24/7.`
+  },
+  {
+    position: "03",
+    title: "Your devices connect and your data flows in automatically.",
+    logo: "/assets/images/safeguards/card-3-icon.png",
+    img: "/assets/images/safeguards/card-3.jpg",
+    text: `We provide essential wearables for free (sleep/activity tracker, CGM for diabetes, BP cuff for hypertension) or integrate your existing devices.
+           Your glucose, sleep, activity, heart rate, medications, and meals stream in continuously.
+           Your AI Doctor now has your real-world health signals.`
+  },
+  {
+    position: "04",
+    title: "Your AI Doctor builds a digital model of your body.",
+    logo: "/assets/images/safeguards/card-4-icon.png",
+    img: "/assets/images/safeguards/card-4.jpg",
+    text: `It studies how you respond to food, stress, sleep, activity, and medications — minute by minute.
+           It translates your doctor’s goals into daily targets for sleep, nutrition, activity, and medication.
+           This creates your personalized baseline and learning model.`
+  },
+  {
+    position: "05",
+    title: "You receive daily individualized guidance.",
+    logo: "/assets/images/safeguards/card-5-icon.png",
+    img: "/assets/images/safeguards/card-5.png",
+    text: `Your AI Doctor watches your body in real time and sends timely, specific micro-interventions:
+           what to adjust, when to rest, how to pace meals, when to hydrate, or when to move.
+           You also have twice-weekly check-ins that replace the dashboard clutter you’re used to.`
+  },
+  {
+    position: "06",
+    title: "A clinician supervises everything and steps in when needed.",
+    logo: "/assets/images/safeguards/card-6-icon.png",
+    img: "/assets/images/safeguards/card-6.jpg",
+    text: `Physicians review your progress, validate recommendations, adjust your plan, and handle escalations.
+           If your AI Doctor detects a red flag or predicts risk, it arranges a telehealth visit or alerts your MD immediately.
+           When it’s time for a routine appointment, your AI Doctor sends your progress summary to your physician.`
+  }
+];
+
 
 function Journey() {
   const container = useRef();
@@ -27,6 +87,11 @@ function Journey() {
 
     const cards = gsap.utils.toArray(".card");
 
+    // cards.slice(1).forEach((card)=>{
+    //   gsap.set(card, {
+    //     translateX:"-1px"
+    //   })
+    // })
 
     // cards.slice(1).forEach((card, index) => {
     //   const children = card.querySelector(".card-children");
@@ -50,62 +115,62 @@ function Journey() {
     const COLLAPSED = 160;
     const EXPANDED = 550;
 
-    cards.forEach((card, i) => {
-      const children = card.querySelector(".card-children");
+    // cards.forEach((card, i) => {
+    //   const children = card.querySelector(".card-children");
 
-      gsap.set(card, {
-        width: i === 0 ? EXPANDED : COLLAPSED,
-        height: 550,
-      });
+    //   gsap.set(card, {
+    //     width: i === 0 ? EXPANDED : COLLAPSED,
+    //     height: 550,
+    //   });
 
-      gsap.set(children, {
-        autoAlpha: i === 0 ? 1 : 0,
-        height: i === 0 ? "auto" : 0,
-        overflow: "hidden"
-      });
-    });
+    //   gsap.set(children, {
+    //     autoAlpha: i === 0 ? 1 : 0,
+    //     height: i === 0 ? "auto" : 0,
+    //     overflow: "hidden"
+    //   });
+    // });
 
 
-    cards.forEach((card, i) => {
-      if (i === cards.length - 1) return;
+    // cards.forEach((card, i) => {
+    //   if (i === cards.length - 1) return;
 
-      const current = cards[i];
-      const next = cards[i + 1];
+    //   const current = cards[i];
+    //   const next = cards[i + 1];
 
-      const currentChildren = current.querySelector(".card-children");
-      const nextChildren = next.querySelector(".card-children");
+    //   const currentChildren = current.querySelector(".card-children");
+    //   const nextChildren = next.querySelector(".card-children");
 
-      t1
-        // shrink current
-        .to(current, {
-          width: COLLAPSED,
-          ease: "none",
-          duration: 0.2
-        })
+    //   t1
+    //     // shrink current
+    //     .to(current, {
+    //       width: COLLAPSED,
+    //       ease: "none",
+    //       duration: 0.2
+    //     })
 
-        // expand next AT THE SAME TIME
-        .to(next, {
-          width: EXPANDED,
-          ease: "none",
-          duration: 0.2
-        }, "<")
+    //     // expand next AT THE SAME TIME
+    //     .to(next, {
+    //       width: EXPANDED,
+    //       ease: "none",
+    //       duration: 0.2
+    //     }, "<")
 
-        // fade children
-        .to(currentChildren, {
-          autoAlpha: 0,
-          height: 0,
-          ease: "none",
-          duration: 0.2
-        }, "<")
+    //     // fade children
+    //     .to(currentChildren, {
+    //       autoAlpha: 0,
+    //       height: 0,
+    //       ease: "none",
+    //       duration: 0.2
+    //     }, "<")
 
-        .to(nextChildren, {
-          autoAlpha: 1,
-          ease: "none",
-          height: "auto",
-          duration: 0.2,
-          delay: 0.2
-        }, "<");
-    });
+    //     .to(nextChildren, {
+    //       autoAlpha: 1,
+    //       ease: "none",
+    //       height: "auto",
+    //       duration: 0.2,
+    //       delay: 0.2
+    //     }, "<");
+    // });
 
 
     t1.to(".section-two", {
@@ -114,14 +179,14 @@ function Journey() {
     })
 
 
-        
+
     t1.addLabel("card2anim")
 
     const cards2 = gsap.utils.toArray(".card-2");
 
     cards2.forEach((card, i) => {
       t1.to(card, {
-        y: `-${(i ) * 100}%`,  // each card moves more than the previous
+        y: `-${(i) * 100}%`,  // each card moves more than the previous
         boxShadow: "0px -5px 80px rgba(0,0,0,0.8)",
         ease: "none",
         duration: 0.3
@@ -180,8 +245,8 @@ function Journey() {
 
 const Third = () => {
   return <div className='bg-[#F1F1F1] z-[1] relative third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
-    <div className='flex flex-col gap-[40px]'>
-      <div className='flex-1 flex flex-col gap-[20px]'>
+    <div className='flex flex-col gap-[10px]'>
+      <div className='flex-1 flex flex-col '>
         <div className='flex flex-row gap-2'>
           <div className='flex-1 text-[40px] font-semibold '>
             Your Journey With Qronic AI
@@ -191,44 +256,28 @@ const Third = () => {
           </div>
         </div>
       </div>
-      <div className='relative z-[1] flex'>
-        <Card position="01" title="Your MD sets your clinical goals." logo="/assets/images/safeguards/card-1-icon.png" img="/assets/images/safeguards/card-1.jpg">
-          After sign-up, your own physician (or one you choose on the platform) reviews your labs, medications, history, and current biomarkers.
-          They set measurable 3–6 month goals — for HbA1c, weight, LDL, blood pressure, sleep, and more.
-          These goals become the medical blueprint for your AI Doctor.
-        </Card>
-        <Card position="02" title="You create your own AI Doctor." logo="/assets/images/safeguards/card-2-icon.png" img="/assets/images/safeguards/card-2.jpg">
-          You choose how you want to interact: text, voice notes, or a human-like video avatar.
-          Pick your language, tone, and frequency of check-ins.
-          Your AI Doctor learns your communication style and is available 24/7.
-        </Card>
-        <Card position="03" title="Your devices connect and your data flows in automatically." logo="/assets/images/safeguards/card-3-icon.png" img="/assets/images/safeguards/card-3.jpg">
-          We provide essential wearables for free (sleep/activity tracker, CGM for diabetes, BP cuff for hypertension) or integrate your existing devices.
-          Your glucose, sleep, activity, heart rate, medications, and meals stream in continuously.
-          Your AI Doctor now has your real-world health signals.
-        </Card>
-        <Card position="04" title="Your AI Doctor builds a digital model of your body." logo="/assets/images/safeguards/card-4-icon.png" img="/assets/images/safeguards/card-4.jpg">
-          It studies how you respond to food, stress, sleep, activity, and medications — minute by minute.
-          It translates your doctor’s goals into daily targets for sleep, nutrition, activity, and medication.
-          This creates your personalized baseline and learning model.
-        </Card>
-        <Card position="05" title="You receive daily individualized guidance." logo="/assets/images/safeguards/card-5-icon.png" img="/assets/images/safeguards/card-5.png">
-          Your AI Doctor watches your body in real time and sends timely, specific micro-interventions:
-          what to adjust, when to rest, how to pace meals, when to hydrate, or when to move.
-          You also have twice-weekly check-ins that replace the dashboard clutter you’re used to.
-        </Card>
-        <Card position="06" title="A clinician supervises everything and steps in when needed." logo="/assets/images/safeguards/card-6-icon.png" img="/assets/images/safeguards/card-6.jpg">
-          Physicians review your progress, validate recommendations, adjust your plan, and handle escalations.
-          If your AI Doctor detects a red flag or predicts risk, it arranges a telehealth visit or alerts your MD immediately.
-          When it’s time for a routine appointment, your AI Doctor sends your progress summary to your physician.
-        </Card>
+      <div className="relative z-[1] flex overflow-x-auto hide-scrollbar">
+        {/* {CARD_DATA.map((card) => (
+          <Card
+            key={card.position}
+            position={card.position}
+            title={card.title}
+            logo={card.logo}
+            img={card.img}
+            className="group"
+          >
+            {card.text}
+          </Card>
+        ))} */}
+         <HoverCards cards={CARD_DATA} />
       </div>
+
     </div>
   </div>
 }
 
-const Card = ({ title, logo, img, children, position = "01" }) => (
-  <div className='flex flex-col shrink-0 card w-[550px] bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[60px] p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[20px]'>
+const Card = ({ title, logo, img, children, position = "01", className }) => (
+  <div className={cn('group transition-all duration-300 ease-out hover:shrink-0 flex flex-col card w-[550px] bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[60px] p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[20px]', className)}>
     <div className='flex-1 flex flex-col gap-[16px]'>
       <div className='h-[204px] rounded-[40px] overflow-hidden'>
         <img src={img} className='w-full h-full object-cover rounded-[24px]' />
@@ -236,11 +285,11 @@ const Card = ({ title, logo, img, children, position = "01" }) => (
       <div className='font-bold text-[20px] flex flex-col gap-[8px]'>
         <div>{title}</div>
       </div>
-      <div className='card-children'>
+      <div className='opacity-0 card-children'>
         {children}
       </div>
     </div>
-    <div className='font-roboto text-[32px]'>
+    <div className='opacity-0 font-roboto text-[32px]'>
       {position}
     </div>
   </div>

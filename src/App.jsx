@@ -20,6 +20,8 @@ import Header from './components/common/Header/header'
 import JoinCohort from './components/common/JoinCohort/JoinCohort'
 import ResponsiveSection from './components/common/ResponsiveSection'
 import HorizontalScroll from './components/common/Framer/HorizontalScrollContainer'
+import { HiChevronLeft } from 'react-icons/hi'
+import { HiChevronRight } from 'react-icons/hi2'
 
 gsap.registerPlugin(useGSAP)
 
@@ -27,6 +29,7 @@ function App() {
   useLenis();
 
   const container = useRef();
+  const hrCardContainer = useRef();
   const [currentCard, setCurrentCard] = useState(1)
 
   /* ================== DURATIONS ================== */
@@ -45,12 +48,16 @@ function App() {
   const SECTION_FIVE_DURATION = 0.3;
   const SECTION_SIX_DURATION = 0.6;
 
+  let scrollTrigger = null
 
   useGSAP(() => {
 
     gsap.registerPlugin(ScrollTrigger);
 
     const t1 = gsap.timeline();
+    const hrTl = gsap.timeline({
+      defaults: { ease: "none" },
+    });
 
     /* ================== FIRST ANIM ================== */
     t1.addLabel("firstAnim");
@@ -198,12 +205,6 @@ function App() {
     /* ================== THIRD → FOURTH ================== */
     t1.addLabel("thirdAnim", ">+=0.35");
 
-    // t1.to(".third-section", {
-    //   autoAlpha: 0.8,
-    //   duration: THIRD_SECTION_FADE_DURATION,
-    //   ease: "none",
-    // }, "thirdAnim");
-
     t1.to(".section-four", {
       y: "-=100%",
       boxShadow: "0px -20px 40px rgba(0,0,0,0.3)",
@@ -212,36 +213,53 @@ function App() {
     }, "thirdAnim");
 
     /* ================== CARD SLIDER ================== */
-    const wrapper = ".hr-card";
-    const steps = 3;
+    // const wrapper = ".hr-card";
+    // const steps = 3;
 
-    t1.addLabel("cardsStart", ">+=0.25");
+    // t1.addLabel("cardsStart", ">+=0.25");
 
-    for (let i = 0; i < steps - 1; i++) {
-      t1.to(wrapper, {
-        xPercent: (i + 1) * -100,
-        x: -24 * (i + 1),
-        duration: CARD_SLIDE_STEP_DURATION,
-        ease: "none",
-        delay: 0.1,
-        onUpdate: () => {
-          const start = t1.labels.cardsStart;
-          const end = t1.labels.cardsEnd;
+    // for (let i = 0; i < steps - 1; i++) {
+    //   // gsap.to(wrapper,{
+    //   //   xPercent: (i + 1) * -100,
+    //   //   x: -24*(i+1),
+    //   //   duration: CARD_SLIDE_STEP_DURATION,
+    //   //   ease: "none",
+    //   //   delay: 0.1,
 
-          const progress = gsap.utils.clamp(
-            0,
-            1,
-            (t1.time() - start) / (end - start)
-          );
+    //   // })
+    //   t1.to(wrapper, {
+    //     xPercent: (i + 1) * -100,
+    //     x: -24 * (i + 1),
+    //     duration: CARD_SLIDE_STEP_DURATION,
+    //     ease: "none",
+    //     delay: 0.1,
+    //     // scrollTrigger: {
+    //     //   trigger: ".hr-card-container",
+    //     //   start: "left center", // Trigger relative to horizontal movement
+    //     //   scrub: true,
+    //     //   markers: true
 
-          gsap.set(".progress-bar", {
-            width: `${progress * 100}%`,
-          });
-        },
-      });
-    }
+    //     // },
+    //     toggleActions: "play pause reverse pause",
 
-    t1.addLabel("cardsEnd", ">");
+    //     onUpdate: () => {
+    //       const start = t1.labels.cardsStart;
+    //       const end = t1.labels.cardsEnd;
+
+    //       const progress = gsap.utils.clamp(
+    //         0,
+    //         1,
+    //         (t1.time() - start) / (end - start)
+    //       );
+
+    //       gsap.set(".progress-bar", {
+    //         width: `${progress * 100}%`,
+    //       });
+    //     },
+    //   });
+    // }
+
+    // t1.addLabel("cardsEnd", ">");
 
     t1.addLabel("inBetweenAnim", ">")
 
@@ -252,6 +270,19 @@ function App() {
         autoAlpha: 0,
         padding: 0,
         duration: SECTION_FIVE_DURATION,
+        ease: "none",
+      },
+      "inBetweenAnim"
+    );
+
+
+    t1.fromTo(
+      ".header",
+      { background: "transparent" },
+      {
+        background: "#121212",
+        duration: FIRST_ANIM_DURATION - FADE_DELAY,
+        delay: FADE_DELAY,
         ease: "none",
       },
       "inBetweenAnim"
@@ -301,16 +332,6 @@ function App() {
       padding: 0,
     }, "fourthAnim")
 
-    t1.fromTo(
-      ".header",
-      { background: "transparent" },
-      {
-        background: "#121212",
-        duration: SECTION_FIVE_DURATION,
-        ease: "none",
-      },
-      "fourthAnim"
-    );
 
 
     t1.fromTo(".join-cohort", {
@@ -325,6 +346,13 @@ function App() {
       }
       , "fourthAnim");
 
+    // t1.set(
+    //   ".header", {
+    //   background: "transparent",
+    // }
+    // );
+
+
     /* ================== FIFTH ANIM ================== */
     t1.addLabel("fifthAnim", ">+=0.1");
 
@@ -337,8 +365,13 @@ function App() {
 
     const duration = Object.values(t1.labels).reduce((acc, num) => acc + num)
 
-    ScrollTrigger.create({
+
+
+    t1.add(hrTl, "thirdAnim+=0.25")
+
+    scrollTrigger = ScrollTrigger.create({
       animation: t1,
+      // snap: "labelsDirectional",
       trigger: container.current,
       start: "top top",
       end: "max",
@@ -347,9 +380,34 @@ function App() {
       invalidateOnRefresh: true,
     });
 
+
+
   }, { scope: container });
 
-  const hrCardContainer = useRef(null);
+  // useEffect(() => {
+  //   const el = hrCardContainer.current;
+  //   if (!el) return;
+  //   console.log("scroll trigger", scrollTrigger)
+
+  //   const onEnter = () => {
+  //     // ScrollTrigger.refresh();
+  //     scrollTrigger?.disable(false)
+  //   };
+
+  //   const onLeave = () => {
+  //     scrollTrigger?.enable(false);
+  //   };
+
+  //   el.addEventListener("mouseenter", onEnter);
+  //   el.addEventListener("mouseleave", onLeave);
+
+  //   return () => {
+  //     el.removeEventListener("mouseenter", onEnter);
+  //     el.removeEventListener("mouseleave", onLeave);
+  //   };
+  // }, []);
+
+
   // let horizontalST;
 
   // useGSAP(() => {
@@ -632,6 +690,57 @@ const Third = ({ currentCard }) => {
 }
 
 const Fourth = ({ hrCardContainer }) => {
+
+
+  const [progress, setProgress] = useState(0);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const updateButtons = () => {
+    const el = hrCardContainer.current;
+    if (!el) return;
+
+    const maxScroll = el.scrollWidth - el.clientWidth;
+
+    setCanPrev(el.scrollLeft > 0);
+    setCanNext(el.scrollLeft < maxScroll);
+  };
+
+  const scrollCards = (dir) => {
+    const container = hrCardContainer.current;
+    if (!container) return;
+
+    const cardWidth = container.firstChild?.offsetWidth || 300;
+    const gap = 24; // matches gap-[24px]
+    const scrollAmount = cardWidth + gap;
+
+    container.scrollBy({
+      left: dir === "next" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
+
+    // Progress update after scroll movement
+    setTimeout(() => {
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      setProgress((container.scrollLeft / maxScroll) * 100);
+    }, 300);
+  };
+
+  useEffect(() => {
+    const el = hrCardContainer.current;
+    if (!el) return;
+
+    const handleScroll = () => {
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      const ratio = el.scrollLeft / maxScroll;
+      setProgress(ratio * 100);
+      updateButtons()
+    };
+
+    el.addEventListener("scroll", handleScroll);
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return <ResponsiveSection className='h-screen relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] rounded-[60px] overflow-hidden'>
     <div className='flex gap-2'>
       <h2 className='flex-1 text-[40px] leading-[52px] font-medium'>
@@ -641,8 +750,8 @@ const Fourth = ({ hrCardContainer }) => {
         You choose one or more improvement programs. Your AI Doctor works in the background every day — helping you feel the changes in ways that matter: steadier energy, calmer mornings, smoother rhythms, and more restorative nights.
       </p>
     </div>
-    <div className='flex flex-col justify-between gap-[24px]' ref={hrCardContainer}>
-      <div className='flex gap-[24px] hr-card-container'>
+    <div className='flex flex-col justify-between gap-[24px]'  >
+      <div className='flex gap-[24px] hr-card-container pb-[8px] overflow-auto hide-scrollbar' ref={hrCardContainer}>
         <HorizontalCard
           title="Mornings stop feeling unpredictable"
           img={"/assets/images/hr-card-1.jpg"}
@@ -682,8 +791,29 @@ const Fourth = ({ hrCardContainer }) => {
           Because your AI Doctor guides you in real time, habits stop slipping through cracks. Hydration, movement, medication timing, sleep routines — they become easier, more automatic, and more consistent.
         </HorizontalCard>
       </div>
-      <div className="bg-[#06040A]/20 w-[200px] h-[4px]">
-        <div className="progress-bar bg-[#06040A] h-full w-fit"></div>
+      <div className='flex justify-between items-center w-full'>
+        <div className="bg-[#06040A]/20 w-[200px] h-[4px]">
+          <div style={{ width: `${progress}%` }}
+            className={cn("progress-bar bg-[#06040A] h-full w-fit")}></div>
+        </div>
+        <div className='cursor-pointer '>
+          <button
+            onClick={() => scrollCards("prev")}
+            className="p-[10px] border-[1px] border-[#121212] text-[#121212] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+            disabled={!canPrev}
+
+          >
+            <HiChevronRight className='-rotate-180' size={"24px"} />
+          </button>
+          <button
+            onClick={() => scrollCards("next")}
+            className="-translate-x-[1px] p-[10px] border-[1px] border-[#121212] text-[#121212] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+            disabled={!canNext}
+
+          >
+            <HiChevronRight size={"24px"} />
+          </button>
+        </div>
       </div>
     </div>
   </ResponsiveSection>

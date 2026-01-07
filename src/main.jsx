@@ -6,6 +6,7 @@ import App from './App.jsx'
 import ReactLenis from 'lenis/react';
 import Safeguards from './components/safeguards/Safeguards.jsx';
 import Journey from './components/journey/Journey.jsx';
+import RouterContainer from './components/RouterContainer.jsx';
 // import ScrollToTop from "./hooks/ScrollToTop.js"
 
 createRoot(document.getElementById('root')).render(
@@ -20,17 +21,10 @@ createRoot(document.getElementById('root')).render(
         gestureOrientation: 'vertical',
         wheelMultiplier: 1,
         touchMultiplier: 2,
+        
       }}>
         
-      <BrowserRouter>
-        <Routes>
-          {/* <ScrollToTop /> */}
-          <Route index path="/" element={<App />} />
-          <Route index path="/safeguards" element={<Safeguards />} />
-          <Route index path="/journey" element={<Journey />} />
-          <Route index path="/how-it-works" element={<App />} />
-        </Routes>
-      </BrowserRouter>
+     <RouterContainer/>
     </ReactLenis>
   </StrictMode>
 )
