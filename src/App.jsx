@@ -478,18 +478,30 @@ function App() {
 
   return (
 
-    <div className='max-w-[1512px] mx-auto'>
+    <div className='mx-auto'>
       <div ref={container}>
-        <Header />
-        <Home />
+        <div className='max-w-[1512px] mx-auto'>
+          <Header />
+        </div>
+        <div className='max-w-[1512px] mx-auto'>
+          <Home />
+        </div>
         <Second />
-        <Third currentCard={currentCard} />
-        <Fourth hrCardContainer={hrCardContainer} />
+        <div className='max-w-[1512px] mx-auto'>
+          <Third currentCard={currentCard} />
+        </div>
+        <div className='max-w-[1512px] mx-auto'>
+          <Fourth hrCardContainer={hrCardContainer} />
+        </div>
         {/* <div className='fourth-section h-screen'>
           <FourthV2 hrCardContainer={hrCardContainer} />
         </div> */}
-        <JoinCohort />
-        <Footer />
+        <div className='max-w-[1512px] mx-auto'>
+          <JoinCohort />
+        </div>
+        <div className='max-w-[1512px] mx-auto'>
+          <Footer />
+        </div>
       </div>
     </div>
   )
@@ -557,6 +569,7 @@ const Second = () => {
       bg-no-repeat
       bg-[50%_100%]
       shadow-[0_0_60px_20px_rgba(18,18,18,0.6)_inset]
+      max-w-[1912px]
     "
     >
       {/* Bottom fade: image → content */}
@@ -582,6 +595,8 @@ const Second = () => {
       px-[42px]
       lg:px-[100px]
       second-section-content
+      max-w-[1512px]
+      mx-auto
     "
     >
       <h2 className="
@@ -924,12 +939,12 @@ const Card = ({
 
 
 const HorizontalCard = ({ img, title, className, children }) => (
-  <div className={cn('hr-card min-w-[320px] max-w-[320px] bg-white flex flex-col gap-[20px] p-[20px] pb-[77px] rounded-[40px]', className)}>
+  <div className={cn('hr-card min-w-[320px] max-w-[320px] bg-white flex flex-col gap-[20px] p-[20px] rounded-[40px]', className)}>
     <div className='img-container w-[280px] h-[152px] rounded-[20px] overflow-hidden'>
       <img src={img} alt="" className='w-full h-full object-cover' />
     </div>
     <div className='flex flex-col gap-[4px]'>
-      <h3 className='font-bold text-[20px] leading-[26px]'>
+      <h3 className='font-bold text-[22px] leading-[28px]'>
         {title}
       </h3>
       <p className='text-[16px]'>

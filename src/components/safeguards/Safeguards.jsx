@@ -160,7 +160,7 @@ function Safeguards() {
     t1.to(".second-inner-content", {
       height: 0,
       autoAlpha: 0,
-      padding: 0
+      // padding: 0
     }, "secondAnim")
 
     t1.to(".section-two", {
@@ -211,15 +211,33 @@ function Safeguards() {
 
 export const HeaderBackground = ({ children }) => {
   return <div className='z-[2] section-two relative h-screen overflow-hidden flex flex-col'>
-    <div className="hero-img shrink-0 h-[20vh] relative overflow-hidden">
+    <div className="hero-img shrink-0 absolute h-[26vh] w-full overflow-hidden">
       <img
-        src="/assets/images/safeguards/safeguard-bg.jpg"
+        src="/assets/images/sub-banner.png"
         alt=""
         className="w-full h-full object-cover object-[0%_25%]"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent" />
+      {/* <div
+        className="absolute inset-0 [background:linear-gradient(357.51deg,#121212_0.18%,rgba(18,18,18,0)_47.86%)]"
+      /> */}
+      <div
+        className="
+          absolute inset-0
+          [background:radial-gradient(circle,rgba(18,18,18,0)_30%,#121212_190%)]
+        "
+      />
+      <div
+        className="
+        pointer-events-none
+        absolute inset-0
+        bg-[linear-gradient(to_bottom,_transparent_30%,_#121212_100%)]
+        translate-y-[10%]
+        
+      "
+      />
+
     </div>
-    <div className='second-inner-content flex flex-col flex-1 p-[10px]'>
+    <div className='second-inner-content mt-[20vh] flex flex-col flex-1 p-[10px] pt-[0px]'>
       {children}
     </div>
   </div>
@@ -227,6 +245,7 @@ export const HeaderBackground = ({ children }) => {
 
 const Third = () => {
   return <ResponsiveSection className='bg-[#F1F1F1] z-[1] flex-1 relative third-section rounded-[54px] text-[#121212] overflow-hidden' >
+
     <div className='flex flex-col gap-[20px] 3xl:gap-[40px]'>
       <div className='safeguards-header flex-1 flex flex-col gap-[20px]'>
         <div className='flex flex-row gap-2'>
@@ -284,7 +303,7 @@ const Card = ({ title, logo, img, children }) => (
 )
 
 const BuildForTrust = () => (
-  <div className='build-for-trust rounded-[52px] overflow-hidden flex flex-col border border-[5px] border-white'>
+  <div className='build-for-trust bg-transparent rounded-[52px] overflow-hidden flex flex-col border border-[5px] border-white'>
     <div className="relative h-[420px] rounded-[52px] overflow-hidden">
       <img
         src="/assets/images/safeguards/safeguards-bg-v2.png"

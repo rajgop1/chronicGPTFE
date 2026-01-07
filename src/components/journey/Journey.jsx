@@ -297,7 +297,7 @@ const Card = ({ title, logo, img, children, position = "01", className }) => (
 )
 
 const SectionThree = () => (
-  <div className='relative z-[4] section-three h-screen rounded-[52px] overflow-hidden flex flex-col gap-[32px] border border-[5px] border-white'>
+  <ResponsiveSection className='relative z-[4] section-three h-screen rounded-[52px] overflow-hidden mx-[10px] flex flex-col gap-[32px] border border-[5px] border-white'>
 
     <div className='flex flex-col gap-[24px] p-[24px] pt-0'>
       <div className='relative z-[2] pt-[24px] flex items-center bg-[#121212] section-three-header'>
@@ -342,25 +342,25 @@ const SectionThree = () => (
         </Card2>
       </div>
     </div>
-  </div>
+  </ResponsiveSection>
 )
 
 const Card2 = ({ title, subtitle, img, children }) => (
   <div className='card-2 rounded-[40px] bg-[#2A2A2A] p-[40px] flex flex-row gap-[32px]'>
     <div className='flex-1 flex flex-col gap-[24px]'>
       <div>
-        <div className='font-semibold text-[24px]'>{title}</div>
-        <div className=''>{subtitle}</div>
+        <div className='font-semibold text-[24px] leading-[40px]'>{title}</div>
+        <div className='text-[16px] leading-[28px]'>{subtitle}</div>
       </div>
-      <div className='flex flex-col gap-[8px] px-[20px]'>
+      <div className='flex flex-col gap-[8px] px-[20px] text-[16px] leading-[28px]'>
         {children}
       </div>
     </div>
-    <div className="flex-1 relative h-[456px] rounded-[52px] overflow-hidden">
+    <div className="flex-1 relative h-[328px] rounded-[24px] overflow-hidden">
       <img
         src={img}
         alt=""
-        className="w-full h-full object-cover object-center rounded-[52px]"
+        className="w-full h-full object-cover object-center rounded-[24px]"
       />
     </div>
   </div>
