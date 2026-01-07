@@ -309,7 +309,7 @@ const Third = () => {
             </Card>
           ))}
         </div>
-        <div className='hidden lg:flex'>
+        <div className='flex-1 hidden lg:flex'>
           <HoverCards cards={CARD_DATA} />
 
         </div>
