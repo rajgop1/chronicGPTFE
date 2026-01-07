@@ -15,15 +15,15 @@ function JoinCohort() {
 
     return (
         <div className='bg-[#121212] w-full h-lvh rounded-t-[54px] overflow-hidden relative z-[5] join-cohort'>
-            <div className='flex flex-col lg:flex-row items-center h-full'>
-                <div className='pt-[60px] md:pt-[100px] lg:flex-1 img-container lg:self-stretch'>
+            <div className='flex flex-col gap-[40px] lg:gap-0 lg:flex-row items-center h-full'>
+                <div className='pt-[60px] lg:pt-[100px] flex-1 img-container lg:self-stretch'>
                     <img src="/assets/images/bottom-banner.png" alt="" className='w-full h-full object-cover' />
                 </div>
-                <div className='flex-1 p-[40px] flex flex-col justify-center items-center'>
+                <div className='flex-1 px-[20px] lg:p-[40px] flex flex-col justify-center items-center'>
                     <div className='flex flex-col items-center text-center text-white'>
-                        <div className='flex flex-col items-center gap-[6px]'>
+                        <div className='flex flex-col items-center gap-[16px] lg:gap-[6px]'>
                             <p className='flex justify-center items-center w-fit text-[14px] lg:text-[16px] px-[14px] py-[6px] pb-[4px] rounded-[30px] text-white font-bold bg-[#CBCBCB33]'>Limited Spots Available</p>
-                            <h2 className='text-[30px] lg:text-[40px] leading-[52px] font-semibold'>Be part of the first cohort.</h2>
+                            <h2 className='text-[30px] lg:text-[40px] leading-[34px] lg:leading-[52px] font-semibold'>Be part of the first <br className='lg:hidden'/> cohort.</h2>
                             <p className='text-[16px] lg:text-[20px] font-medium leading-[100%]'>
                                 Get full access, all setup support, and early-user <br /> advantages.
                             </p>

@@ -4,6 +4,8 @@ import App from '../App'
 import Safeguards from './safeguards/Safeguards'
 import Journey from './journey/Journey'
 import { useLenis } from 'lenis/react'
+import HeaderFooterLayout from './common/Layout/HeaderFooter'
+import FooterLayout from './common/Layout/Footer'
 
 function RouterContainer() {
 
@@ -23,9 +25,11 @@ function RouterContainer() {
     <BrowserRouter>
       <Wrapper>
         <Routes>
-          <Route index path="/" element={<App />} />
-          <Route path="/safeguards" element={<Safeguards />} />
-          <Route path="/journey" element={<Journey />} />
+          <Route element={<FooterLayout />} >
+            <Route index path="/" element={<App />} />
+            <Route path="/safeguards" element={<Safeguards />} />
+            <Route path="/journey" element={<Journey />} />
+          </Route>
           <Route path="/how-it-works" element={<App />} />
         </Routes>
       </Wrapper>

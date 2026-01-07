@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 import Separator from "../Separator";
 
 const Footer = () => (
-  <div className='footer h-fit flex flex-col flex-1 px-[20px] lg:px-[60px]'>
+  <div className='max-w-[1512px] relative z-50 mx-auto footer h-fit flex flex-col flex-1 px-[20px] lg:px-[60px]'>
     <Separator variant='v2' />
     <div className="flex flex-col ">
       <footer className='py-[40px] flex flex-col gap-[50px] bg-[#121212]'>
@@ -42,12 +42,12 @@ const Footer = () => (
         </div>
         <Separator variant='v2' />
         <div className='flex flex-col gap-[40px] lg:flex-row w-full justify-between text-[14px]'>
-          <div className='flex flex-wrap flex-col md:flex-row md:justify-center flex-1 gap-[32px]'>
+          <div className='flex flex-wrap flex-col md:flex-row md:justify-center lg:justify-start flex-1 gap-[32px]'>
             <div>Copyright © ChronicGPT 2026</div>
             <div>Privacy Policy</div>
             <div>Terms & Conditions</div>
           </div>
-          <div className='flex '>
+          <div className='flex md:justify-center lg:justify-start'>
             Designed & Developed by Etherealdesign.io
           </div>
         </div>

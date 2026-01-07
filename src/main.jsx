@@ -7,7 +7,11 @@ import ReactLenis from 'lenis/react';
 import Safeguards from './components/safeguards/Safeguards.jsx';
 import Journey from './components/journey/Journey.jsx';
 import RouterContainer from './components/RouterContainer.jsx';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
 // import ScrollToTop from "./hooks/ScrollToTop.js"
+
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -21,10 +25,10 @@ createRoot(document.getElementById('root')).render(
         gestureOrientation: 'vertical',
         wheelMultiplier: 1,
         touchMultiplier: 2,
-        
+
       }}>
-        
-     <RouterContainer/>
+
+      <RouterContainer />
     </ReactLenis>
   </StrictMode>
 )

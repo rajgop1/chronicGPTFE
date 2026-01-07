@@ -362,19 +362,19 @@ function App() {
 
 
     /* ================== FIFTH ANIM ================== */
-    t1.addLabel("fifthAnim", ">+=0.1");
+    t1.addLabel("fifthAnim", ">+=0.25");
 
     t1.to(".join-cohort", {
-      height: 0,
-      autoAlpha: 0,
-      duration: SECTION_SIX_DURATION,
+      autoAlpha: 0.6,
+      y: -200,
+      duration: 0.1,
       ease: "none",
     }, "fifthAnim");
 
     t1.to(".header", {
       height: 0,
       autoAlpha: 0,
-      duration: SECTION_SIX_DURATION,
+      duration: 0.1,
       ease: "none",
     }, "fifthAnim");
 
@@ -400,132 +400,28 @@ function App() {
 
   }, { scope: container });
 
-  // useEffect(() => {
-  //   const el = hrCardContainer.current;
-  //   if (!el) return;
-  //   console.log("scroll trigger", scrollTrigger)
-
-  //   const onEnter = () => {
-  //     // ScrollTrigger.refresh();
-  //     scrollTrigger?.disable(false)
-  //   };
-
-  //   const onLeave = () => {
-  //     scrollTrigger?.enable(false);
-  //   };
-
-  //   el.addEventListener("mouseenter", onEnter);
-  //   el.addEventListener("mouseleave", onLeave);
-
-  //   return () => {
-  //     el.removeEventListener("mouseenter", onEnter);
-  //     el.removeEventListener("mouseleave", onLeave);
-  //   };
-  // }, []);
-
-
-  // let horizontalST;
-
-  // useGSAP(() => {
-  //   gsap.registerPlugin(ScrollTrigger);
-
-  //   const cards = gsap.utils.toArray(".hr-card");
-  //   const steps = cards.length;
-
-  //   const t2 = gsap.timeline();
-  //   t2.addLabel("cardsStart");
-
-  //   for (let i = 0; i < steps - 1; i++) {
-  //     t2.to(".hr-card-container", {
-  //       xPercent: -(i + 1) * 100,
-  //       duration: CARD_SLIDE_STEP_DURATION,
-  //       ease: "none",
-  //       onUpdate: () => {
-  //         const start = t2.labels.cardsStart;
-  //         const end = t2.labels.cardsEnd;
-
-  //         const progress = gsap.utils.clamp(
-  //           0,
-  //           1,
-  //           (t2.time() - start) / (end - start)
-  //         );
-
-  //         gsap.set(".progress-bar", {
-  //           width: `${progress * 100}%`,
-  //         });
-  //       },
-  //     });
-  //   }
-
-  //   t2.addLabel("cardsEnd");
-
-  //   horizontalST = ScrollTrigger.create({
-  //     animation: t2,
-  //     trigger: hrCardContainer.current,
-  //     start: "top top",
-  //     end: () => `+=${window.innerWidth * (steps - 1)}`,
-  //     pin: true,
-  //     scrub: true,
-  //     anticipatePin: 1,
-  //     invalidateOnRefresh: true,
-  //     enabled: false, // 🔴 important
-  //   });
-
-  // }, { scope: hrCardContainer });
-
-
-  // useEffect(() => {
-  //   const el = hrCardContainer.current;
-  //   if (!el) return;
-
-  //   const onEnter = () => {
-  //     horizontalST?.enable();
-  //     ScrollTrigger.refresh();
-  //   };
-
-  //   const onLeave = () => {
-  //     horizontalST?.disable();
-  //   };
-
-  //   el.addEventListener("mouseenter", onEnter);
-  //   el.addEventListener("mouseleave", onLeave);
-
-  //   return () => {
-  //     el.removeEventListener("mouseenter", onEnter);
-  //     el.removeEventListener("mouseleave", onLeave);
-  //   };
-  // }, []);
-
-
-
-
   return (
 
-    <div className='mx-auto'>
-      <div ref={container}>
-        <div className='max-w-[1512px] mx-auto'>
-          <Header />
-        </div>
-        <div className='max-w-[1512px] mx-auto'>
-          <Home />
-        </div>
-        <Second />
-        <div className='max-w-[1512px] mx-auto'>
-          <Third currentCard={currentCard} />
-        </div>
-        <div className='max-w-[1512px] mx-auto'>
-          <Fourth hrCardContainer={hrCardContainer} />
-        </div>
-        {/* <div className='fourth-section h-dvh'>
+    <div ref={container} className='container mx-auto'>
+
+      <Header />
+      <div className='max-w-[1512px] mx-auto'>
+        <Home />
+      </div>
+      <Second />
+      <div className='max-w-[1512px] mx-auto'>
+        <Third currentCard={currentCard} />
+      </div>
+      <div className='max-w-[1512px] mx-auto'>
+        <Fourth hrCardContainer={hrCardContainer} />
+      </div>
+      {/* <div className='fourth-section h-dvh'>
           <FourthV2 hrCardContainer={hrCardContainer} />
         </div> */}
-        <div className='max-w-[1512px] mx-auto'>
-          <JoinCohort />
-        </div>
-        <div className='max-w-[1512px] mx-auto'>
-          <Footer />
-        </div>
+      <div className='max-w-[1512px] mx-auto'>
+        <JoinCohort />
       </div>
+
     </div>
   )
 }

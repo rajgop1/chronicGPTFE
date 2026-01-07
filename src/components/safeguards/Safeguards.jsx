@@ -201,9 +201,11 @@ function Safeguards() {
     t1.addLabel("fifthAnim", ">+=0.25")
 
     t1.to(".join-cohort", {
-      height: 0,
-      autoAlpha: 0,
-      ease: "none"
+      // height: 0,
+      autoAlpha: 0.6,
+      y:-200,
+      ease: "none",
+      duration: 0.1
     }, "fifthAnim")
 
 
@@ -213,13 +215,12 @@ function Safeguards() {
 
   return (
     <div className='max-w-[1512px] mx-auto' ref={container}>
-      <Header />
+      <Header/>
       <HeaderBackground>
         <Third />
       </HeaderBackground>
       <BuildForTrust />
       <JoinCohort />
-      <Footer />
     </div>
   )
 }

@@ -250,15 +250,15 @@ function Journey() {
     }, "fourthAnim")
 
 
-    // t1.add("fifthAnim")
+    t1.add("fifthAnim")
 
-    // t1.to(".join-cohort", {
-    //   height: "60dvh",
-    //   autoAlpha: 1,
-    //   ease: "none",
-    //   y: "+=100%"
-    // }, "fifthAnim")
-
+    
+    t1.to(".join-cohort", {
+      autoAlpha: 0.6,
+      y:-200,
+      ease: "none",
+      duration:0.1,
+    }, "fifthAnim")
 
 
 
@@ -266,16 +266,14 @@ function Journey() {
 
   return (
     <>
-      <div className='max-w-[1512px] mx-auto text-[#121212]' ref={container}>
-        <Header />
+      <div className='container max-w-[1512px] mx-auto text-[#121212]' ref={container}>
+        <Header/>
         <HeaderBackground>
           <Third />
         </HeaderBackground>
         <SectionThree />
         <JoinCohort />
       </div>
-      <Footer />
-
     </>
   )
 }
