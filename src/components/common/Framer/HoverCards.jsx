@@ -59,7 +59,7 @@ export default function HoverCards({ cards }) {
                   className="text-[13px]"
                   initial={{ opacity: 0, }}
                   animate={{ opacity: 1, }}
-                  exit={{ opacity: 0,  }}
+                  exit={{ opacity: 0, }}
                   transition={{ duration: 0.25 }}
                 >
                   {card.text}
@@ -69,12 +69,14 @@ export default function HoverCards({ cards }) {
 
             {/* Position number */}
             <AnimatePresence>
-              {isActive && (
+              {(
                 <motion.div
                   className="font-roboto text-[20px] mt-2 px-2 flex flex-col justify-end flex-1"
-                 
+
                 >
-                  {card.position}
+                  <div className="flex items-center gap-[8px]">
+                    {card.position} {isActive && <div className="text-[14px] font-thin text-uppercase">//step</div>}
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
