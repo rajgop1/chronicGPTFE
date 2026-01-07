@@ -257,7 +257,7 @@ const Third = () => {
           </div>
         </div>
       </div>
-      <div className="flex-1 relative z-[1] flex overflow-x-auto hide-scrollbar">
+      <div className="flex-1 flex flex-col justify-center relative z-[1] flex overflow-x-auto hide-scrollbar">
         {/* {CARD_DATA.map((card) => (
           <Card
             key={card.position}
