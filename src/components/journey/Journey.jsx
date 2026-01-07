@@ -8,6 +8,7 @@ import JoinCohort from '../common/JoinCohort/JoinCohort';
 import { HeaderBackground } from '../safeguards/Safeguards';
 import { cn } from '../../helpers/utils';
 import HoverCards from '../common/Framer/HoverCards';
+import ResponsiveSection from '../common/ResponsiveSection';
 
 gsap.registerPlugin(useGSAP)
 
@@ -244,9 +245,9 @@ function Journey() {
 
 
 const Third = () => {
-  return <div className='bg-[#F1F1F1] z-[1] relative third-section rounded-[54px] p-[60px] mx-[10px] text-black bg-[#FFF] overflow-hidden'>
-    <div className='flex flex-col gap-[10px]'>
-      <div className='flex-1 flex flex-col '>
+  return <ResponsiveSection className='max-h-[76vh] flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section rounded-[54px] p-[60px] mx-[10px] text-[#121212] overflow-hidden'>
+    <div className='flex-1 flex flex-col gap-[10px]'>
+      <div className='flex flex-col '>
         <div className='flex flex-row gap-2'>
           <div className='flex-1 text-[40px] font-semibold '>
             Your Journey With Qronic AI
@@ -256,7 +257,7 @@ const Third = () => {
           </div>
         </div>
       </div>
-      <div className="relative z-[1] flex overflow-x-auto hide-scrollbar">
+      <div className="flex-1 relative z-[1] flex overflow-x-auto hide-scrollbar">
         {/* {CARD_DATA.map((card) => (
           <Card
             key={card.position}
@@ -273,7 +274,7 @@ const Third = () => {
       </div>
 
     </div>
-  </div>
+  </ResponsiveSection>
 }
 
 const Card = ({ title, logo, img, children, position = "01", className }) => (
