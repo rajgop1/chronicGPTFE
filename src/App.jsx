@@ -126,43 +126,36 @@ function App() {
       { backgroundPosition: "50% 50%", duration: FIRST_ANIM_DURATION, ease: "none" },
       "secondAnim"
     );
-
+    const CARD_MOVE_DURATION = 0.5;
+    const GAP = 32; // px gap between cards
+    const TOTAL_CARDS = 3;
+    const DELAY_BETWEEN = 0.2; // seconds delay between cards
 
     // Set initial box shadow
     t1.set(".card", {
       boxShadow: "0px -5px 40px #12121233",
     });
 
-    // First animation label
-    t1.addLabel("cardAnim1", ">+=0.2");
+    // Create timeline with labels
+    for (let i = 1; i < TOTAL_CARDS; i++) {
+      const labelName = `cardAnim${i}`;
 
-    // Update current card
-    t1.call(() => setCurrentCard(1), null);
+      // Add label with a small delay
+      t1.addLabel(labelName, `+=${DELAY_BETWEEN}`);
 
-    // Move cards: full height + 32px gap
-    t1.to(".card", {
-      yPercent: -100, // move by full card height
-      y: -32,         // add the 32px gap
-      duration: CARD_MOVE_DURATION,
-      ease: "none",
-    }, "cardAnim1");
+      t1.to(".card", {
+        yPercent: "-=100",   // move up by one card height
+        y: `-=${GAP}`,       // add gap between cards
+        duration: CARD_MOVE_DURATION,
+        ease: "none",
+        onUpdate: () => {
+          const yPercent = gsap.getProperty(".card", "yPercent");
+          const current = Math.abs(Math.round(yPercent / 100)) + 1;
+          setCurrentCard(current);
+        },
+      }, labelName); // start this animation at the label
+    }
 
-    // Second animation label
-    t1.addLabel("cardAnim2", ">+=0.2");
-
-    // Update current card again
-    t1.call(() => setCurrentCard(2), null, "cardAnim2");
-
-    // Move cards again: next card height + gap
-    t1.to(".card", {
-      yPercent: -200, // moved 2 card heights total
-      y: "-=32",         // 32px per card gap × 2
-      duration: CARD_MOVE_DURATION,
-      ease: "none",
-    }, "cardAnim2");
-
-    // Update current card
-    t1.call(() => setCurrentCard(3), null, "cardAnim2");
 
 
     // /* ================== CARD 1 ================== */
@@ -559,7 +552,7 @@ const Second = () => {
       flex-1
       w-full
       hero-img
-      bg-[url('/assets/images/doctors-desktop-bg.png')]
+      bg-[url('/assets/images/safeguards/safeguards-bg-v2-upscaled.png')]
       bg-cover
       bg-no-repeat
       bg-[50%_100%]
