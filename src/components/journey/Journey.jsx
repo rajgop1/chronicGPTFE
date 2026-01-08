@@ -281,10 +281,10 @@ function Journey() {
 
 
 const Third = () => {
-  return <ResponsiveSection className='max-h-[84lvh] lg:max-h-[76lvh] mx-[4px] lg:mx-0 flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section mx-[10px] text-[#121212] overflow-hidden'>
-    <div className='flex-1 flex flex-col gap-[10px]'>
+  return <ResponsiveSection className=' max-h-[84lvh] lg:max-h-[76lvh] mx-[4px] lg:mx-0 flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section mx-[10px] text-[#121212] overflow-hidden'>
+    <div className='flex-1 flex flex-col 2xl:gap-[10px]'>
       <div className='flex flex-col '>
-        <div className='flex flex-col lg:flex-row gap-[12px] lg:gap-2'>
+        <div className=' flex items-center flex-col lg:flex-row gap-[12px] lg:gap-2'>
           <div className='flex-1 text-[32px] lg:text-[40px] leading-[36px] md:leading-normal font-semibold '>
             Your Journey With Qronic AI
           </div>
@@ -308,7 +308,7 @@ const Third = () => {
             </Card>
           ))}
         </div>
-        <div className='flex-1 hidden lg:flex'>
+        <div className='flex-1 hidden lg:flex lg:flex-col lg:justify-center'>
           <HoverCards cards={CARD_DATA} />
 
         </div>

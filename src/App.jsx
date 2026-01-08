@@ -153,25 +153,63 @@ function App() {
     const TOTAL_CARDS = 3;
     const DELAY_BETWEEN = 0.2;
 
-    for (let i = 1; i < TOTAL_CARDS; i++) {
-      const labelName = `cardAnim${i}`;
+    mm.add("(min-width: 768px)", () => {
+      for (let i = 1; i < TOTAL_CARDS; i++) {
+        const labelName = `cardAnim${i}`;
 
-      t1.addLabel(labelName, `+=${DELAY_BETWEEN}`);
+        t1.addLabel(labelName, `+=${DELAY_BETWEEN}`);
 
-      t1.to(".card", {
-        yPercent: "-=100",   // move up by one card height
-        y: `-=${GAP}`,       // add gap between cards
-        duration: CARD_MOVE_DURATION,
-        ease: "none",
-        onUpdate: () => {
-          const yPercent = gsap.getProperty(".card", "yPercent");
-          const current = Math.abs(Math.round(yPercent / 100)) + 1;
-          setCurrentCard(current);
-        },
-      }, labelName); // start this animation at the label
-    }
+        t1.to(".card", {
+          yPercent: "-=100",   // move up by one card height
+          y: `-=${GAP}`,       // add gap between cards
+          duration: CARD_MOVE_DURATION,
+          ease: "none",
+          onUpdate: () => {
+            const yPercent = gsap.getProperty(".card", "yPercent");
+            const current = Math.abs(Math.round(yPercent / 100)) + 1;
+            setCurrentCard(current);
+          },
+        }, labelName); // start this animation at the label
+      }
+    })
 
 
+
+    mm.add("(max-width: 767px)", () => {
+      for (let i = 1; i < TOTAL_CARDS; i++) {
+        const labelName = `cardAnim${i}`;
+
+        t1.addLabel(labelName, `+=${DELAY_BETWEEN}`);
+
+        if (i === TOTAL_CARDS - 1) {
+          t1.to(".third-section-header", {
+            duration: CARD_MOVE_DURATION,
+            position: "static",
+            overflow: "hidden",
+            delay: 0.1,
+            yPercent: -100,
+          }, labelName).to(".third-section-header", {
+            height: 0,
+            maxHeight: 0,
+            duration: CARD_MOVE_DURATION
+          });
+        }
+
+        t1.to(".card", {
+          yPercent: "-=100",   // move up by one card height
+          y: `-=${GAP}`,       // add gap between cards
+          duration: CARD_MOVE_DURATION,
+          ease: "none",
+          onUpdate: () => {
+            const yPercent = gsap.getProperty(".card", "yPercent");
+            const current = Math.abs(Math.round(yPercent / 100)) + 1;
+            setCurrentCard(current);
+          },
+        }, labelName); // start this animation at the label
+
+
+      }
+    })
 
     // /* ================== CARD 1 ================== */
     // t1.addLabel("card1", ">+=0.25");
@@ -508,7 +546,8 @@ const Second = () => {
       lg:text-[36px]
       xl:text-[50px]
       font-extrabold
-      mb-[24px]
+      lg:mb-[24px]
+      mb-[16px]
       max-w-[280px]
       sm:max-w-full
       text-center
@@ -540,6 +579,7 @@ const Third = ({ currentCard }) => {
         3xl:max-h-[calc(80lvh-120px)]
         flex-1 flex flex-col justify-between gap-[20px]
         relative z-[1] bg-white shadow-lg lg:shadow-none lg:bg-transparent lg:static -mx-[16px] -mt-[20px] px-[16px] py-[24px] lg:mx-0 lg:mt-0 lg:px-0 lg:py-0  
+        third-section-header
         '>
         <div className='flex flex-col gap-2 justify-between'>
           <div className='text-[40px] font-medium '>
@@ -826,6 +866,7 @@ const Card = ({
         md:gap-[10px]
         lg:gap-[16px]
         3xl:gap-[32px]
+        h-[600px]
         ${className}
       `}
     >
