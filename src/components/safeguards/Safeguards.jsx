@@ -319,7 +319,7 @@ const Third = () => {
 
 const Card = ({ title, logo, img, children }) => (
   <div className='card bg-[#F1F1F1] h-[440px] md:h-auto lg:bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[28px] lg:rounded-[40px] p-[24px] border border-[1px] border-[#B0B0B0] flex flex-col-reverse lg:flex-row gap-[20px] lg:gap-[60px]'>
-    <div className='flex-1 flex flex-col justify-between gap-[6px]'>
+    <div className='flex-1 flex flex-col lg:justify-between gap-[6px]'>
       <div className='flex items-center gap-[8px] lg:gap-[20px]'>
         <img src={logo} alt="" className='w-[40px] h-[40px] lg:w-[80px] lg:h-[80px]' />
         <div className='text-[20px] lg:text-[28px] font-bold lg:font-medium'>
@@ -331,7 +331,7 @@ const Card = ({ title, logo, img, children }) => (
       </div>
     </div>
     <div className='flex-1'>
-      <div className='lg:h-[300px] xl:h-[320px] rounded-[24px] overflow-hidden'>
+      <div className='h-[208px] lg:h-[300px] xl:h-[320px] rounded-[24px] overflow-hidden'>
         <img src={img} className='w-full h-full object-cover rounded-[24px]' />
       </div>
     </div>
@@ -347,8 +347,8 @@ const BuildForTrust = () => (
         className="w-full h-full object-cover object-center rounded-[24px] lg:rounded-[52px]"
       />
     </div>
-    <div className='flex-1 flex flex-col lg:justify-center gap-[24px] text-center px-[10px] py-[24px] lg:p-[24px] pb-[32px]'>
-      <div className='text-[32px] lg:text-[36px] font-semibold'>Built for Trust</div>
+    <div className='flex-1 flex flex-col lg:justify-center gap-[4px] lg:gap-[24px] text-center px-[10px] py-[24px] lg:p-[24px] pb-[32px]'>
+      <div className='text-[32px] leading-[36px] lg:text-[36px] lg:leading-normal font-semibold'>Built for Trust</div>
       <div className='text-[16px] flex flex-col gap-[8px]'>
         <div className='font-medium'>
           We know you can only trust a system that is medically sound, transparent, and accountable. ChronicGPT is built so that your AI Doctor never acts alone. Your human doctor sets your health goals, licensed physicians oversee your progress, and every recommendation your AI Doctor makes is traceable, explainable, and grounded in real clinical reasoning. You are always informed, always in control, and never navigating your health alone.

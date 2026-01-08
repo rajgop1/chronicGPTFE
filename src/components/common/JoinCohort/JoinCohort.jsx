@@ -25,7 +25,7 @@ function JoinCohort() {
                             <p className='flex justify-center items-center w-fit text-[14px] lg:text-[16px] px-[14px] py-[6px] pb-[4px] rounded-[30px] text-white font-bold bg-[#CBCBCB33]'>Limited Spots Available</p>
                             <h2 className='text-[30px] lg:text-[40px] leading-[34px] lg:leading-[52px] font-semibold'>Be part of the first <br className='lg:hidden'/> cohort.</h2>
                             <p className='text-[16px] lg:text-[20px] font-medium leading-[100%]'>
-                                Get full access, all setup support, and early-user <br /> advantages.
+                                Get full access, all setup support, and early-user <br className='hidden lg:inline'/> advantages.
                             </p>
                         </div>
 
