@@ -87,10 +87,10 @@ const NavItem = ({ to, label }) => (
           <svg width="16" height="16" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="paint0_linear" x1="-3" y1="0" x2="15" y2="11.625" gradientUnits="userSpaceOnUse">
-                <stop offset="0.504808" stop-color="#B6CE44" />
-                <stop offset="0.668269" stop-color="#2DB4FF" />
-                <stop offset="0.846154" stop-color="#FF6CEB" />
-                <stop offset="0.985577" stop-color="#BF9CF5" />
+                <stop offset="0.504808" stopColor="#B6CE44" />
+                <stop offset="0.668269" stopColor="#2DB4FF" />
+                <stop offset="0.846154" stopColor="#FF6CEB" />
+                <stop offset="0.985577" stopColor="#BF9CF5" />
                 <animateTransform
                   attributeName="gradientTransform"
                   type="rotate"

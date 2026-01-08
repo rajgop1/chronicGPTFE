@@ -281,7 +281,7 @@ function Journey() {
 
 
 const Third = () => {
-  return <ResponsiveSection className='max-h-[76lvh] mx-[4px] lg:mx-0 flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section mx-[10px] text-[#121212] overflow-hidden'>
+  return <ResponsiveSection className='max-h-[84lvh] lg:max-h-[76lvh] mx-[4px] lg:mx-0 flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section mx-[10px] text-[#121212] overflow-hidden'>
     <div className='flex-1 flex flex-col gap-[10px]'>
       <div className='flex flex-col '>
         <div className='flex flex-col lg:flex-row gap-[12px] lg:gap-2'>
