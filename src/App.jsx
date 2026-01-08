@@ -119,7 +119,7 @@ function App() {
     mm.add("(min-width: 768px)", () => {
       // Desktop/tablet height
       t1.to(".second-section", {
-        height: "20dvh",
+        height: "20lvh",
         padding: 0,
         ease: "none",
         duration: SECOND_ANIM_DURATION,
@@ -129,7 +129,7 @@ function App() {
     mm.add("(max-width: 767px)", () => {
       // Mobile height
       t1.to(".second-section", {
-        height: "10dvh",
+        height: "10lvh",
         padding: 0,
         ease: "none",
         duration: SECOND_ANIM_DURATION,
@@ -416,7 +416,7 @@ function App() {
       <div className={cn('mx-auto', MAX_WIDTH)}>
         <Fourth hrCardContainer={hrCardContainer} />
       </div>
-      {/* <div className='fourth-section h-dvh'>
+      {/* <div className='fourth-section h-lvh'>
           <FourthV2 hrCardContainer={hrCardContainer} />
         </div> */}
       <div className={cn('mx-auto', MAX_WIDTH)}>
@@ -505,7 +505,7 @@ const Second = () => {
     {/* CONTENT SECTION */}
     <div
       className={cn("relative z-[1] -mt-[80px] bg-[linear-gradient(to_bottom,_transparent_0%,_#121212_45%)] flex flex-col justify-center text-center py-[28px] px-[42px] lg:px-[100px] second-section-content mx-auto", MAX_WIDTH)
-    }
+      }
     >
       <div className='text-center w-full flex justify-center'>
         <h2 className="
@@ -537,12 +537,12 @@ const Second = () => {
 }
 
 const Third = ({ currentCard }) => {
-  return <ResponsiveSection className='z-[3] relative h-dvh third-section mx-[10px] text-black bg-[#FFF] overflow-hidden'>
+  return <ResponsiveSection className='z-[3] relative h-lvh third-section mx-[10px] text-black bg-[#FFF] overflow-hidden'>
     <div className='flex flex-col lg:flex-row gap-8 md:gap-4 lg:gap-6 3xl:gap-8'>
-      <div className='max-h-[calc(80dvh-20px)]
-        md:max-h-[calc(80dvh-40px)]
-        lg:max-h-[calc(80dvh-80px)]
-        3xl:max-h-[calc(80dvh-120px)]
+      <div className='max-h-[calc(80lvh-20px)]
+        md:max-h-[calc(80lvh-40px)]
+        lg:max-h-[calc(80lvh-80px)]
+        3xl:max-h-[calc(80lvh-120px)]
         flex-1 flex flex-col justify-between gap-[20px]
         relative z-[1] bg-white shadow-lg lg:shadow-none lg:bg-transparent lg:static -mx-[16px] -mt-[20px] px-[16px] py-[24px] lg:mx-0 lg:mt-0 lg:px-0 lg:py-0  
         '>
@@ -619,15 +619,22 @@ const Fourth = ({ hrCardContainer }) => {
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
 
+  const [showNav, setShowNav] = useState(true);
+
   const updateButtons = () => {
     const el = hrCardContainer.current;
     if (!el) return;
 
     const maxScroll = el.scrollWidth - el.clientWidth;
 
+    // hide buttons if no scrolling possible
+    const canScroll = el.scrollWidth > el.clientWidth;
+    setShowNav(canScroll);
+
     setCanPrev(el.scrollLeft > 0);
     setCanNext(el.scrollLeft < maxScroll);
   };
+
 
   const scrollCards = (dir) => {
     const container = hrCardContainer.current;
@@ -653,18 +660,20 @@ const Fourth = ({ hrCardContainer }) => {
     const el = hrCardContainer.current;
     if (!el) return;
 
+    updateButtons(); // check first render
     const handleScroll = () => {
       const maxScroll = el.scrollWidth - el.clientWidth;
       const ratio = el.scrollLeft / maxScroll;
       setProgress(ratio * 100);
-      updateButtons()
+      updateButtons();
     };
 
     el.addEventListener("scroll", handleScroll);
     return () => el.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return <ResponsiveSection className='h-dvh relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] overflow-hidden'>
+
+  return <ResponsiveSection className='h-lvh relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] overflow-hidden'>
     <div className='flex flex-col lg:flex-row gap-2'>
       <h2 className='flex-1 text-[40px] leading-[52px] font-medium'>
         Real clinical outcomes, felt in your everyday life
@@ -716,10 +725,11 @@ const Fourth = ({ hrCardContainer }) => {
       </div>
       <div className='flex justify-between flex flex-row-reverse lg:flex-row items-center w-full'>
         <div className="bg-[#06040A]/20 w-[200px] h-[4px]">
-          <div style={{ width: `${progress}%` }}
+          <div
+            style={{ width: `${showNav ? progress : 100}%` }}
             className={cn("progress-bar bg-[#06040A] h-full w-fit")}></div>
         </div>
-        <div className='cursor-pointer '>
+        {<div className='cursor-pointer '>
           <button
             onClick={() => scrollCards("prev")}
             className="p-[10px] border-[1px] border-[#121212] text-[#121212] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
@@ -736,14 +746,14 @@ const Fourth = ({ hrCardContainer }) => {
           >
             <HiChevronRight size={"24px"} />
           </button>
-        </div>
+        </div>}
       </div>
     </div>
   </ResponsiveSection>
 }
 
 const FourthV2 = ({ hrCardContainer }) => {
-  return <ResponsiveSection className='h-dvh relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] rounded-[60px] overflow-hidden'>
+  return <ResponsiveSection className='h-lvh relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] rounded-[60px] overflow-hidden'>
     <div className='flex gap-2'>
       <h2 className='flex-1 text-[40px] leading-[52px] font-medium'>
         Real clinical outcomes, <br /> felt in your everyday life

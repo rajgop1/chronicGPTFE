@@ -181,7 +181,7 @@ function Safeguards() {
     }, "secondAnim")
 
     t1.to(".section-two", {
-      height: "20dvh",
+      height: "20lvh",
     }, "secondAnim")
 
 
@@ -191,7 +191,7 @@ function Safeguards() {
       height: 0,
       autoAlpha: 0,
     }, "thirdAnim").to(".build-for-trust", {
-      height: "100dvh",
+      height: "100lvh",
       // autoAlpha: 0,
     }, "thirdAnim")
 
@@ -229,7 +229,7 @@ function Safeguards() {
 
 export const HeaderBackground = ({ children }) => {
   return <div className='z-[2] section-two relative h-lvh overflow-hidden flex flex-col'>
-    <div className="hero-img shrink-0 absolute h-[26dvh] w-full overflow-hidden">
+    <div className="hero-img shrink-0 absolute h-[26lvh] w-full overflow-hidden">
       <img
         src="/assets/images/sub-banner.png"
         alt=""
@@ -255,7 +255,7 @@ export const HeaderBackground = ({ children }) => {
       />
 
     </div>
-    <div className='second-inner-content mt-[14dvh] lg:mt-[20dvh] flex flex-col flex-1 p-[10px] pt-[0px]'>
+    <div className='second-inner-content mt-[14lvh] lg:mt-[20lvh] flex flex-col flex-1 p-[10px] pt-[0px]'>
       {children}
     </div>
   </div>

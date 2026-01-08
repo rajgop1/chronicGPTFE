@@ -49,7 +49,7 @@ function JoinCohort() {
                                             Be among the first to experience personalized AI Doctor care
                                         </div>
                                     </div>
-                                    <div className='flex-1 flex flex-col lg:px-[80px]'>
+                                    <div className='flex-1 flex flex-col lg:px-[80px] w-full'>
                                         <div className='flex flex-col gap-[32px] '>
                                             <div className='flex flex-col lg:flex-row gap-[24px] flex-1'>
                                                 <FormInput

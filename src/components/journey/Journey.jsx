@@ -177,7 +177,7 @@ function Journey() {
 
 
     t1.to(".section-two", {
-      height: "10dvh",
+      height: "10lvh",
       autoAlpha: 0
     })
 
