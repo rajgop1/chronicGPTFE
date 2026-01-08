@@ -9,6 +9,7 @@ import { HeaderBackground } from '../safeguards/Safeguards';
 import { cn } from '../../helpers/utils';
 import HoverCards from '../common/Framer/HoverCards';
 import ResponsiveSection from '../common/ResponsiveSection';
+import { MAX_WIDTH } from '../constants/css-classes';
 
 gsap.registerPlugin(useGSAP)
 
@@ -266,7 +267,7 @@ function Journey() {
 
   return (
     <>
-      <div className='container max-w-[1512px] mx-auto text-[#121212]' ref={container}>
+      <div className={cn('container mx-auto text-[#121212]', MAX_WIDTH)} ref={container}>
         <Header/>
         <HeaderBackground>
           <Third />

@@ -1,8 +1,10 @@
 import { NavLink } from "react-router";
 import Separator from "../Separator";
+import { cn } from "../../../helpers/utils";
+import { MAX_WIDTH } from "../../constants/css-classes";
 
 const Footer = () => (
-  <div className='max-w-[1512px] relative z-50 mx-auto footer h-fit flex flex-col flex-1 px-[20px] lg:px-[60px]'>
+  <div className={cn('relative z-50 mx-auto footer h-fit flex flex-col flex-1 px-[20px] lg:px-[60px]', MAX_WIDTH)}>
     <Separator variant='v2' />
     <div className="flex flex-col ">
       <footer className='py-[40px] flex flex-col gap-[50px] bg-[#121212]'>
@@ -18,9 +20,10 @@ const Footer = () => (
           <div className='flex flex-col md:items-end lg:items-center gap-[16px]'>
             <NavLink to="" className={"font-medium"}>Quick Links</NavLink>
             <div className='flex flex-col gap-[10px]'>
-              <NavLink to="" className={"text-[14px]"}>Home</NavLink>
-              <NavLink to="" className={"text-[14px]"}>How it Works</NavLink>
-              <NavLink to="" className={"text-[14px]"}>Journey</NavLink>
+              <NavLink to="/" className={"text-[14px]"}>Home</NavLink>
+              <NavLink to="/safeguards" className={"text-[14px]"}>Safeguards</NavLink>
+              <NavLink to="/journey" className={"text-[14px]"}>Journey</NavLink>
+              {/* <NavLink to="" className={"text-[14px]"}>How it Works</NavLink> */}
             </div>
           </div>
           <div className='md:col-span-2 lg:col-span-1 flex flex-col gap-[20px] md:text-center md:items-center'>

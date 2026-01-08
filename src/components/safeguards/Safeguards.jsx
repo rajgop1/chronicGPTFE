@@ -6,6 +6,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 import JoinCohort from '../common/JoinCohort/JoinCohort';
 import ResponsiveSection from '../common/ResponsiveSection';
+import { cn } from '../../helpers/utils';
+import { MAX_WIDTH } from '../constants/css-classes';
 
 gsap.registerPlugin(useGSAP)
 
@@ -214,7 +216,7 @@ function Safeguards() {
   }, { scope: container.current })
 
   return (
-    <div className='max-w-[1512px] mx-auto' ref={container}>
+    <div className={cn('mx-auto', MAX_WIDTH)} ref={container}>
       <Header/>
       <HeaderBackground>
         <Third />

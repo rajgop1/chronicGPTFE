@@ -1,0 +1,1 @@
+export const MAX_WIDTH = "mon-w-full max-w-[1912px]"

@@ -5,6 +5,7 @@ import Separator from '../Separator';
 import { HiOutlineX } from 'react-icons/hi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLenis } from 'lenis/react';
+import { MAX_WIDTH } from '../../constants/css-classes';
 
 function Header() {
   const lenis = useLenis();
@@ -22,7 +23,7 @@ function Header() {
   }, [menu, lenis])
 
   return (
-    <header className='mx-auto max-w-[1512px] header fixed top-0 z-[50] left-0 right-0 text-white'>
+    <header className={cn('mx-auto header fixed top-0 z-[50] left-0 right-0 text-white', MAX_WIDTH)}>
       <div className='flex justify-between items-center px-[24px] md:py-[20px] lg:px-[60px] lg:py-[32px] h-[64px] lg:h-[100px] '>
         <NavLink to="/">
           <img src={"/assets/images/logo.png"} className='w-[30px] h-[24px] lg:h-[40px] lg:w-[50px]' alt='Vite logo' />

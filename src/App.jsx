@@ -22,6 +22,7 @@ import ResponsiveSection from './components/common/ResponsiveSection'
 import HorizontalScroll from './components/common/Framer/HorizontalScrollContainer'
 import { HiChevronLeft } from 'react-icons/hi'
 import { HiChevronRight } from 'react-icons/hi2'
+import { MAX_WIDTH } from './components/constants/css-classes'
 
 gsap.registerPlugin(useGSAP)
 
@@ -402,23 +403,23 @@ function App() {
 
   return (
 
-    <div ref={container} className='container mx-auto'>
+    <div ref={container} className={cn('container mx-auto', MAX_WIDTH)}>
 
       <Header />
-      <div className='max-w-[1512px] mx-auto'>
+      <div className={cn('mx-auto', MAX_WIDTH)}>
         <Home />
       </div>
       <Second />
-      <div className='max-w-[1512px] mx-auto'>
+      <div className={cn('mx-auto', MAX_WIDTH)}>
         <Third currentCard={currentCard} />
       </div>
-      <div className='max-w-[1512px] mx-auto'>
+      <div className={cn('mx-auto', MAX_WIDTH)}>
         <Fourth hrCardContainer={hrCardContainer} />
       </div>
       {/* <div className='fourth-section h-dvh'>
           <FourthV2 hrCardContainer={hrCardContainer} />
         </div> */}
-      <div className='max-w-[1512px] mx-auto'>
+      <div className={cn('mx-auto', MAX_WIDTH)}>
         <JoinCohort />
       </div>
 
@@ -504,20 +505,8 @@ const Second = () => {
 
     {/* CONTENT SECTION */}
     <div
-      className="
-      relative
-      z-[1]
-      -mt-[80px]
-      bg-[linear-gradient(to_bottom,_transparent_0%,_#121212_45%)]
-      flex flex-col justify-center
-      text-center
-      py-[28px]
-      px-[42px]
-      lg:px-[100px]
-      second-section-content
-      max-w-[1512px]
-      mx-auto
-    "
+      className={cn("relative z-[1] -mt-[80px] bg-[linear-gradient(to_bottom,_transparent_0%,_#121212_45%)] flex flex-col justify-center text-center py-[28px] px-[42px] lg:px-[100px] second-section-content mx-auto", MAX_WIDTH)
+    }
     >
       <div className='text-center w-full flex justify-center'>
         <h2 className="
