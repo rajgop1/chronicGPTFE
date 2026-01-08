@@ -489,7 +489,6 @@ const Second = () => {
       bg-no-repeat
       bg-[50%_100%]
       shadow-[0_0_60px_20px_rgba(18,18,18,0.6)_inset]
-      max-w-[1912px]
       mx-auto
     "
     >
