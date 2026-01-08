@@ -58,10 +58,6 @@ function App() {
 
 
     const t1 = gsap.timeline();
-    const hrTl = gsap.timeline({
-      defaults: { ease: "none" },
-    });
-
     /* ================== FIRST ANIM ================== */
     t1.addLabel("firstAnim");
 
@@ -117,7 +113,6 @@ function App() {
     }, "secondAnim");
 
     mm.add("(min-width: 768px)", () => {
-      // Desktop/tablet height
       t1.to(".second-section", {
         height: "20lvh",
         padding: 0,
@@ -127,7 +122,6 @@ function App() {
     });
 
     mm.add("(max-width: 767px)", () => {
-      // Mobile height
       t1.to(".second-section", {
         height: "10lvh",
         padding: 0,
@@ -136,27 +130,32 @@ function App() {
       }, "secondAnim");
     });
 
-    t1.fromTo(
-      ".second-section .hero-img",
-      { backgroundPosition: "50% 100%", },
-      { backgroundPosition: "50% 50%", duration: FIRST_ANIM_DURATION, ease: "none" },
-      "secondAnim"
-    );
-
-    const GAP = 32; // px gap between cards
-    const TOTAL_CARDS = 3;
-    const DELAY_BETWEEN = 0.2; // seconds delay between cards
-
-    // Set initial box shadow
-    t1.set(".card", {
-      boxShadow: "0px -5px 40px #12121233",
+    mm.add("(min-width: 768px)", () => {
+      t1.fromTo(
+        ".second-section .hero-img",
+        { backgroundPosition: "50% 100%", },
+        { backgroundPosition: "50% 50%", duration: FIRST_ANIM_DURATION, ease: "none" },
+        "secondAnim"
+      );
     });
 
-    // Create timeline with labels
+    mm.add("(max-width: 767px)", () => {
+      t1.fromTo(
+        ".second-section .hero-img",
+        { backgroundPosition: "0% 0%", },
+        { backgroundPosition: "50% 20%", duration: FIRST_ANIM_DURATION, ease: "none" },
+        "secondAnim"
+      );
+    });
+
+
+    const GAP = 32;
+    const TOTAL_CARDS = 3;
+    const DELAY_BETWEEN = 0.2;
+
     for (let i = 1; i < TOTAL_CARDS; i++) {
       const labelName = `cardAnim${i}`;
 
-      // Add label with a small delay
       t1.addLabel(labelName, `+=${DELAY_BETWEEN}`);
 
       t1.to(".card", {
@@ -379,20 +378,15 @@ function App() {
     //   ease: "none",
     // }, "fifthAnim");
 
-    const duration = Object.values(t1.labels).reduce((acc, num) => acc + num)
-
-
-
-    t1.add(hrTl, "thirdAnim+=0.25")
 
     scrollTrigger = ScrollTrigger.create({
-      animation: t1,
-      // snap: "labelsDirectional",
       trigger: container.current,
       start: "top top",
       end: "max",
       pin: true,
       scrub: true,
+      animation: t1,
+      // snap: "labelsDirectional",
       // pinSpacing: false,
       // invalidateOnRefresh: true,
     });
@@ -484,10 +478,11 @@ const Second = () => {
       flex-1
       w-full
       hero-img
-      bg-[url('/assets/images/safeguards/safeguards-bg-v2-upscaled.png')]
+      md:bg-[url('/assets/images/safeguards/safeguards-bg-v2-upscaled.png')]
+      bg-[url('/assets/images/safeguards/safeguards-bg-v2-mobile.png')]
       bg-cover
       bg-no-repeat
-      bg-[50%_100%]
+      md:bg-[50%_100%]
       shadow-[0_0_60px_20px_rgba(18,18,18,0.6)_inset]
       mx-auto
     "

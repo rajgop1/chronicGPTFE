@@ -17,8 +17,8 @@ const CARD_DATA = [
   {
     position: "01",
     title: "Your MD sets your clinical goals.",
-    logo: "/assets/images/safeguards/card-1-icon.png",
-    img: "/assets/images/safeguards/card-1.jpg",
+    // logo: "/assets/images/safeguards/card-1-icon.png",
+    img: "/assets/images/journey/horizontal-cards/card-1.png",
     text: `After sign-up, your own physician (or one you choose on the platform) reviews your labs, medications, history, and current biomarkers.
            They set measurable 3–6 month goals — for HbA1c, weight, LDL, blood pressure, sleep, and more.
            These goals become the medical blueprint for your AI Doctor.`
@@ -26,8 +26,8 @@ const CARD_DATA = [
   {
     position: "02",
     title: "You create your own AI Doctor.",
-    logo: "/assets/images/safeguards/card-2-icon.png",
-    img: "/assets/images/safeguards/card-2.jpg",
+    // logo: "/assets/images/safeguards/card-2-icon.png",
+    img: "/assets/images/journey/horizontal-cards/card-2.png",
     text: `You choose how you want to interact: text, voice notes, or a human-like video avatar.
            Pick your language, tone, and frequency of check-ins.
            Your AI Doctor learns your communication style and is available 24/7.`
@@ -35,8 +35,8 @@ const CARD_DATA = [
   {
     position: "03",
     title: "Your devices connect and your data flows in automatically.",
-    logo: "/assets/images/safeguards/card-3-icon.png",
-    img: "/assets/images/safeguards/card-3.jpg",
+    // logo: "/assets/images/safeguards/card-3-icon.png",
+    img: "/assets/images/journey/horizontal-cards/card-3.png",
     text: `We provide essential wearables for free (sleep/activity tracker, CGM for diabetes, BP cuff for hypertension) or integrate your existing devices.
            Your glucose, sleep, activity, heart rate, medications, and meals stream in continuously.
            Your AI Doctor now has your real-world health signals.`
@@ -44,8 +44,8 @@ const CARD_DATA = [
   {
     position: "04",
     title: "Your AI Doctor builds a digital model of your body.",
-    logo: "/assets/images/safeguards/card-4-icon.png",
-    img: "/assets/images/safeguards/card-4.jpg",
+    // logo: "/assets/images/safeguards/card-4-icon.png",
+    img: "/assets/images/journey/horizontal-cards/card-4.jpg",
     text: `It studies how you respond to food, stress, sleep, activity, and medications — minute by minute.
            It translates your doctor’s goals into daily targets for sleep, nutrition, activity, and medication.
            This creates your personalized baseline and learning model.`
@@ -53,8 +53,8 @@ const CARD_DATA = [
   {
     position: "05",
     title: "You receive daily individualized guidance.",
-    logo: "/assets/images/safeguards/card-5-icon.png",
-    img: "/assets/images/safeguards/card-5.png",
+    // logo: "/assets/images/safeguards/card-5-icon.png",
+    img: "/assets/images/journey/horizontal-cards/card-5.jpg",
     text: `Your AI Doctor watches your body in real time and sends timely, specific micro-interventions:
            what to adjust, when to rest, how to pace meals, when to hydrate, or when to move.
            You also have twice-weekly check-ins that replace the dashboard clutter you’re used to.`
@@ -62,8 +62,8 @@ const CARD_DATA = [
   {
     position: "06",
     title: "A clinician supervises everything and steps in when needed.",
-    logo: "/assets/images/safeguards/card-6-icon.png",
-    img: "/assets/images/safeguards/card-6.jpg",
+    // logo: "/assets/images/safeguards/card-6-icon.png",
+    img: "/assets/images/journey/horizontal-cards/card-6.png",
     text: `Physicians review your progress, validate recommendations, adjust your plan, and handle escalations.
            If your AI Doctor detects a red flag or predicts risk, it arranges a telehealth visit or alerts your MD immediately.
            When it’s time for a routine appointment, your AI Doctor sends your progress summary to your physician.`

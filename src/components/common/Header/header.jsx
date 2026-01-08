@@ -78,12 +78,12 @@ const NavItem = ({ to, label }) => (
   <NavLink to={to} className="relative inline-block px-2">
     {({ isActive }) => (
       <div className='flex items-center gap-2'>
-        {/* <img
+        <img
           src="/assets/images/star.png"
           alt="active"
-          className={cn('w-[16px] h-[16 px] invisible', )}
-        /> */}
-        <div className={cn("invisible", isActive && "visible")}>
+          className={cn('lg:hidden w-[16px] h-[16 px] invisible', isActive && "visible" )}
+        />
+        <div className={cn("hidden lg:flex relative z-[1] w-[16px] h-[16px] invisible", isActive && "visible")}>
           <svg width="16" height="16" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="paint0_linear" x1="-3" y1="0" x2="15" y2="11.625" gradientUnits="userSpaceOnUse">

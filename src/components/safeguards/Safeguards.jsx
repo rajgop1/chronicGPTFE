@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import Header from '../common/Header/header';
-import Footer from '../common/Footer/footer';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
@@ -13,20 +12,14 @@ gsap.registerPlugin(useGSAP)
 
 function Safeguards() {
   const container = useRef();
+
+  let scrollTrigger = null
+
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
+
+    const t1 = gsap.timeline();
     const mm = gsap.matchMedia()
-
-    const t1 = gsap.timeline({
-      scrollTrigger: {
-        trigger: container.current,
-        start: "top top",
-        end: "max",
-        pin: true,
-        scrub: true,
-      }
-
-    })
 
     const cards = gsap.utils.toArray(".card");
     // const STACK_OFFSET = 25;
@@ -181,7 +174,7 @@ function Safeguards() {
     }, "secondAnim")
 
     t1.to(".section-two", {
-      height: "20lvh",
+      height: "20vh",
     }, "secondAnim")
 
 
@@ -191,16 +184,30 @@ function Safeguards() {
       height: 0,
       autoAlpha: 0,
     }, "thirdAnim").to(".build-for-trust", {
-      height: "100lvh",
+      height: "100vh",
       // autoAlpha: 0,
     }, "thirdAnim")
+
+    t1.addLabel("inBetweenAnim", ">")
 
     t1.to(".build-for-trust", {
       height: 0,
       autoAlpha: 0
-    },)
+    }, "inBetweenAnim")
+
+    t1.fromTo(
+      ".header",
+      { background: "transparent" },
+      {
+        background: "#121212",
+        duration: 0.2,
+        delay: 0.2,
+        ease: "none",
+      }, "inBetweenAnim"
+    );
 
     t1.addLabel("fifthAnim", ">+=0.25")
+
 
     t1.to(".join-cohort", {
       // height: 0,
@@ -211,13 +218,24 @@ function Safeguards() {
     }, "fifthAnim")
 
 
+    scrollTrigger = ScrollTrigger.create({
+      trigger: container.current,
+      start: "top top",
+      end: "max",
+      pin: true,
+      scrub: true,
+      animation: t1,
+      // snap: "labelsDirectional",
+      // pinSpacing: false,
+      // invalidateOnRefresh: true,
+    });
 
 
   }, { scope: container.current })
 
   return (
     <div className={cn('mx-auto', MAX_WIDTH)} ref={container}>
-      <Header/>
+      <Header />
       <HeaderBackground>
         <Third />
       </HeaderBackground>
@@ -285,10 +303,10 @@ const Third = () => {
         <Card title="Transparent and in your control" logo="/assets/images/safeguards/card-3-icon.png" img="/assets/images/safeguards/card-3.jpg">
           You can see what the AI Doctor sees, why it makes a recommendation, and who else can access your data. No black boxes, no hidden decisions.
         </Card>
-        <Card title="AI Doctor is medically validated" logo="/assets/images/safeguards/card-4-icon.png" img="/assets/images/safeguards/card-4.jpg">
+        <Card title="AI Doctor is medically validated" logo="/assets/images/safeguards/card-4-icon.png" img="/assets/images/safeguards/card-4.png">
           Every AI Doctor is continuously reviewed by licensed physicians. It follows clinical guidelines, double-checks itself, and escalates to a human doctor whenever needed.
         </Card>
-        <Card title="Fully compliant with US healthcare laws" logo="/assets/images/safeguards/card-5-icon.png" img="/assets/images/safeguards/card-5.png">
+        <Card title="Fully compliant with US healthcare laws" logo="/assets/images/safeguards/card-5-icon.png" img="/assets/images/safeguards/card-5.jpg">
           ChronicGPT Inc complies with HIPAA, tele-health regulations, and all relevant AI-in-health safeguards. You are using a medically governed product, not a hobby experiment.
         </Card>
         <Card title="Human doctors stand behind every action" logo="/assets/images/safeguards/card-6-icon.png" img="/assets/images/safeguards/card-6.jpg">
