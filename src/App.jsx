@@ -372,12 +372,12 @@ function App() {
       ease: "none",
     }, "fifthAnim");
 
-    t1.to(".header", {
-      height: 0,
-      autoAlpha: 0,
-      duration: 0.1,
-      ease: "none",
-    }, "fifthAnim");
+    // t1.to(".header", {
+    //   height: 0,
+    //   autoAlpha: 0,
+    //   duration: 0.1,
+    //   ease: "none",
+    // }, "fifthAnim");
 
     const duration = Object.values(t1.labels).reduce((acc, num) => acc + num)
 
