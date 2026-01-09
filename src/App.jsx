@@ -867,6 +867,10 @@ const Card = ({
         lg:gap-[16px]
         3xl:gap-[32px]
         h-[600px]
+        max-h-[calc(80lvh-20px)]
+        md:max-h-[calc(80lvh-40px)]
+        lg:max-h-[calc(80lvh-80px)]
+        3xl:max-h-[calc(80lvh-120px)]
         ${className}
       `}
     >
