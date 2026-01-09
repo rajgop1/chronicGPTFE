@@ -351,6 +351,14 @@ function App() {
       ease: "none",
     }, "inBetweenAnim");
 
+    // t1.fromTo(".section-four", {
+    //   height: "100lvh"
+    // }, {
+    //   height: "90lvh",
+    //   duration: SECTION_FIVE_DURATION,
+    //   ease: "none",
+    // }, "inBetweenAnim");
+
 
     /* ================== FOURTH EXIT ================== */
     t1.addLabel("fourthAnim", ">");
@@ -709,7 +717,7 @@ const Fourth = ({ hrCardContainer }) => {
 
 
   return <ResponsiveSection className='h-lvh relative z-[4] text-[#121212] bg-[#F1F1F1] section-four flex flex-col gap-[10px] md:gap-[16px] lg:gap-[28px] 3xl:gap-[36px] bg-[#F1F1F1] mx-[10px] overflow-hidden'>
-    <div className='flex flex-col lg:flex-row gap-2'>
+    <div className='flex flex-col lg:flex-row gap-8'>
       <h2 className='flex-1 text-[40px] leading-[52px] font-medium'>
         Real clinical outcomes, felt in your everyday life
       </h2>
@@ -717,8 +725,8 @@ const Fourth = ({ hrCardContainer }) => {
         You choose one or more improvement programs. Your AI Doctor works in the background every day — helping you feel the changes in ways that matter: steadier energy, calmer mornings, smoother rhythms, and more restorative nights.
       </p>
     </div>
-    <div className='flex flex-col-reverse lg:flex-col justify-between gap-[24px]'  >
-      <div className={cn('flex gap-[24px] hr-card-container pb-[8px] overflow-auto hide-scrollbar', canNext && "hr-card-container-mask")} ref={hrCardContainer}>
+    <div className='flex flex-col-reverse lg:flex-col justify-between gap-[24px] flex-1'  >
+      <div className={cn(' flex gap-[24px] hr-card-container pb-[8px] overflow-auto hide-scrollbar', canNext && "hr-card-container-mask")} ref={hrCardContainer}>
         <HorizontalCard
           title="Mornings stop feeling unpredictable"
           img={"/assets/images/hr-card-1.jpg"}
@@ -905,7 +913,7 @@ const Card = ({
 
 
 const HorizontalCard = ({ img, title, className, children }) => (
-  <div className={cn('hr-card min-w-[320px] max-w-[320px] bg-white flex flex-col gap-[20px] p-[20px] rounded-[40px]', className)}>
+  <div className={cn('hr-card min-w-[320px] max-w-[320px] 2xl:min-w-auto 2xl:h-[450px] bg-white flex flex-col gap-[20px] p-[20px] rounded-[40px]', className)}>
     <div className='img-container w-[280px] h-[152px] rounded-[20px] overflow-hidden'>
       <img src={img} alt="" className='w-full h-full object-cover' />
     </div>
