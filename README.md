@@ -117,7 +117,7 @@ Router resets Lenis scroll position on route change for smooth UX.
 1. Clone the repo
 
 ```bash
-git clone <repo-url>
+git clone git@github.com:etherealdesign/chronic-gpt-fe.git
 cd chronicGPTFE
 npm install
 ```
