@@ -284,7 +284,7 @@ const Third = () => {
 
     <div className='flex flex-col gap-[20px] 3xl:gap-[40px]'>
       <div className='safeguards-header flex-1 flex flex-col gap-[20px]'>
-        <div className='flex flex-col lg:flex-row gap-2'>
+        <div className='flex flex-col lg:flex-row lg:items-center gap-2'>
           <div className='flex-1 text-[32px] lg:text-[40px] font-semibold '>
             Safeguards you deserve
           </div>

@@ -879,6 +879,7 @@ const Card = ({
         md:max-h-[calc(80lvh-40px)]
         lg:max-h-[calc(80lvh-80px)]
         3xl:max-h-[calc(80lvh-120px)]
+        overflow-auto
         ${className}
       `}
     >
