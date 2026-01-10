@@ -22,86 +22,8 @@ function Safeguards() {
     const mm = gsap.matchMedia()
 
     const cards = gsap.utils.toArray(".card");
-    // const STACK_OFFSET = 25;
-
-    // cards.forEach((card, index) => {
-    //   gsap.set(card, {
-    //     y: index * STACK_OFFSET, // stack DOWN
-    //     scale: 1 - index * 0.04,
-    //     zIndex: cards.length - index,
-    //   });
-    // });
-
-    // cards.slice(1).forEach((card, index) => {
-
-    //   t1
-    //     // bring NEXT card into active slot
-    //     .to(card, {
-    //       y: 0,
-    //       scale: 1,
-    //       zIndex: cards.length + index,  // always top
-    //       ease: "none",
-    //       boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
-    //       duration: 0.25,
-    //     })
-
-    //     // push all previous cards DOWN
-    //     .to(
-    //       cards.slice(0, index + 1),
-    //       {
-    //         y: (i) => (i + 1) * STACK_OFFSET,
-    //         scale: (i) => 0.95 - i * 0.05,
-    //         ease: "none",
-    //         zIndex: (i) => {
-    //           const newZ = cards.length - (i + 1)
-    //           console.log("index", index, "card", card, "new z", newZ,)
-    //           return newZ
-    //         }, // 🔑 reset stacking
-    //         duration: 0.25
-    //       },
-    //       "<"
-    //     );
-    // });
-
-    // // Initial states
-    // cards.forEach((card, i) => {
-    //   gsap.set(card, {
-    //     yPercent: i === 0 ? 0 : 30,
-    //     scale: i === 0 ? 1 : 0.92,
-    //     autoAlpha: i === 0 ? 1 : 0,
-    //     zIndex: cards.length - i,
-    //   });
-    // });
-
-    // // Scroll takeover animation
-    // cards.slice(1).forEach((card, i) => {
-    //   const prev = cards[i];
-
-    //   t1
-    //     // Incoming card
-    //     .to(card, {
-    //       yPercent: 0,
-    //       scale: 1,
-    //       autoAlpha: 1,
-    //       duration: 1,
-    //       ease: "none",
-    //     })
-
-    //     // Previous card fades back
-    //     .to(
-    //       prev,
-    //       {
-    //         scale: 0.92,
-    //         autoAlpha: 0,
-    //         duration: 1,
-    //         ease: "none",
-    //       },
-    //       "<"
-    //     );
-    // });
 
     mm.add("(min-width: 1024px)", () => {
-      // DESKTOP/TABLET — scale + move
       const MARGIN_TOP = 0
       const BASE_SCALES = []
       const AUTO_ALPHAE = []
@@ -135,12 +57,12 @@ function Safeguards() {
 
 
     mm.add("(max-width: 1023px)", () => {
-      const GAP = 24 // change to your card gap
+      const GAP = 24
 
       t1.addLabel("cardsAnimationMobile")
 
       cards.forEach((card) => {
-        gsap.set(card, { scale: 1, autoAlpha: 1 }) // reset desktop style
+        gsap.set(card, { scale: 1, autoAlpha: 1 })
       })
 
       cards.slice(1).forEach((card, i) => {
@@ -155,7 +77,6 @@ function Safeguards() {
           cards,
           {
             yPercent: -100 * (i + 1),
-            // y: `-=calc(-${GAP * (i + 1)}px`,
             y: `-=${GAP * i}`,
             ease: "none",
           },
@@ -170,7 +91,7 @@ function Safeguards() {
     t1.to(".second-inner-content", {
       height: 0,
       autoAlpha: 0,
-      // padding: 0
+
     }, "secondAnim")
 
     t1.to(".section-two", {
@@ -185,7 +106,7 @@ function Safeguards() {
       autoAlpha: 0,
     }, "thirdAnim").to(".build-for-trust", {
       height: "100vh",
-      // autoAlpha: 0,
+
     }, "thirdAnim")
 
     t1.addLabel("inBetweenAnim", ">")
@@ -241,9 +162,6 @@ function Safeguards() {
       pin: true,
       scrub: true,
       animation: t1,
-      // snap: "labelsDirectional",
-      // pinSpacing: false,
-      // invalidateOnRefresh: true,
     });
 
 
@@ -269,9 +187,6 @@ export const HeaderBackground = ({ children }) => {
         alt=""
         className="w-full h-full object-cover object-[0%_35%]"
       />
-      {/* <div
-        className="absolute inset-0 [background:linear-gradient(357.51deg,#121212_0.18%,rgba(18,18,18,0)_47.86%)]"
-      /> */}
       <div
         className="
           absolute inset-0
@@ -284,7 +199,6 @@ export const HeaderBackground = ({ children }) => {
         absolute inset-0
         bg-[linear-gradient(to_bottom,_transparent_30%,_#121212_100%)]
         translate-y-[10%]
-        
       "
       />
 
