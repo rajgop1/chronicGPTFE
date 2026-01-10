@@ -209,13 +209,29 @@ function Safeguards() {
     t1.addLabel("fifthAnim", ">+=0.25")
 
 
-    t1.to(".join-cohort", {
-      // height: 0,
-      autoAlpha: 0.6,
-      y:-200,
-      ease: "none",
-      duration: 0.1
-    }, "fifthAnim")
+    mm.add("(min-width: 1024px", () => {
+      t1.to(".join-cohort", {
+        y: "-20vh",
+        autoAlpha: 0.6,
+        duration: 0.1,
+      }, "fifthAnim")
+    })
+
+    mm.add("(max-width: 1023px", () => {
+
+      t1.to(".join-cohort", {
+        y: "-20vh",
+        autoAlpha: 0.6,
+        duration: 1.5,
+      }, "fifthAnim")
+
+      t1.to(container.current, {
+        height: "fit-content",
+        maxHeight: "fit-content",
+        autoAlpha: 0.6,
+        duration: 1.5,
+      }, "fifthAnim")
+    })
 
 
     scrollTrigger = ScrollTrigger.create({

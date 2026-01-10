@@ -33,17 +33,13 @@ function App() {
   const hrCardContainer = useRef();
   const [currentCard, setCurrentCard] = useState(1)
 
-  /* ================== DURATIONS ================== */
-  // First / Second section
   const FIRST_ANIM_DURATION = 0.25;
   const SECOND_ANIM_DURATION = 0.4;
   const FADE_DELAY = 0.05;
 
-  // Cards
   const CARD_MOVE_DURATION = 0.25;
   const CARD_SLIDE_STEP_DURATION = 0.25;
 
-  // Sections
   const THIRD_SECTION_FADE_DURATION = 0.3;
   const SECTION_FOUR_SLIDE_DURATION = 0.3;
   const SECTION_FIVE_DURATION = 0.3;
@@ -56,9 +52,8 @@ function App() {
     gsap.registerPlugin(ScrollTrigger);
     const mm = gsap.matchMedia();
 
-
     const t1 = gsap.timeline();
-    /* ================== FIRST ANIM ================== */
+
     t1.addLabel("firstAnim");
 
     t1.to(".home-section", {
@@ -101,7 +96,7 @@ function App() {
       "firstAnim"
     );
 
-    /* ================== SECOND ANIM ================== */
+
     t1.addLabel("secondAnim", ">+=0.15");
 
     t1.to(".second-section-content", {
@@ -160,8 +155,8 @@ function App() {
         t1.addLabel(labelName, `+=${DELAY_BETWEEN}`);
 
         t1.to(".card", {
-          yPercent: "-=100",   // move up by one card height
-          y: `-=${GAP}`,       // add gap between cards
+          yPercent: "-=100",   
+          y: `-=${GAP}`,       
           duration: CARD_MOVE_DURATION,
           ease: "none",
           onUpdate: () => {
@@ -169,7 +164,7 @@ function App() {
             const current = Math.abs(Math.round(yPercent / 100)) + 1;
             setCurrentCard(current);
           },
-        }, labelName); // start this animation at the label
+        }, labelName);
       }
     })
 
@@ -196,8 +191,8 @@ function App() {
         }
 
         t1.to(".card", {
-          yPercent: "-=100",   // move up by one card height
-          y: `-=${GAP}`,       // add gap between cards
+          yPercent: "-=100",   
+          y: `-=${GAP}`,       
           duration: CARD_MOVE_DURATION,
           ease: "none",
           onUpdate: () => {
@@ -205,50 +200,12 @@ function App() {
             const current = Math.abs(Math.round(yPercent / 100)) + 1;
             setCurrentCard(current);
           },
-        }, labelName); // start this animation at the label
+        }, labelName);
 
 
       }
     })
 
-    // /* ================== CARD 1 ================== */
-    // t1.addLabel("card1", ">+=0.25");
-
-    // t1.call(() => setCurrentCard(1), null, "card1");
-
-    // t1.to(".second-card", {
-    //   y: "-=95%",
-    //   boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
-    //   duration: CARD_MOVE_DURATION,
-    //   ease: "none",
-    // }, "card1");
-
-    // /* ================== CARD 2 ================== */
-    // t1.addLabel("card2", ">");
-
-    // t1.call(() => setCurrentCard(2), null, "card2");
-
-    // t1.to(".third-card", {
-    //   y: "-=95%",
-    //   boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
-    //   duration: CARD_MOVE_DURATION,
-    //   ease: "none",
-    // }, "card2");
-
-    // /* ================== CARD 3 ================== */
-    // t1.addLabel("card3", ">");
-
-
-    // t1.to(".third-card", {
-    //   y: "-=100%",
-    //   boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
-    //   duration: CARD_MOVE_DURATION,
-    //   ease: "none",
-    // }, "card3");
-
-    // t1.call(() => setCurrentCard(3), null, "card3+0.01");
-
-    /* ================== THIRD → FOURTH ================== */
     t1.addLabel("thirdAnim", ">+=0.35");
 
     t1.to(".section-four", {
@@ -257,55 +214,6 @@ function App() {
       duration: SECTION_FOUR_SLIDE_DURATION,
       ease: "none",
     }, "thirdAnim");
-
-    /* ================== CARD SLIDER ================== */
-    // const wrapper = ".hr-card";
-    // const steps = 3;
-
-    // t1.addLabel("cardsStart", ">+=0.25");
-
-    // for (let i = 0; i < steps - 1; i++) {
-    //   // gsap.to(wrapper,{
-    //   //   xPercent: (i + 1) * -100,
-    //   //   x: -24*(i+1),
-    //   //   duration: CARD_SLIDE_STEP_DURATION,
-    //   //   ease: "none",
-    //   //   delay: 0.1,
-
-    //   // })
-    //   t1.to(wrapper, {
-    //     xPercent: (i + 1) * -100,
-    //     x: -24 * (i + 1),
-    //     duration: CARD_SLIDE_STEP_DURATION,
-    //     ease: "none",
-    //     delay: 0.1,
-    //     // scrollTrigger: {
-    //     //   trigger: ".hr-card-container",
-    //     //   start: "left center", // Trigger relative to horizontal movement
-    //     //   scrub: true,
-    //     //   markers: true
-
-    //     // },
-    //     toggleActions: "play pause reverse pause",
-
-    //     onUpdate: () => {
-    //       const start = t1.labels.cardsStart;
-    //       const end = t1.labels.cardsEnd;
-
-    //       const progress = gsap.utils.clamp(
-    //         0,
-    //         1,
-    //         (t1.time() - start) / (end - start)
-    //       );
-
-    //       gsap.set(".progress-bar", {
-    //         width: `${progress * 100}%`,
-    //       });
-    //     },
-    //   });
-    // }
-
-    // t1.addLabel("cardsEnd", ">");
 
     t1.addLabel("inBetweenAnim", ">")
 
@@ -334,15 +242,6 @@ function App() {
       "inBetweenAnim"
     );
 
-    // t1.fromTo(".section-four", {
-    //   y: "-99%"
-    // }, {
-    //   y: "-80%",
-    //   boxShadow: "none",
-    //   duration: SECTION_FIVE_DURATION,
-    //   ease: "none",
-    // }, "inBetweenAnim");
-
     t1.fromTo(".join-cohort", {
       y: "-100%"
     }, {
@@ -351,24 +250,7 @@ function App() {
       ease: "none",
     }, "inBetweenAnim");
 
-    // t1.fromTo(".section-four", {
-    //   height: "100lvh"
-    // }, {
-    //   height: "90lvh",
-    //   duration: SECTION_FIVE_DURATION,
-    //   ease: "none",
-    // }, "inBetweenAnim");
-
-
-    /* ================== FOURTH EXIT ================== */
     t1.addLabel("fourthAnim", ">");
-
-    // t1.to(".section-four", {
-    //   y: "0%",
-    //   boxShadow: "none",
-    //   duration: SECTION_FIVE_DURATION,
-    //   ease: "none",
-    // }, "fourthAnim");
 
     t1.to(".third-section", {
       height: 0,
@@ -388,11 +270,12 @@ function App() {
 
 
 
-    t1.fromTo(".join-cohort", {
-      y: "-100%",
-      duration: SECTION_FIVE_DURATION,
-      ease: "none",
-    },
+    t1.fromTo(".join-cohort",
+      {
+        y: "-100%",
+        duration: SECTION_FIVE_DURATION,
+        ease: "none",
+      },
       {
         y: "0%",
         duration: SECTION_FIVE_DURATION,
@@ -400,14 +283,6 @@ function App() {
       }
       , "fourthAnim");
 
-    // t1.set(
-    //   ".header", {
-    //   background: "transparent",
-    // }
-    // );
-
-
-    /* ================== FIFTH ANIM ================== */
     t1.addLabel("fifthAnim", ">+=0.25");
 
     t1.to(".join-cohort", {
@@ -416,14 +291,6 @@ function App() {
       duration: 0.1,
       ease: "none",
     }, "fifthAnim");
-
-    // t1.to(".header", {
-    //   height: 0,
-    //   autoAlpha: 0,
-    //   duration: 0.1,
-    //   ease: "none",
-    // }, "fifthAnim");
-
 
     scrollTrigger = ScrollTrigger.create({
       trigger: container.current,
@@ -444,7 +311,6 @@ function App() {
   return (
 
     <div ref={container} className={cn('container mx-auto', MAX_WIDTH)}>
-      {/* <div className='max-w-[1912px]'></div> */}
       <Header />
       <div className={cn('mx-auto', MAX_WIDTH)}>
         <Home />
@@ -456,9 +322,6 @@ function App() {
       <div className={cn('mx-auto', MAX_WIDTH)}>
         <Fourth hrCardContainer={hrCardContainer} />
       </div>
-      {/* <div className='fourth-section h-lvh'>
-          <FourthV2 hrCardContainer={hrCardContainer} />
-        </div> */}
       <div className={cn('mx-auto', MAX_WIDTH)}>
         <JoinCohort />
       </div>
