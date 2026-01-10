@@ -387,7 +387,7 @@ const SectionThree = () => (
   <ResponsiveSection className='text-white relative z-[4] section-three h-lvh overflow-hidden mx-[10px] flex flex-col gap-[32px] border border-[5px] border-white pt-0'>
 
     <div className='flex flex-col gap-[40px] lg:gap-[24px] px-[5px] lg:p-[24px] lg:pt-0'>
-      <div className='relative lg:z-[2] pt-[24px] flex items-center bg-[#121212] section-three-header flex-col lg:flex-row gap-[4px]'>
+      <div className='relative lg:z-[2] pt-[8px] lg:pt-[24px] flex items-center bg-[#121212] section-three-header flex-col lg:flex-row gap-[4px]'>
         <div className='flex-1 text-[32px] lg:text-[36px] leading-[36px] lg:leading-normal font-semibold'>No Surprises. No Fine Print. <br className='hidden lg:inline-block' /> Just the Truth.</div>
         <div className='flex-1 text-[16px] leading-[22px] font-medium'>We believe in complete transparency. Here's exactly what you get with Qronic AI, what your insurance already covers, and what's optional.</div>
       </div>
