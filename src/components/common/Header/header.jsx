@@ -101,10 +101,10 @@ function MobileMenu() {
             {/* <Dialog.Title>Mobile Menu</Dialog.Title> */}
 
 
-            <a href="/" className="text-white text-xl">Home</a>
-            <a href="/safeguards" className="text-white text-xl">Safeguards</a>
-            <a href="/journey" className="text-white text-xl">Journey</a>
-            <a href="/how-it-works" className="text-white text-xl">How It Works</a>
+            <NavItem to="/" label="Home" />
+            <NavItem to="/safeguards" label="Safeguards" />
+            <NavItem to="/journey" label="Journey" />
+            <NavItem to="/how-it-works" label="How it Works" />
 
             <Dialog.Close asChild>
               <button className="absolute top-4 right-4 border border-white p-2 rounded-full">
