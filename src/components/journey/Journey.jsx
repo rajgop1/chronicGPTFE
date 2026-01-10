@@ -98,7 +98,7 @@ function Journey() {
 
     const cards = gsap.utils.toArray(".card");
 
-    mm.add("(max-width: 768px)", () => {
+    mm.add("(max-width: 1023px)", () => {
 
       cards.forEach((card, i) => {
         const labelName = `card-anim-${i}`
@@ -162,7 +162,7 @@ function Journey() {
 
     })
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 1024px)", () => {
       t1.to(".section-two", {
         height: "10lvh",
         autoAlpha: 0
@@ -174,7 +174,7 @@ function Journey() {
     const cards2 = gsap.utils.toArray(".card-2");
 
     // Desktop
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 1024px)", () => {
       cards2.forEach((card, i) => {
         t1.to(card, {
           y: `-${i * 100}%`,
@@ -217,7 +217,7 @@ function Journey() {
     );
 
     // Mobile
-    mm.add("(max-width: 767px)", () => {
+    mm.add("(max-width: 1023px)", () => {
       // gsap.set(".section-three", {
       //   height: "fit-content",
       //   maxHeight: "fit-content",
@@ -265,7 +265,7 @@ function Journey() {
     t1.addLabel("thirdAnim")
 
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 1024px)", () => {
       t1.to(".section-three-header", {
         autoAlpha: 0.75,
         duration: HEADER_FADE_DURATION
@@ -294,7 +294,7 @@ function Journey() {
 
     t1.addLabel("fifthAnim", ">")
 
-    mm.add("(min-width: 768px", () => {
+    mm.add("(min-width: 1024px", () => {
       t1.to(".join-cohort", {
         y: "-20vh",
         autoAlpha: 0.6,
@@ -302,7 +302,7 @@ function Journey() {
       }, "fifthAnim")
     })
 
-    mm.add("(max-width: 767px", () => {
+    mm.add("(max-width: 1023px", () => {
 
       t1.to(".join-cohort", {
         y: "-20vh",

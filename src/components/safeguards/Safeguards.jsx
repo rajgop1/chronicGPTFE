@@ -100,7 +100,7 @@ function Safeguards() {
     //     );
     // });
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 1024px)", () => {
       // DESKTOP/TABLET — scale + move
       const MARGIN_TOP = 0
       const BASE_SCALES = []
@@ -134,7 +134,7 @@ function Safeguards() {
     })
 
 
-    mm.add("(max-width: 767px)", () => {
+    mm.add("(max-width: 1023px)", () => {
       const GAP = 24 // change to your card gap
 
       t1.addLabel("cardsAnimationMobile")
@@ -197,7 +197,7 @@ function Safeguards() {
 
     t1.fromTo(
       ".header",
-      { background: "transparent" },
+      { background: "#12121200" },
       {
         background: "#121212",
         duration: 0.2,

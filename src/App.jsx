@@ -112,7 +112,7 @@ function App() {
       padding: 0,
     }, "secondAnim");
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 1024px)", () => {
       t1.to(".second-section", {
         height: "20lvh",
         padding: 0,
@@ -121,7 +121,7 @@ function App() {
       }, "secondAnim");
     });
 
-    mm.add("(max-width: 767px)", () => {
+    mm.add("(max-width: 1023px)", () => {
       t1.to(".second-section", {
         height: "10lvh",
         padding: 0,
@@ -130,7 +130,7 @@ function App() {
       }, "secondAnim");
     });
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 1024px)", () => {
       t1.fromTo(
         ".second-section .hero-img",
         { backgroundPosition: "50% 100%", },
@@ -139,7 +139,7 @@ function App() {
       );
     });
 
-    mm.add("(max-width: 767px)", () => {
+    mm.add("(max-width: 1023px)", () => {
       t1.fromTo(
         ".second-section .hero-img",
         { backgroundPosition: "0% 0%", },
@@ -153,7 +153,7 @@ function App() {
     const TOTAL_CARDS = 3;
     const DELAY_BETWEEN = 0.2;
 
-    mm.add("(min-width: 768px)", () => {
+    mm.add("(min-width: 1024px)", () => {
       for (let i = 1; i < TOTAL_CARDS; i++) {
         const labelName = `cardAnim${i}`;
 
@@ -175,7 +175,7 @@ function App() {
 
 
 
-    mm.add("(max-width: 767px)", () => {
+    mm.add("(max-width: 1023px)", () => {
       for (let i = 1; i < TOTAL_CARDS; i++) {
         const labelName = `cardAnim${i}`;
 
@@ -324,7 +324,7 @@ function App() {
 
     t1.fromTo(
       ".header",
-      { background: "transparent" },
+      { background: "#12121200" },
       {
         background: "#121212",
         duration: FIRST_ANIM_DURATION - FADE_DELAY,
@@ -444,7 +444,7 @@ function App() {
   return (
 
     <div ref={container} className={cn('container mx-auto', MAX_WIDTH)}>
-
+      {/* <div className='max-w-[1912px]'></div> */}
       <Header />
       <div className={cn('mx-auto', MAX_WIDTH)}>
         <Home />
@@ -468,7 +468,7 @@ function App() {
 }
 
 const Home = () => {
-  return <div className='home-section h-lvh pb-[40px] xl:pb-[68px] px-[42px] flex flex-col'  >
+  return <div className='home-section h-lvh pb-[40px] xl:pb-[68px] px-[42px] flex flex-col'>
     {/* Home */}
     <div className='shrink-0 h-[59px] lg:h-[99px] w-full'>
     </div>
@@ -490,7 +490,7 @@ const Home = () => {
           </div>
         </div>
         <div className='flex-1 flex justify-center'>
-          <div className='relative dr-img-container max-w-[304px] md:max-w-[200px] lg:max-w-[464px]'>
+          <div className='relative dr-img-container max-w-[clamp(200px,40vw,464px)]'>
             <img src="/assets/images/dr-sara-mohan.png" alt="" className='w-full h-full object-cover' />
             <div className='absolute top-[50%] -translate-y-[200%] -right-[34px]'>
               <div>

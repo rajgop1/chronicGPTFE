@@ -15,7 +15,7 @@ function JoinCohort() {
 
     return (
         <div className='bg-[#121212] w-full h-lvh rounded-t-[54px] overflow-hidden relative z-[5] join-cohort'>
-            <div className='flex flex-col gap-[40px] lg:gap-0 lg:flex-row items-center h-full'>
+            <div className='flex flex-col gap-[20px] lg:gap-0 lg:flex-row items-center h-full'>
                 <div className='pt-[60px] lg:pt-[100px] flex-1 img-container lg:self-stretch'>
                     <img src="/assets/images/bottom-banner.png" alt="" className='w-full h-full object-cover' />
                 </div>
