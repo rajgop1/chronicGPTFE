@@ -73,6 +73,15 @@ const CARD_DATA = [
 
 function Journey() {
   const container = useRef();
+  // ================== DURATIONS ==================
+  const HEADER_HIDE_DURATION = 0.25
+  const FLEX_GAP_DURATION = 0.1
+  const CARD_SCROLL_DURATION = 2.5
+  const CARD_SCROLL_DELAY = 0.25
+  const CARD2_DESKTOP_DURATION = 0.25
+  const HEADER_FADE_DURATION = 0.2
+  const SECTION_COLLAPSE_DURATION = 2.5
+
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger)
     const mm = gsap.matchMedia();
@@ -85,192 +94,224 @@ function Journey() {
         pin: true,
         scrub: true,
       }
-
     })
 
     const cards = gsap.utils.toArray(".card");
 
-    // cards.slice(1).forEach((card)=>{
-    //   gsap.set(card, {
-    //     translateX:"-1px"
-    //   })
-    // })
+    mm.add("(max-width: 768px)", () => {
 
-    // cards.slice(1).forEach((card, index) => {
-    //   const children = card.querySelector(".card-children");
+      cards.forEach((card, i) => {
+        const labelName = `card-anim-${i}`
+        t1.addLabel(labelName, ">");
 
-    //   t1.set(card, {
-    //     // x: -(index + 1) * 100,
-    //     minWidth: "20%",
-    //     ease: "none",
-    //     boxShadow: "0px -5px 40px rgba(0,0,0,0.2)",
-    //     borderTopLeftRadius: 0,
-    //     borderBottomLeftRadius: 0,
-    //     borderLeft: 0,
-    //   });
+        if (i === 0) {
+          t1.to(".section-two-header", {
+            height: 0,
+            autoAlpha: 0,
+            duration: HEADER_HIDE_DURATION
+          }, labelName)
 
-    //   t1.set(children, {
-    //     // x: -(index + 1) * 100,
-    //     visibility: "hidden"
-    //   });
-    // });
+          t1.to(".section-two-child", {
+            paddingTop: 0,
+            duration: FLEX_GAP_DURATION,
 
-    const COLLAPSED = 160;
-    const EXPANDED = 550;
+          }, labelName)
 
-    // cards.forEach((card, i) => {
-    //   const children = card.querySelector(".card-children");
+          t1.to(".section-two-child .flex-container", {
+            gap: 0,
+            duration: FLEX_GAP_DURATION,
 
-    //   gsap.set(card, {
-    //     width: i === 0 ? EXPANDED : COLLAPSED,
-    //     height: 550,
-    //   });
+          })
+        }
 
-    //   gsap.set(children, {
-    //     autoAlpha: i === 0 ? 1 : 0,
-    //     height: i === 0 ? "auto" : 0,
-    //     overflow: "hidden"
-    //   });
-    // });
+        t1.to(".card", {
+          yPercent: -(i + 1) * 100,
+          ease: "none",
+          duration: CARD_SCROLL_DURATION,
+          delay: CARD_SCROLL_DELAY,
+        }, labelName);
 
+        if (i === cards.length - 1) {
+          // t1.to(".section-two-child", {
+          //   height: 0,
+          //   maxHeight: 0,
+          //   duration: 0.25,
+          //   duration: CARD_SCROLL_DURATION,
+          //   delay: CARD_SCROLL_DURATION+ CARD_SCROLL_DELAY,
+          // }, labelName)
+          // t1.to(".section-three", {
+          //   yPercent: -100,
+          //   // maxHeight: 0,
+          //   duration: 0.25,
+          //   duration: CARD_SCROLL_DURATION,
+          //   delay: CARD_SCROLL_DURATION+ CARD_SCROLL_DELAY,
+          // }, labelName)
+          t1.to(".section-two", {
+            height: 0,
+            // maxHeight: 0,
+            overflow: "hidden",
+            autoAlpha: 0.1,
+            duration: CARD_SCROLL_DURATION,
+            padding: 0,
+            border: 0,
+            delay: CARD_SCROLL_DELAY + 1.5
+          }, labelName)
+        }
 
-    // cards.forEach((card, i) => {
-    //   if (i === cards.length - 1) return;
+      });
 
-    //   const current = cards[i];
-    //   const next = cards[i + 1];
-
-    //   const currentChildren = current.querySelector(".card-children");
-    //   const nextChildren = next.querySelector(".card-children");
-
-    //   t1
-    //     // shrink current
-    //     .to(current, {
-    //       width: COLLAPSED,
-    //       ease: "none",
-    //       duration: 0.2
-    //     })
-
-    //     // expand next AT THE SAME TIME
-    //     .to(next, {
-    //       width: EXPANDED,
-    //       ease: "none",
-    //       duration: 0.2
-    //     }, "<")
-
-    //     // fade children
-    //     .to(currentChildren, {
-    //       autoAlpha: 0,
-    //       height: 0,
-    //       ease: "none",
-    //       duration: 0.2
-    //     }, "<")
-
-    //     .to(nextChildren, {
-    //       autoAlpha: 1,
-    //       ease: "none",
-    //       height: "auto",
-    //       duration: 0.2,
-    //       delay: 0.2
-    //     }, "<");
-    // });
-
-
-    t1.to(".section-two", {
-      height: "10lvh",
-      autoAlpha: 0
     })
 
-
+    mm.add("(min-width: 768px)", () => {
+      t1.to(".section-two", {
+        height: "10lvh",
+        autoAlpha: 0
+      })
+    })
 
     t1.addLabel("card2anim")
 
     const cards2 = gsap.utils.toArray(".card-2");
 
-    /* ⏩ DESKTOP — keep your existing logic */
+    // Desktop
     mm.add("(min-width: 768px)", () => {
       cards2.forEach((card, i) => {
         t1.to(card, {
           y: `-${i * 100}%`,
           boxShadow: "0px -5px 80px rgba(0,0,0,0.8)",
           ease: "none",
-          duration: 0.3,
+          duration: CARD2_DESKTOP_DURATION,
         });
       });
+
+      t1.to(".section-two", {
+        height: 0,
+        duration: 0.25,
+        padding: 0,
+        border: 0
+      },)
+
+      t1.to(".section-three", {
+        height: 0,
+        duration: 0.25,
+        padding: 0,
+        border: 0
+      },)
+
     });
 
-    /* 📱 MOBILE — same animation style as earlier stack section */
+    // Mobile
     mm.add("(max-width: 767px)", () => {
-      const GAP = 32; // change to px if you want vertical spacing
-
-      cards2.slice(1).forEach((card, i) => {
-        const label = `card2-mobile-${i}`;
-        t1.addLabel(label);
-
+      // gsap.set(".section-three", {
+      //   height: "fit-content",
+      //   maxHeight: "fit-content",
+      //   overflow: "hidden"
+      // },)
+      cards2.forEach((card, i) => {
+        const labelName = `card2-mobile-${i}`;
+        t1.addLabel(labelName);
 
         if (i === 0) {
-          t1.to(".section-three-header", { height: 0, autoAlpha: 0, duration: 0.1 }, label)
+          t1.to(".section-three-header", {
+            height: 0,
+            autoAlpha: 0,
+            duration: HEADER_HIDE_DURATION
+          }, labelName)
         }
 
-        // Move all cards, but only reveal stack above
+        t1.to(cards2, {
+          yPercent: -(i + 1) * 100,
+          ease: "none",
+          duration: CARD_SCROLL_DURATION,
+          delay: CARD_SCROLL_DELAY,
+        }, labelName)
 
-        t1.to(
-          cards2,
-          {
-            yPercent: -100 * (i + 1),
-            y: `-=${GAP * i}`,
-            ease: "none",
-          },
-          `${label}`
-        )
+        if (i === cards2.length - 1) {
+
+
+          t1.to(".section-three", {
+            height: 0,
+            // maxHeight: 0,
+            overflow: "hidden",
+            autoAlpha: 0.1,
+            duration: CARD_SCROLL_DURATION,
+            padding: 0,
+            border: 0,
+            delay: CARD_SCROLL_DELAY + 1
+          }, labelName)
+
+
+
+        }
       });
     });
 
-    t1.addLabel("thirdAnim");
+    t1.addLabel("thirdAnim")
 
     mm.add("(min-width: 768px)", () => {
       t1.to(".section-three-header", {
         autoAlpha: 0.75,
+        duration: HEADER_FADE_DURATION
+      }, "thirdAnim")
+
+      t1.to(".section-two", {
+        height: 0,
+        autoAlpha: 0,
+        border: 0,
+        padding: 0,
         duration: 0.2
       }, "thirdAnim")
     })
 
-    t1.to(".section-two", {
-      height: "0",
-      autoAlpha: 0,
-      duration: 0.1
-    })
-
     t1.add("fourthAnim")
 
-    t1.to(".section-three", {
-      height: 0,
-      autoAlpha: 0,
-      border: 0,
-      padding: 0
-    }, "fourthAnim")
+    // t1.to(".section-three", {
+    //   height: 0,
+    //   autoAlpha: 0,
+    //   border: 0,
+    //   padding: 0,
+    //   duration: SECTION_COLLAPSE_DURATION
+    // }, "fourthAnim")
 
 
-    t1.add("fifthAnim")
+    t1.add("fifthAnim", ">")
 
-    
-    t1.to(".join-cohort", {
-      autoAlpha: 0.6,
-      y:-200,
-      ease: "none",
-      duration:0.1,
-    }, "fifthAnim")
+    mm.add("(min-width: 768px", () => {
+      t1.to(".join-cohort", {
+        y: -200,
+        autoAlpha: 0.6,
+        duration: 0.1,
+      }, "fifthAnim")
+    })
+
+    mm.add("(max-width: 767px", () => {
+
+      t1.to(".join-cohort", {
+        y: -200,
+        autoAlpha: 0.6,
+        duration: 2.5,
+        delay: 2.5
+      }, "fifthAnim")
+    })
 
 
+    // t1.to(".join-cohort .img-container, .join-cohort img", {
+    //   height: 0,
+    //   autoAlpha: 0.6,
+
+    //   flex:0,
+    //   duration: SECTION_COLLAPSE_DURATION
+    // }, "fifthAnim")
 
   }, { scope: container.current })
+
 
   return (
     <>
       <div className={cn('container mx-auto text-[#121212]', MAX_WIDTH)} ref={container}>
-        <Header/>
+        <Header />
         <HeaderBackground>
-          <Third />
+          <Second />
         </HeaderBackground>
         <SectionThree />
         <JoinCohort />
@@ -280,11 +321,11 @@ function Journey() {
 }
 
 
-const Third = () => {
-  return <ResponsiveSection className=' max-h-[84lvh] lg:max-h-[76lvh] mx-[4px] lg:mx-0 flex-1 flex flex-col bg-[#F1F1F1] z-[1] relative third-section mx-[10px] text-[#121212] overflow-hidden'>
-    <div className='flex-1 flex flex-col 2xl:gap-[10px]'>
-      <div className='flex flex-col '>
-        <div className=' flex items-center flex-col lg:flex-row gap-[12px] lg:gap-2'>
+const Second = () => {
+  return <ResponsiveSection className='max-h-[84lvh] lg:max-h-[76lvh] flex-1 flex flex-col bg-white z-[1] relative section-two-child text-[#121212] overflow-hidden'>
+    <div className='flex-container flex-1 flex flex-col gap-[40px] lg:gap-[10px] 2xl:gap-[10px]'>
+      <div className='flex flex-col'>
+        <div className='section-two-header flex lg:items-center flex-col lg:flex-row gap-[12px] lg:gap-2'>
           <div className='flex-1 text-[32px] lg:text-[40px] leading-[36px] md:leading-normal font-semibold '>
             Your Journey With Qronic AI
           </div>
@@ -294,7 +335,7 @@ const Third = () => {
         </div>
       </div>
       <div className="flex-1 flex flex-col justify-center relative z-[1] flex overflow-x-auto hide-scrollbar">
-        <div className='flex flex-col lg:hidden'>
+        <div className='card-container flex flex-col gap-[20px] lg:hidden'>
           {CARD_DATA.map((card) => (
             <Card
               key={card.position}
@@ -319,8 +360,8 @@ const Third = () => {
 }
 
 const Card = ({ title, logo, img, children, position = "01", className }) => (
-  <div className={cn('flex flex-col-reverse lg:flex-col card w-full bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[30px] lg:rounded-[60px] p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[24px] lg:gap-[20px]', className)}>
-    <div className='flex-1 flex flex-col gap-[24px] lg:gap-[16px]'>
+  <div className={cn('h-[768px] overflow-hidden flex flex-col-reverse lg:flex-col card w-full bg-white shadow-[0px_10px_20px_0px_#0000000A] rounded-[30px] lg:rounded-[60px] px-[20px] py-[24px] lg:p-[24px] border border-[1px] border-[#B0B0B0] flex gap-[24px] lg:gap-[20px]', className)}>
+    <div className='flex-1 flex flex-col gap-[16px]'>
       <div className='h-[288px] lg:h-[204px] rounded-[30px] lg:rounded-[40px] overflow-hidden'>
         <img src={img} className='w-full h-full object-cover rounded-[30px] lg:rounded-[24px]' />
       </div>
@@ -328,7 +369,7 @@ const Card = ({ title, logo, img, children, position = "01", className }) => (
         <div className='font-bold text-[24px] lg:text-[20px] flex flex-col gap-[8px]'>
           <div>{title}</div>
         </div>
-        <div className='card-children'>
+        <div className='card-children text-[16px] leading-[24px]'>
           {children}
         </div>
       </div>
@@ -343,11 +384,11 @@ const Card = ({ title, logo, img, children, position = "01", className }) => (
 )
 
 const SectionThree = () => (
-  <ResponsiveSection className='text-white relative z-[4] section-three h-lvh overflow-hidden mx-[10px] flex flex-col gap-[32px] border border-[5px] border-white'>
+  <ResponsiveSection className='text-white relative z-[4] section-three h-lvh overflow-hidden mx-[10px] flex flex-col gap-[32px] border border-[5px] border-white pt-0'>
 
     <div className='flex flex-col gap-[40px] lg:gap-[24px] px-[5px] lg:p-[24px] lg:pt-0'>
       <div className='relative lg:z-[2] pt-[24px] flex items-center bg-[#121212] section-three-header flex-col lg:flex-row gap-[4px]'>
-        <div className='flex-1 text-[32px] lg:text-[36px] leading-[36px] lg:leading-normal font-semibold'>No Surprises. No Fine Print. <br className='hidden lg:inline-block'/> Just the Truth.</div>
+        <div className='flex-1 text-[32px] lg:text-[36px] leading-[36px] lg:leading-normal font-semibold'>No Surprises. No Fine Print. <br className='hidden lg:inline-block' /> Just the Truth.</div>
         <div className='flex-1 text-[16px] leading-[22px] font-medium'>We believe in complete transparency. Here's exactly what you get with Qronic AI, what your insurance already covers, and what's optional.</div>
       </div>
       <div className='relative z-[1] flex flex-col gap-[40px]'>
@@ -392,7 +433,7 @@ const SectionThree = () => (
 )
 
 const Card2 = ({ title, subtitle, img, children }) => (
-  <div className='card-2 rounded-[30px] lg:rounded-[40px] bg-[#2A2A2A] p-[20px] lg:p-[40px] flex flex-col lg:flex-row gap-[32px]'>
+  <div className='h-[800px] lg:h-auto card-2 rounded-[30px] lg:rounded-[40px] bg-[#2A2A2A] p-[20px] lg:p-[40px] flex flex-col lg:flex-row gap-[32px]'>
     <div className='flex-1 flex flex-col gap-[20px] lg:gap-[24px]'>
       <div>
         <div className='font-bold lg:font-semibold text-[20px] lg:text-[24px] leading-[30px] lg:leading-[40px]'>{title}</div>

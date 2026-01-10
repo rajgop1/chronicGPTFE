@@ -45,7 +45,7 @@ function JoinCohort() {
                                         <div className='flex flex-col gap-[8px]'>
                                             <div className='text-[30px] font-bold'>Join the Waitlist</div>
                                         </div>
-                                        <div className='text-[38px] leading-[42px] font-thin'>
+                                        <div className='text-[28px] leading-[32px]  lg:text-[38px] lg:leading-[42px] font-thin'>
                                             Be among the first to experience personalized AI Doctor care
                                         </div>
                                     </div>

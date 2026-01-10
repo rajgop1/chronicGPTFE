@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router';
 import { cn } from '../../../helpers/utils';
-import Separator from '../Separator';
 import { HiOutlineX } from 'react-icons/hi';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useLenis } from 'lenis/react';
+import { motion} from 'framer-motion';
 import { MAX_WIDTH } from '../../constants/css-classes';
 import * as Dialog from "@radix-ui/react-dialog";
 
 
 function Header() {
-  const lenis = useLenis();
   return (
     <header className={cn('mx-auto header fixed top-0 z-[51] left-0 right-0 text-white', MAX_WIDTH)}>
       <div className='flex justify-between items-center px-[24px] md:py-[20px] lg:px-[60px] lg:py-[32px] h-[64px] lg:h-[100px] '>
@@ -21,14 +17,12 @@ function Header() {
           <NavItem to="/" label="Home" />
           <NavItem to="/safeguards" label="Safeguards" />
           <NavItem to="/journey" label="Journey" />
-          <NavItem to="/how-it-works" label="How it Works" />
+          {/* <NavItem to="/how-it-works" label="How it Works" /> */}
         </nav>
         <div className='flex lg:hidden'>
           <MobileMenu />
         </div>
-
       </div>
-      {/* <Separator /> */}
     </header>
   )
 }
@@ -104,7 +98,7 @@ function MobileMenu() {
             <NavItem to="/" label="Home" />
             <NavItem to="/safeguards" label="Safeguards" />
             <NavItem to="/journey" label="Journey" />
-            <NavItem to="/how-it-works" label="How it Works" />
+            {/* <NavItem to="/how-it-works" label="How it Works" /> */}
 
             <Dialog.Close asChild>
               <button className="absolute top-4 right-4 border border-white p-2 rounded-full">

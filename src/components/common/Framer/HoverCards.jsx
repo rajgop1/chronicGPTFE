@@ -41,7 +41,7 @@ export default function HoverCards({ cards }) {
         return (
           <motion.div
             key={i}
-            className="max-h-[500px] rounded-[40px] p-[24px] flex flex-col cursor-pointer border border-[#B0B0B0] shadow-[0px_10px_20px_0px_#0000000A] overflow-hidden"
+            className="max-h-[500px] rounded-[40px] px-[20px] py-[24px] lg:p-[24px] flex flex-col cursor-pointer border border-[#B0B0B0] shadow-[0px_10px_20px_0px_#0000000A] overflow-hidden"
             onMouseEnter={() => setActive(i)}
             animate={{
               width: isActive ? expandedWidth : baseWidth,

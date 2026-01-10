@@ -5,9 +5,9 @@ import { MAX_WIDTH } from "../../constants/css-classes";
 
 const Footer = () => (
   <div className={cn('relative z-50 mx-auto footer h-fit flex flex-col flex-1 px-[20px] lg:px-[60px]', MAX_WIDTH)}>
-    <Separator variant='v2' />
+    <Separator variant='v2'/>
     <div className="flex flex-col ">
-      <footer className='py-[40px] flex flex-col gap-[30px] lg:gap-[50px] bg-[#121212]'>
+      <footer className='py-[40px] flex flex-col gap-[30px] lg:gap-[50px] bg-[#121212] -mx-[20px] lg:mx-0 p-[20px] lg:px-0'>
         <div className='lg:px-[20px] grid grid-auto md:grid-cols-2 lg:grid-cols-3 gap-[40px]'>
           <div className='flex flex-col gap-[16px] lg:gap-[24px]'>
             <div className='flex gap-[10px] w-[220px]'>
