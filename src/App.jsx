@@ -412,7 +412,7 @@ function App() {
 
     t1.to(".join-cohort", {
       autoAlpha: 0.6,
-      y: -200,
+      y: "-20vh",
       duration: 0.1,
       ease: "none",
     }, "fifthAnim");

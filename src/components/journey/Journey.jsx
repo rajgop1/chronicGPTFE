@@ -200,6 +200,22 @@ function Journey() {
 
     });
 
+    t1.addLabel("inBetweenAnim", ">")
+
+    t1.fromTo(
+      ".header",
+      {
+        background: "#12121200",
+        duration: 0.15
+      },
+      {
+        background: "#121212",
+        duration: 0.15,
+        ease: "none",
+      },
+      "inBetweenAnim"
+    );
+
     // Mobile
     mm.add("(max-width: 767px)", () => {
       // gsap.set(".section-three", {
@@ -248,6 +264,7 @@ function Journey() {
 
     t1.addLabel("thirdAnim")
 
+
     mm.add("(min-width: 768px)", () => {
       t1.to(".section-three-header", {
         autoAlpha: 0.75,
@@ -263,7 +280,9 @@ function Journey() {
       }, "thirdAnim")
     })
 
-    t1.add("fourthAnim")
+
+
+    t1.addLabel("fourthAnim")
 
     // t1.to(".section-three", {
     //   height: 0,
@@ -273,12 +292,11 @@ function Journey() {
     //   duration: SECTION_COLLAPSE_DURATION
     // }, "fourthAnim")
 
-
-    t1.add("fifthAnim", ">")
+    t1.addLabel("fifthAnim", ">")
 
     mm.add("(min-width: 768px", () => {
       t1.to(".join-cohort", {
-        y: -200,
+        y: "-20vh",
         autoAlpha: 0.6,
         duration: 0.1,
       }, "fifthAnim")
@@ -287,7 +305,7 @@ function Journey() {
     mm.add("(max-width: 767px", () => {
 
       t1.to(".join-cohort", {
-        y: -200,
+        y: "-20vh",
         autoAlpha: 0.6,
         duration: 2.5,
         delay: 2.5
