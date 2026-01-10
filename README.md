@@ -80,7 +80,6 @@ npm run lint
 / (repo root)
 ├─ public/                      # static assets (images, icons)
 ├─ src/
-│  ├─ assets/                   # images & other media
 │  ├─ components/               # UI components and pages
 │  │  ├─ common/                # shared small components & layout
 │  │  ├─ home/                  # home specific components
@@ -164,7 +163,7 @@ npm run lint
 ## Contributing 🤝
 If you plan to contribute, please:
 1. Open an issue describing the change or feature.
-2. Create a topic branch from `main`.
+2. Create a topic branch from `master`.
 3. Add clear commit messages and a short PR description.
 
 Developer notes:
