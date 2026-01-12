@@ -106,14 +106,15 @@ function Safeguards() {
       autoAlpha: 0,
     }, "thirdAnim").to(".build-for-trust", {
       height: "100vh",
-
+      duration: 0.25,
     }, "thirdAnim")
 
-    t1.addLabel("inBetweenAnim", ">")
+    t1.addLabel("inBetweenAnim", ">+=0.25")
 
     t1.to(".build-for-trust", {
       height: 0,
-      autoAlpha: 0
+      autoAlpha: 0,
+      duration: 1.25,
     }, "inBetweenAnim")
 
     t1.fromTo(
@@ -134,7 +135,7 @@ function Safeguards() {
       t1.to(".join-cohort", {
         y: "-20vh",
         autoAlpha: 0.6,
-        duration: 0.1,
+        duration: 0.85,
       }, "fifthAnim")
     })
 

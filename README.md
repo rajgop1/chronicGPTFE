@@ -5,8 +5,7 @@
 ---
 
 ## Table of contents 📚
-- [About](#about)
-<!-- - [Demo / Screenshots](#demo--screenshots) -->
+- [About](#about) <!-- - [Demo / Screenshots](#demo--screenshots) -->
 - [Tech stack](#tech-stack)
 - [Features](#features)
 - [Repository structure](#repository-structure)

@@ -169,6 +169,7 @@ function Journey() {
       })
     })
 
+
     t1.addLabel("card2anim")
 
     const cards2 = gsap.utils.toArray(".card-2");
@@ -184,6 +185,22 @@ function Journey() {
         });
       });
 
+      t1.addLabel("inBetweenAnim", ">")
+
+      t1.fromTo(
+        ".header",
+        {
+          background: "#12121200",
+          duration: 0.15
+        },
+        {
+          background: "#121212",
+          duration: 0.15,
+          ease: "none",
+        },
+        "inBetweenAnim"
+      );
+
       t1.to(".section-two", {
         height: 0,
         duration: 0.25,
@@ -198,23 +215,10 @@ function Journey() {
         border: 0
       },)
 
+
     });
 
-    t1.addLabel("inBetweenAnim", ">")
 
-    t1.fromTo(
-      ".header",
-      {
-        background: "#12121200",
-        duration: 0.15
-      },
-      {
-        background: "#121212",
-        duration: 0.15,
-        ease: "none",
-      },
-      "inBetweenAnim"
-    );
 
     // Mobile
     mm.add("(max-width: 1023px)", () => {
@@ -223,6 +227,22 @@ function Journey() {
       //   maxHeight: "fit-content",
       //   overflow: "hidden"
       // },)
+      t1.addLabel("inBetweenAnim", ">")
+
+      t1.fromTo(
+        ".header",
+        {
+          background: "#12121200",
+          duration: 0.15
+        },
+        {
+          background: "#121212",
+          duration: 0.15,
+          ease: "none",
+        },
+        "inBetweenAnim"
+      );
+      
       cards2.forEach((card, i) => {
         const labelName = `card2-mobile-${i}`;
         t1.addLabel(labelName);
