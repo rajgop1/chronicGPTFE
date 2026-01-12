@@ -348,7 +348,7 @@ const Home = () => {
         <div className='flex-1 flex justify-center'>
           <div className='relative dr-img-container max-w-[clamp(200px,40vw,464px)]'>
             <img src="/assets/images/dr-sara-mohan.png" alt="" className='w-full h-full object-cover' />
-            <div className='absolute top-[50%] -translate-y-[200%] -right-[34px]'>
+            <div className='absolute top-[50%] -translate-y-[200%] -right-[48px] lg:-right-[34px]'>
               <div>
                 <FadeInText>
                   <FloatText amplitude={6} duration={2} className="text-[14px] lg:text-[22px] font-medium text-white leading-[16px] lg:leading-[21px]">
