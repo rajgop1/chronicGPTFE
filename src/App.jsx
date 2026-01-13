@@ -130,7 +130,7 @@ function App() {
     mm.add("(max-width: 1023px)", () => {
       t1.fromTo(
         ".second-section .hero-img",
-        { backgroundPosition: "0% 0%", },
+        { backgroundPosition: "50% 0%", },
         { backgroundPosition: "50% 20%", duration: FIRST_ANIM_DURATION, ease: "none" },
         "secondAnim"
       );
